@@ -1,35 +1,32 @@
 .project {
-
   background-color: orangered;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-
-  .newList {
-
-    margin: 1rem  ;
-    padding: 1rem;
-    background-color: orangered;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font: inherit;
-    cursor: pointer;
-  }
-
+}
+.project .newList {
+  margin: 1rem;
+  padding: 1rem;
+  background-color: orangered;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font: inherit;
+  cursor: pointer;
 }
 
 .todolists {
   background-color: white;
   box-sizing: border-box;
   justify-content: flex-start;
-  align-items: flex-start ;
+  align-items: flex-start;
   width: 100%;
   display: flex;
   flex-direction: row;
   overflow-x: auto;
   margin: 0;
-
 }
+
+/*# sourceMappingURL=Project.css.map */

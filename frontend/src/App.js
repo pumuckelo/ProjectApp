@@ -9,6 +9,8 @@ import Project from "./components/ProjectList/Project/Project";
 function App() {
   return (
       <Router>
+      {/*<ProjectList/>*/}
+      <Project title='SuperApp'/>
           <Switch>
               <Route path={'/projects' } component={ProjectList} />
               <Route path='/projects/:projectid' component={Project} />

@@ -6,7 +6,7 @@ const TodoItem = (props)=>{
 
     return (
         <div className='todoitem'>
-            <h1>Muell rausbringen</h1>
+            <p>{props.title}</p>
         </div>
 
     )
