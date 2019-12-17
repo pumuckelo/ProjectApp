@@ -28,6 +28,8 @@
 }
 .todoitem i {
   cursor: pointer;
+}
+.todoitem i:hover {
   color: #ff4f48;
 }
 

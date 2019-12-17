@@ -5,13 +5,13 @@ import TodoItem from "./TodoItem/TodoItem";
 
 const TodoList = (props) => {
 
-    const [todos, setTodos] = useState([{title: "App designen", completed: true}, {
-        title: "App strukturieren",
-        completed: false
-    }, {title: "Datenbank planen", completed: false}, {title: "Backend planen", completed: false},])
+    const [todos, setTodos] = useState([])
     const newTodoInput = useRef('')
 
-
+    /*{title: "App designen", completed: true}, {
+            title: "App strukturieren",
+            completed: false
+        }, {title: "Datenbank planen", completed: false}, {title: "Backend planen", completed: false},*/
     const newTodoSubmitHandler = (event) => {
         event.preventDefault()
         let newTodos = [...todos]

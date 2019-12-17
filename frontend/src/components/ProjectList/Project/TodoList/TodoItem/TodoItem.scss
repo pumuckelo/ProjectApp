@@ -4,11 +4,9 @@
   justify-content: space-between;
   padding: 1rem;
   background-color: dodgerblue;
-  margin:  1rem 0;
+  margin: 1rem 0;
   color: white;
   border-radius: 10px;
-
-
 
 
   p {
@@ -18,26 +16,33 @@
     cursor: pointer;
     padding-right: 1rem;
   }
- /* button {
-  font: inherit;
-    justify-self: flex-end;
-    border: none;
-    background: red;
-    color: white;
-    border-radius: 100%;
-    padding: 0.3rem;
-    width: auto;
-    height: 100%;
-  }*/
+
+  /* button {
+   font: inherit;
+     justify-self: flex-end;
+     border: none;
+     background: red;
+     color: white;
+     border-radius: 100%;
+     padding: 0.3rem;
+     width: auto;
+     height: 100%;
+   }*/
 
   i {
     cursor: pointer;
-    color: #ff4f48;
+
+    &:hover {
+      color: #ff4f48;;
+    }
   }
 
 }
 
 .completed {
   opacity: 0.5;
-  p { text-decoration: line-through; }
+
+  p {
+    text-decoration: line-through;
+  }
 }
