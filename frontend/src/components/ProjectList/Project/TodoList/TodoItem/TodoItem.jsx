@@ -5,8 +5,10 @@ const TodoItem = (props)=>{
 
 
     return (
-        <div className='todoitem'>
-            <p>{props.title}</p>
+        <div  className={props.completed ? "todoitem completed" : "todoitem"}>
+            <p onClick={props.toggleCompleted}>{props.title}</p>
+
+            <i onClick={props.deleteTodo} className="fas fa-trash-alt"></i>
         </div>
 
     )

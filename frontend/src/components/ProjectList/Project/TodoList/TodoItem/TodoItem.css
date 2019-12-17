@@ -1,0 +1,41 @@
+.todoitem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: dodgerblue;
+  margin: 1rem 0;
+  color: white;
+  border-radius: 10px;
+  /* button {
+   font: inherit;
+     justify-self: flex-end;
+     border: none;
+     background: red;
+     color: white;
+     border-radius: 100%;
+     padding: 0.3rem;
+     width: auto;
+     height: 100%;
+   }*/
+}
+.todoitem p {
+  margin: 0;
+  flex-grow: 1;
+  height: 100%;
+  cursor: pointer;
+  padding-right: 1rem;
+}
+.todoitem i {
+  cursor: pointer;
+  color: #ff4f48;
+}
+
+.completed {
+  opacity: 0.5;
+}
+.completed p {
+  text-decoration: line-through;
+}
+
+/*# sourceMappingURL=TodoItem.css.map */
