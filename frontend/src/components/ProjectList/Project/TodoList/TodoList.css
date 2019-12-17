@@ -9,14 +9,14 @@
   align-items: stretch;
   max-width: 15rem;
 }
-.todolist i {
+.todolist i.fas.fa-cog {
   align-self: flex-end;
   position: relative;
   top: -1em;
   right: -1em;
   cursor: pointer;
 }
-.todolist i:hover {
+.todolist i.fas.fa-cog:hover {
   color: grey;
 }
 .todolist h2 {

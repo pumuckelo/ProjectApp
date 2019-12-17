@@ -1,4 +1,5 @@
 .projectlist {
+  z-index: 1;
   position: absolute;
   top: 0;
   left: 0;
@@ -26,8 +27,8 @@
 
 @keyframes fadein {
   0% {
-    opacity: 0;
-    transform: translateX(-100px);
+    opacity: 1;
+    transform: translateX(-10rem);
   }
   100% {
     opacity: 1;
