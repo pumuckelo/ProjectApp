@@ -45,6 +45,7 @@ const TodoList = (props) => {
     })
     return (
         <div className='todolist'>
+            <i className="fas fa-cog"></i>
             <h2>{props.title}</h2>
             {todoItems}
             <form className='newTodoForm' onSubmit={(event) => {

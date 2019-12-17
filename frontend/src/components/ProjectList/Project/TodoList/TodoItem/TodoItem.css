@@ -28,6 +28,7 @@
 }
 .todoitem i {
   cursor: pointer;
+  align-self: center;
 }
 .todoitem i:hover {
   color: #ff4f48;

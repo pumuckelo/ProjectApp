@@ -1,13 +1,19 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, Fragment} from 'react'
 import './Project.css'
 import TodoList from "./TodoList/TodoList";
+import ProjectList from "../ProjectList";
 
 const Project = (props) => {
 
     const newListInput = useRef('')
 
     const [todoLists, setTodoLists] = useState(['Erste Phase', 'Zweite Phase'])
+    const [projectListEnabled, setProjectListEnabled] = useState(false)
 
+
+    const toggleProjectList = () => {
+        setProjectListEnabled(!projectListEnabled)
+    }
     const addNewTodoListHandler = (event) => {
         event.preventDefault()
         let updatedTodoLists = [...todoLists]
@@ -24,26 +30,34 @@ const Project = (props) => {
     // then create array of todolists
 
     return (
-        <div className='project'>
-            <div className='heading'>
-            <h1>{props.title}</h1>
+        <Fragment>
+            {projectListEnabled && <ProjectList close={() => {
+                toggleProjectList()
+            }}/>}
+            <div className='project'>
+                <div className='heading'>
+                    <i onClick={() => {
+                        toggleProjectList()
+                    }} className="fas fa-ellipsis-v fa-lg"></i>
+                    <h1>{props.title}</h1>
 
+                </div>
+                <div className='todolists'>
+                    {/*Hier würden normalerweise die todolists von der datenbank hinkommen in einem array.map => todolist*/}
+                    {todoListsComponents}
+
+                    <form onSubmit={(event) => {
+                        addNewTodoListHandler(event)
+                    }} action="">
+                        <div className='newListControl'>
+                            <input ref={newListInput} type='text' placeholder="List Name"/>
+                            <button className='newList'>New <i className="fas fa-clipboard-list"></i></button>
+                        </div>
+                    </form>
+
+                </div>
             </div>
-            <div className='todolists'>
-                {/*Hier würden normalerweise die todolists von der datenbank hinkommen in einem array.map => todolist*/}
-                {todoListsComponents}
-
-                <form onSubmit={(event) => {
-                    addNewTodoListHandler(event)
-                }} action="">
-                    <div className='newListControl'>
-                        <input ref={newListInput} type='text' placeholder="List Name"/>
-                        <button className='newList'>New <i className="fas fa-clipboard-list"></i></button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
+        </Fragment>
     )
 }
 

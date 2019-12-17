@@ -1,18 +1,25 @@
-
-import React, {Fragment} from "react";
+import React, {Fragment, useState} from "react";
 import './ProjectList.css'
 import Project from "./Project/Project";
-const ProjectList = () =>{
+import {NavLink} from 'react-router-dom'
 
+const ProjectList = (props) => {
 
+    const [projectList, setProjectList] = useState(['TodoApp', 'Zeiterfassungsapp'])
 
+    const projectsLinks = projectList.map(project => {
+        return <NavLink to='#'>{project}</NavLink>
+    })
     return (
         <div className='projectlist'>
-            <Project title='TodoApp'/>
-            <Project title='ZeitErfassungsApp'/>
+            <i onClick={props.close} className="fas fa-long-arrow-alt-left fa-lg"></i>
+            <h2>My Projects</h2>
+
+           
+            {projectsLinks}
         </div>
     )
 };
 
 
-export default  ProjectList
+export default ProjectList

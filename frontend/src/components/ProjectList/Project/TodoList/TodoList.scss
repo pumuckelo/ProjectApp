@@ -9,6 +9,17 @@
   align-items: stretch;
   max-width: 15rem;
 
+  i {
+    align-self: flex-end;
+    position: relative;
+    top: -1em;
+    right: -1em;
+    cursor: pointer;
+
+    &:hover {
+      color: grey;
+    }
+  }
 
   h2 {
     text-align: center;

@@ -9,6 +9,16 @@
   align-items: stretch;
   max-width: 15rem;
 }
+.todolist i {
+  align-self: flex-end;
+  position: relative;
+  top: -1em;
+  right: -1em;
+  cursor: pointer;
+}
+.todolist i:hover {
+  color: grey;
+}
 .todolist h2 {
   text-align: center;
   margin-top: 0;
