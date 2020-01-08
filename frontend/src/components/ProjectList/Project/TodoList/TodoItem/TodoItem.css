@@ -1,7 +1,13 @@
 .todoitem {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   padding: 1rem;
   background-color: dodgerblue;
   margin: 1rem 0;
@@ -19,17 +25,24 @@
      height: 100%;
    }*/
 }
+
 .todoitem p {
   margin: 0;
-  flex-grow: 1;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   height: 100%;
   cursor: pointer;
   padding-right: 1rem;
 }
+
 .todoitem i {
   cursor: pointer;
-  align-self: center;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
+
 .todoitem i:hover {
   color: #ff4f48;
 }
@@ -37,8 +50,8 @@
 .completed {
   opacity: 0.5;
 }
+
 .completed p {
   text-decoration: line-through;
 }
-
 /*# sourceMappingURL=TodoItem.css.map */

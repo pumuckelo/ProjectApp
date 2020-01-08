@@ -1,0 +1,64 @@
+.todolistsettings_background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.36);
+}
+
+.todolistsettings_background .todolistsettings_modal {
+  border-radius: 20px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: relative;
+  max-width: 40rem;
+  min-width: 10rem;
+  top: 20vh;
+  margin: auto;
+  background-color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+.todolistsettings_background .todolistsettings_modal form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.todolistsettings_background .todolistsettings_modal form input[type="text"] {
+  padding: 1rem;
+  width: 50%;
+}
+
+.todolistsettings_background .todolistsettings_modal form button {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  cursor: pointer;
+  max-width: 30%;
+  margin: 0.5rem 0;
+  padding: 0.7rem 1rem;
+  background-color: #0080ff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font: inherit;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+}
+
+.todolistsettings_background .todolistsettings_modal form button:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+/*# sourceMappingURL=TodoListSettings.css.map */
