@@ -5,7 +5,16 @@ import TodoItem from "./TodoItem/TodoItem";
 import TodoListSettings from "./TodoListSettings/TodoListSettings";
 
 const TodoList = props => {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState([
+    {
+      title: "Obst pfluecken",
+      status: "In progress",
+      assignedTo: {
+        username: "hans",
+        name: "Hans Beckenbauer"
+      }
+    }
+  ]);
   const [settingsVisible, setSettingsVisible] = useState(false);
   const newTodoInput = useRef("");
 
@@ -13,6 +22,7 @@ const TodoList = props => {
             title: "App strukturieren",
             completed: false
         }, {title: "Datenbank planen", completed: false}, {title: "Backend planen", completed: false},*/
+
   const newTodoSubmitHandler = event => {
     event.preventDefault();
     let newTodos = [...todos];
@@ -52,6 +62,7 @@ const TodoList = props => {
           toggleTodoCompletedHandler(index);
         }}
         key={index}
+        todoItem={todoitem}
         title={todoitem.title}
         completed={todoitem.completed}
       />

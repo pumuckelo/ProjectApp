@@ -54,4 +54,41 @@
 .completed p {
   text-decoration: line-through;
 }
+
+.newdesign-todoitem {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+  -webkit-box-shadow: 0 1px 5px 0.5px #dadada;
+          box-shadow: 0 1px 5px 0.5px #dadada;
+}
+
+.newdesign-todoitem .name {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.newdesign-todoitem .status {
+  font-size: 80%;
+}
+
+.newdesign-todoitem .checklist-status {
+  font-size: 80%;
+}
+
+.newdesign-todoitem .assignedTo {
+  margin-top: 0.5rem;
+}
+
+.newdesign-todoitem .assignedTo p {
+  margin: 0 0.5rem;
+  display: inline-block;
+}
 /*# sourceMappingURL=TodoItem.css.map */
