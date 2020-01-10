@@ -1,7 +1,8 @@
-import React, { useRef, Fragment } from "react";
+import React, { useRef, Fragment, useContext } from "react";
 import "./Login.css";
 
 import { gql, useMutation } from "@apollo/client";
+import AuthContext from "../../../context/auth-context";
 
 const loginMutationString = gql`
   mutation loginUser($username_or_email: String, $password: String) {
@@ -16,6 +17,7 @@ const Login = props => {
 
   const emailUsernameInput = useRef("");
   const passwordInput = useRef("");
+  const authData = useContext(AuthContext);
   //   loginUser(username_or_email: String, password: String)
   const loginHandler = event => {
     event.preventDefault();
@@ -23,20 +25,29 @@ const Login = props => {
     let password = passwordInput.current.value;
     console.log(emailOrUsername);
     console.log(password);
+    //graphql user function and then set auth data to state
     loginUser({
       variables: {
         username_or_email: emailOrUsername,
         password: password
       }
+    }).then(() => {
+      console.log("now trying to importcookies");
+      authData.importCookiesToAuthContext();
     });
 
     emailUsernameInput.current.value = "";
     passwordInput.current.value = "";
   };
 
+  //redirect if gets data
+  if (data) {
+  }
+
   return (
     <div className="login-window">
       <h1>Login</h1>
+      {error && <p>{error.message}</p>}
       <label htmlFor="email">E-Mail or Username</label>
       <form onSubmit={event => loginHandler(event)} action="">
         <input
