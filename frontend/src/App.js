@@ -16,7 +16,7 @@ import Login from "./components/Authentication/Login/Login";
 const gqlClient = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
-    uri: "http://localhost:12000",
+    uri: "http://localhost:12000/graphql",
     credentials: "include"
   })
 });

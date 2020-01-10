@@ -4,7 +4,7 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-
+const authMiddleware = require("./middleware/auth-middleware");
 const typeDefs = require("./schema/index");
 const resolvers = require("./resolver/index");
 const { ApolloServer, gql } = require("apollo-server-express");
@@ -18,15 +18,16 @@ const server = new ApolloServer({
   }
 });
 
-// app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 // Damit Cors funktioniert musst du noch bei dem Apollo Server
 // cors ausschalten
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(authMiddleware);
 
-server.applyMiddleware({ app });
+server.applyMiddleware({ app, cors: false });
 mongoose.connect(
   process.env.DATABASE_CONNECTION_STRING,
   { useNewUrlParser: true, useUnifiedTopology: true },
