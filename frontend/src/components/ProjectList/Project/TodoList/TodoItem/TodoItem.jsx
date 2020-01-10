@@ -1,61 +1,60 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import "./TodoItem.css";
+import TodoItemDetails from "./TodoItemDetails/TodoItemDetails";
 
 const TodoItem = props => {
-  const [onTodoDetails, setOnTodoDetails] = useState(false);
+  const [onTodoItemDetails, setOnTodoItemDetails] = useState(false);
   const [checklistStatus, setChecklistStatus] = useState({
     completed: null,
     notcompleted: null,
     length: null
   });
 
-  let checklist = [
-    {
-      name: "Apfel",
-      completed: false
-    },
-    {
-      name: "Banane",
-      completed: true
-    },
-    {
-      name: "Birne",
-      completed: false
-    },
-    {
-      name: "Salat",
-      completed: true
-    }
-  ];
-
   useEffect(() => {
     getCompletedChecklist();
   }, []);
 
   const getCompletedChecklist = () => {
-    let completed = checklist.filter(item => item.completed);
-    let notcompleted = checklist.filter(item => !item.completed);
+    let completed = props.todoItem.checklist.filter(item => item.completed);
+    let notcompleted = props.todoItem.checklist.filter(item => !item.completed);
     setChecklistStatus({
       completed: completed.length,
       notcompleted: notcompleted.length,
-      length: checklist.length
+      length: props.todoItem.checklist.length
     });
   };
 
+  const toggleTodoItemDetails = () => {
+    setOnTodoItemDetails(!onTodoItemDetails);
+  };
+
   return (
-    <div className="newdesign-todoitem">
-      <div className="name">{props.todoItem.title}</div>
-      <div className="status">Status: {props.todoItem.status}</div>
-      <div className="checklist-status">
-        Completed: {checklistStatus.completed} / {checklistStatus.length}
-      </div>
-      {props.todoItem.assignedTo && (
-        <div className="assignedTo">
-          <i class="fas fa-user"></i>
-          <p>{props.todoItem.assignedTo.username}</p>
+    <Fragment>
+      <div
+        onClick={() => toggleTodoItemDetails()}
+        className="newdesign-todoitem"
+      >
+        <div className="name">{props.todoItem.title}</div>
+        <div className="status">Status: {props.todoItem.status}</div>
+        <div className="checklist-status">
+          Completed: {checklistStatus.completed} / {checklistStatus.length}
         </div>
+        {props.todoItem.assignedTo && (
+          <div className="assignedTo">
+            <i className="fas fa-user"></i>
+            <p>{props.todoItem.assignedTo.username}</p>
+          </div>
+        )}
+      </div>
+
+      {onTodoItemDetails && (
+        <TodoItemDetails
+          closeDetails={() => toggleTodoItemDetails()}
+          todoItem={props.todoItem}
+        />
       )}
-    </div>
+    </Fragment>
+
     // <div
     //   className={props.todoItem.completed ? "todoitem completed" : "todoitem"}
     // >

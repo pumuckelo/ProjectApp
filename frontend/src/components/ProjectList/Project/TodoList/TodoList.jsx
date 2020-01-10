@@ -12,7 +12,25 @@ const TodoList = props => {
       assignedTo: {
         username: "hans",
         name: "Hans Beckenbauer"
-      }
+      },
+      checklist: [
+        {
+          name: "Apfel",
+          completed: false
+        },
+        {
+          name: "Banane",
+          completed: true
+        },
+        {
+          name: "Birne",
+          completed: false
+        },
+        {
+          name: "Salat",
+          completed: true
+        }
+      ]
     }
   ]);
   const [settingsVisible, setSettingsVisible] = useState(false);
