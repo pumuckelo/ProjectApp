@@ -12,7 +12,10 @@ const { ApolloServer, gql } = require("apollo-server-express");
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  playground: true
+  playground: true,
+  context: ({ req, res }) => {
+    return { req, res };
+  }
 });
 
 // app.use(cors({ origin: "http://localhost:3000", credentials: true }));
