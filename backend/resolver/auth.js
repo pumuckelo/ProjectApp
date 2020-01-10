@@ -107,10 +107,16 @@ module.exports = {
       user.save();
 
       // set tokens as httponly cookies
-      res.cookie("accessToken", accessToken, { httpOnly: true });
-      res.cookie("refreshToken", refreshToken, { httpOnly: true });
-      res.cookie("username", user.username);
-      res.cookie("userId", user.id);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: true,
+        expiresIn: "5m"
+      });
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        expiresIn: "5d"
+      });
+      res.cookie("username", user.username, { expiresIn: "5d" });
+      res.cookie("userId", user.id, { expiresIn: "5d" });
       return user.username;
     },
     hello: () => "HELLO WORKS"

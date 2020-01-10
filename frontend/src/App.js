@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Fragment from "react";
 import "./App.css";
 import ProjectList from "./components/ProjectList/ProjectList";
@@ -24,6 +24,10 @@ const gqlClient = new ApolloClient({
 });
 
 function App() {
+  useEffect(() => {
+    importCookiesToAuthContext();
+  }, []);
+
   const [authData, setAuthData] = useState({
     username: null,
     userId: null
