@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const typeDefs = require("./schema/index");
 const resolvers = require("./resolver/index");
@@ -20,6 +21,7 @@ const server = new ApolloServer({
 // cors ausschalten
 
 app.use(express.json());
+app.use(cookieParser());
 
 server.applyMiddleware({ app });
 mongoose.connect(
