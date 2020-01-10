@@ -1,0 +1,17 @@
+.login-window {
+  max-width: 40rem;
+  padding: 2rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 20vh;
+  box-shadow: 0 2px 10px 1px rgb(221, 221, 221);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  align-self: flex-end;
+}
