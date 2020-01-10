@@ -12,6 +12,10 @@
   flex-direction: column;
 }
 
+.login-window form {
+  display: flex;
+  flex-direction: column;
+}
 .buttons {
   align-self: flex-end;
 }
