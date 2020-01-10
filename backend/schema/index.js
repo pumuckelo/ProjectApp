@@ -50,7 +50,7 @@ const typeDefs = gql`
 
   type Mutation {
     registerUser(username: String, email: String, password: String): String
-    loginUser(username: String, email: String, password: String): String
+    loginUser(username_or_email: String, password: String): String
     hello: String
   }
 

@@ -12,7 +12,8 @@ const userSchema = new mongoose.Schema({
     unique: true
   },
   password: String,
-  projects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project" }]
+  projects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project" }],
+  refreshToken: String
 });
 
 const User = mongoose.model("User", userSchema);
