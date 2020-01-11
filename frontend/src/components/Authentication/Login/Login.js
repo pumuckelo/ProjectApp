@@ -1,5 +1,6 @@
 import React, { useRef, Fragment, useContext } from "react";
 import "./Login.css";
+import { Redirect } from "react-router-dom";
 
 import { gql, useMutation } from "@apollo/client";
 import AuthContext from "../../../context/auth-context";
@@ -14,10 +15,14 @@ const Login = props => {
   const [loginUser, { loading, error, data }] = useMutation(
     loginMutationString
   );
-
   const emailUsernameInput = useRef("");
   const passwordInput = useRef("");
   const authData = useContext(AuthContext);
+
+  //   if user is logged in redirect to homepage
+  if (authData.userId != null) {
+    return <Redirect to="/" />;
+  }
   //   loginUser(username_or_email: String, password: String)
   const loginHandler = event => {
     event.preventDefault();
@@ -34,8 +39,9 @@ const Login = props => {
     }).then(() => {
       console.log("now trying to importcookies");
       authData.importCookiesToAuthContext();
+      return <Redirect to="/" />;
     });
-
+    //Reset form inputs
     emailUsernameInput.current.value = "";
     passwordInput.current.value = "";
   };

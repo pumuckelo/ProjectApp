@@ -4,6 +4,7 @@ import "./App.css";
 import ProjectList from "./components/ProjectList/ProjectList";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Project from "./components/ProjectList/Project/Project";
+import Home from "./components/Home/Home";
 import AuthContext from "./context/auth-context";
 import Cookies from "js-cookie";
 
@@ -56,12 +57,17 @@ function App() {
         <Router>
           {/*<ProjectList/>*/}
           <Switch>
-            {!authData.userId && (
+            {/* {!authData.userId && (
               <Route exact path="/login" component={Login} />
+            )} */}
+            <Route exact path="/login" component={Login} />
+            {authData.userId && <Route exact path="/" component={Home} />}
+            {authData.userId && (
+              <Route exact path="/projects" component={ProjectList} />
             )}
-            <Project title="SuperApp" />
-            <Route exact path="/projects" component={ProjectList} />
-            <Route exact path="/projects/:projectid" component={Project} />
+            {authData.userId && (
+              <Route exact path="/projects/:projectid" component={Project} />
+            )}
           </Switch>
         </Router>
       </AuthContext.Provider>
