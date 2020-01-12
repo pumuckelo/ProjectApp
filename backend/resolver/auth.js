@@ -104,24 +104,21 @@ module.exports = {
         { expiresIn: "5d" }
       );
       user.refreshToken = await refreshToken;
-      user.save();
+      await user.save();
 
       // set tokens as httponly cookies
       res.cookie("accessToken", accessToken, {
-        httpOnly: true,
-        expiresIn: "5m"
+        httpOnly: true
       });
       res.cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        expiresIn: "5d"
+        httpOnly: true
       });
       res.cookie("username", user.username, { expiresIn: "5d" });
       res.cookie("userId", user.id, { expiresIn: "5d" });
+
       return user.username;
     },
     hello: () => "HELLO WORKS"
-  }
-  //   Query: {
-  //     test: () => {}
-  //   }
+  },
+  Query: {}
 };
