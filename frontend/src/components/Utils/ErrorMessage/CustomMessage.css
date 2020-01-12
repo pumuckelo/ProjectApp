@@ -1,0 +1,31 @@
+.customMessage {
+  position: fixed;
+  top: 5vh;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding: 1rem;
+  border-radius: 10px;
+  width: 20rem;
+  text-align: center;
+}
+
+.green {
+  background-color: rgb(0, 179, 0);
+  color: white;
+}
+
+.red {
+  background-color: red;
+  color: white;
+}
+
+.blue {
+  background-color: rgb(0, 136, 255);
+  color: white;
+}
+
+.yellow {
+  background-color: rgb(179, 179, 35);
+  color: white;
+}
