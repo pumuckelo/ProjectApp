@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Fragment from "react";
 import "./App.css";
 import ProjectList from "./components/ProjectList/ProjectList";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Project from "./components/ProjectList/Project/Project";
 import Home from "./components/Home/Home";
 import AuthContext from "./context/auth-context";
@@ -15,6 +14,7 @@ import {
   ApolloProvider
 } from "@apollo/client";
 import Login from "./components/Authentication/Login/Login";
+import Navbar from "./components/Navbar/Navbar";
 
 const gqlClient = new ApolloClient({
   cache: new InMemoryCache(),
@@ -40,6 +40,7 @@ function App() {
       username: Cookies.get("username")
     });
     console.log("clicked importcookies");
+    console.log(authData.userId);
   };
 
   const logout = () => {};
@@ -56,6 +57,7 @@ function App() {
       >
         <Router>
           {/*<ProjectList/>*/}
+          <Navbar />
           <Switch>
             {/* {!authData.userId && (
               <Route exact path="/login" component={Login} />

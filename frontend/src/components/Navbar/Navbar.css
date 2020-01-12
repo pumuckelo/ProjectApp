@@ -1,0 +1,16 @@
+nav {
+  display: flex;
+  height: 3rem;
+  background-color: rgb(0, 136, 255);
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+nav a {
+  margin: auto 1rem;
+  color: white;
+  text-decoration: none;
+}
