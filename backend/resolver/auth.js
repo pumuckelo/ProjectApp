@@ -90,7 +90,7 @@ module.exports = {
           email: user.email
         },
         process.env.JWT_ACCESS_KEY,
-        { expiresIn: "15m" }
+        { expiresIn: "15s" }
       );
 
       //create refreshToken and save to database of user

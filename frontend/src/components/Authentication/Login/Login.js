@@ -20,7 +20,8 @@ const Login = props => {
   const authData = useContext(AuthContext);
 
   //   if user is logged in redirect to homepage
-  if (authData.userId != null) {
+  if (authData.userId) {
+    console.log("login js" + authData.userId);
     return <Redirect to="/" />;
   }
   //   loginUser(username_or_email: String, password: String)

@@ -85,6 +85,7 @@ const checkRefreshToken = async (refreshToken, req, res, next) => {
           res.cookie("username", "");
           res.sendStatus(401);
           next();
+          return;
         }
       }
     }
@@ -95,7 +96,7 @@ const checkRefreshToken = async (refreshToken, req, res, next) => {
 const createNewAccessToken = async (userData, req, res) => {
   console.log("Starting to create new Access Token");
   let newAccessToken = await jwt.sign(userData, process.env.JWT_ACCESS_KEY, {
-    expiresIn: "15m"
+    expiresIn: "15s"
   });
   res.cookie("accessToken", newAccessToken, {
     httpOnly: true
