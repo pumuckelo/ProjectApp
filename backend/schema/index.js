@@ -13,6 +13,7 @@ const typeDefs = gql`
   }
 
   type TodoItem {
+    _id: ID!
     name: String
     checklist: [ChecklistItem]!
     assignedTo: User
@@ -25,12 +26,14 @@ const typeDefs = gql`
   }
 
   type User {
+    _id: ID!
     username: String
     email: String
     projects: [ID]!
   }
 
   type TodoList {
+    _id: ID!
     name: String
     description: String
     todoItems: [TodoItem]!
@@ -39,7 +42,8 @@ const typeDefs = gql`
   }
 
   type Project {
-    name: String
+    _id: ID!
+    name: String!
     todoLists: [TodoList]!
     owners: [User]!
     members: [User]!
@@ -58,7 +62,7 @@ const typeDefs = gql`
 
   type Query {
     hello: String
-    myProjects: [String]
+    myProjects: [Project]
   }
 `;
 
