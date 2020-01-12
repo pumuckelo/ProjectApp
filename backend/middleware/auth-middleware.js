@@ -70,7 +70,8 @@ const checkRefreshToken = async (refreshToken, req, res, next) => {
 
         if (refreshToken == databaseRefreshToken) {
           console.log("RefreshToken correct");
-          req.userId = decodedRefreshToken;
+          //Set the userID for the request
+          req.userId = decodedRefreshToken.id;
           data = {
             id: decodedRefreshToken.id,
             username: decodedRefreshToken.username,
@@ -93,10 +94,11 @@ const checkRefreshToken = async (refreshToken, req, res, next) => {
 
 const createNewAccessToken = async (userData, req, res) => {
   console.log("Starting to create new Access Token");
-  let newAccessToken = await jwt.sign(userData, process.env.JWT_ACCESS_KEY);
+  let newAccessToken = await jwt.sign(userData, process.env.JWT_ACCESS_KEY, {
+    expiresIn: "15m"
+  });
   res.cookie("accessToken", newAccessToken, {
-    httpOnly: true,
-    expiresIn: "5m"
+    httpOnly: true
   });
   console.log("Refreshed AccessToken ");
 };

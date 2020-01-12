@@ -90,7 +90,7 @@ module.exports = {
           email: user.email
         },
         process.env.JWT_ACCESS_KEY,
-        { expiresIn: "10m" }
+        { expiresIn: "15m" }
       );
 
       //create refreshToken and save to database of user
@@ -113,8 +113,8 @@ module.exports = {
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true
       });
-      res.cookie("username", user.username, { expiresIn: "5d" });
-      res.cookie("userId", user.id, { expiresIn: "5d" });
+      res.cookie("username", user.username);
+      res.cookie("userId", user.id);
 
       return user.username;
     },
