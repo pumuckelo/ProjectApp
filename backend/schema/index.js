@@ -52,10 +52,13 @@ const typeDefs = gql`
     registerUser(username: String, email: String, password: String): String
     loginUser(username_or_email: String, password: String): String
     hello: String
+    createProjectTest(name: String, owner: String): String
+    createProject(name: String): String
   }
 
   type Query {
     hello: String
+    myProjects: [String]
   }
 `;
 
