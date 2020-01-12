@@ -51,5 +51,18 @@ module.exports = {
       }
     }
   },
-  Query: {}
+  Query: {
+    // will be used to display a list of the projects of the user
+    // without much detail (only name and id)
+    myProjects: async (_, args, { req, res }) => {
+      checkIfAuthenticated(req, res);
+      //search for projects of the user and return only id and name of the projects
+      const user = await db.User.findById(req.userId).populate(
+        "projects",
+        "name"
+      );
+      console.log(user.projects);
+      return user.projects;
+    }
+  }
 };
