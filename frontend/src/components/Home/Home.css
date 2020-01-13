@@ -20,6 +20,12 @@
   align-items: center;
 }
 
+a {
+  width: 80%;
+  text-decoration: none;
+  color: black;
+}
+
 .projectCard {
   padding: 1rem;
   width: 80%;

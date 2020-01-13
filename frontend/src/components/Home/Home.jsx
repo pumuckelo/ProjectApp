@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useMutation, gql, useQuery } from "@apollo/client";
+import { NavLink } from "react-router-dom";
 
 import "./Home.css";
 import Project from "../ProjectList/Project/Project";
@@ -46,9 +47,11 @@ const Home = props => {
   if (myProjectsData) {
     myProjects = myProjectsData.myProjects.map(project => {
       return (
-        <div key={project._id} className="projectCard">
-          <p>{project.name}</p>
-        </div>
+        <NavLink to={`/projects/${project._id}`}>
+          <div key={project._id} className="projectCard">
+            <p>{project.name}</p>
+          </div>
+        </NavLink>
       );
     });
   }
