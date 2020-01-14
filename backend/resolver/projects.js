@@ -63,6 +63,18 @@ module.exports = {
       );
       console.log(user.projects);
       return user.projects;
+    },
+    getProject: async (_, { id }, { req, res }) => {
+      //find project
+      const project = await db.Project.findById(id)
+        // .populate({
+        //   path: "todoLists",
+        //   populate: { path: "todoItems" }
+        // })
+        .populate("owners")
+        .populate("members");
+
+      return project;
     }
   }
 };
