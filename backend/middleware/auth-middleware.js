@@ -34,7 +34,7 @@ const authMiddleware = async (req, res, next) => {
       }
     );
   } else {
-    console.log("No token found");
+    // console.log("No token found");
     next();
   }
 };

@@ -13,7 +13,11 @@ const todoListSchema = new mongoose.Schema({
     }
   ],
   startDate: Date,
-  dueDate: Date
+  dueDate: Date,
+  project: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Project"
+  }
 });
 
 const TodoList = mongoose.model("TodoList", todoListSchema);

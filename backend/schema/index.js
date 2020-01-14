@@ -39,12 +39,13 @@ const typeDefs = gql`
     todoItems: [TodoItem]!
     startDate: String
     dueDate: String
+    project: ID
   }
 
   type Project {
     _id: ID!
     name: String!
-    todoLists: [TodoList]!
+    todoLists: [ID]!
     owners: [User]!
     members: [User]!
     startDate: String
@@ -58,11 +59,17 @@ const typeDefs = gql`
     hello: String
     createProjectTest(name: String, owner: String): String
     createProject(name: String): String
+    createTodoList(name: String, projectId: ID): TodoList
   }
 
   type Query {
     hello: String
     myProjects: [Project]
+    getProject(id: String): Project
+  }
+
+  type Subscription {
+    todoListCreated(projectId: ID): TodoList
   }
 `;
 

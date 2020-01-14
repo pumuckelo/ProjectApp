@@ -2,15 +2,21 @@
 
 const authResolver = require("./auth");
 const projectResolver = require("./projects");
+const todoListResolver = require("./todoLists");
 
 module.exports = {
   Mutation: {
     ...authResolver.Mutation,
-    ...projectResolver.Mutation
+    ...projectResolver.Mutation,
+    ...todoListResolver.Mutation
   },
   Query: {
     ...authResolver.Query,
-    ...projectResolver.Query
+    ...projectResolver.Query,
+    ...todoListResolver.Query
+  },
+  Subscription: {
+    ...todoListResolver.Subscription
   }
 
   //   ...projectResolver

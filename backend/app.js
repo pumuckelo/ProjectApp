@@ -1,20 +1,28 @@
 require("dotenv").config();
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const authMiddleware = require("./middleware/auth-middleware");
 const typeDefs = require("./schema/index");
 const resolvers = require("./resolver/index");
-const { ApolloServer, gql } = require("apollo-server-express");
+const http = require("http");
+const {
+  ApolloServer,
+  gql,
+  PubSub,
+  withFilter
+} = require("apollo-server-express");
+
+const app = express();
+const pubsub = new PubSub();
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   playground: true,
   context: ({ req, res }) => {
-    return { req, res };
+    return { req, res, pubsub, withFilter };
   }
 });
 
@@ -28,6 +36,10 @@ app.use(cookieParser());
 app.use(authMiddleware);
 
 server.applyMiddleware({ app, cors: false });
+
+const httpServer = http.createServer(app);
+
+server.installSubscriptionHandlers(httpServer);
 mongoose.connect(
   process.env.DATABASE_CONNECTION_STRING,
   { useNewUrlParser: true, useUnifiedTopology: true },
@@ -35,6 +47,6 @@ mongoose.connect(
     console.log("Connected to database");
   }
 );
-app.listen(process.env.APPLICATION_PORT, () => {
+httpServer.listen(process.env.APPLICATION_PORT, () => {
   console.log("Server started on Port " + process.env.APPLICATION_PORT);
 });
