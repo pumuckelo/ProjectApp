@@ -7,7 +7,7 @@ const TodoItemDetails = props => {
   const checklistItems = props.todoItem.checklist.map(checklistItem => {
     return (
       <div className="checklistItem">
-        <i class="far fa-circle"></i>
+        <i className="far fa-circle"></i>
         {checklistItem.name}
       </div>
     );

@@ -2,12 +2,19 @@ import React, { useState, useRef, Fragment } from "react";
 import "./Project.css";
 import TodoList from "./TodoList/TodoList";
 import ProjectList from "../ProjectList";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation, useSubscription } from "@apollo/client";
 
 const Project = props => {
   const { projectid } = props.match.params;
-  console.log(projectid);
-  const getProjectQuery = gql`
+  const [projectListEnabled, setProjectListEnabled] = useState(false);
+  const [projectData, setProjectData] = useState({
+    name: "",
+    todoLists: []
+  });
+
+  //----- Query / Mutation Strings
+
+  const getProjectQueryString = gql`
   {
     getProject(id:"${projectid}"){
       name
@@ -18,25 +25,89 @@ const Project = props => {
     }
   }
   `;
-  const { data, error, loading } = useQuery(getProjectQuery);
-  if (data) {
-    console.log(data.getProject);
-  }
-  if (error) {
-    console.log(error);
-  }
-  // const [todoLists, setTodoLists] = useState([]);
-  const [projectListEnabled, setProjectListEnabled] = useState(false);
 
-  let todoLists;
-  //CREATE TODOLISTS
-  if (data) {
-    data.getProject.todoLists.map(id => {
-      return <TodoList id={id} />;
-    });
+  const createTodoListMutationString = gql`
+    mutation createTodoList($name: String, $projectId: ID) {
+      createTodoList(name: $name, projectId: $projectId) {
+        name
+      }
+    }
+  `;
+
+  const todoListCreatedSubscriptionString = gql`
+    subscription todoListCreated($projectId: ID) {
+      todoListCreated(projectId: $projectId) {
+        _id
+      }
+    }
+  `;
+  //-----------
+
+  const {
+    data: getProjectData,
+    error: getProjectError,
+    loading: getProjectLoading
+  } = useQuery(getProjectQueryString, {
+    onCompleted(data) {
+      setProjectData(data.getProject);
+    }
+  });
+
+  if (getProjectError) {
+    console.log(getProjectError);
   }
-  const newListInput = useRef("");
+
+  let todoLists = projectData.todoLists.map(id => {
+    return <TodoList _id={id} />;
+  });
+
   // addTodoListHandler
+  const newListInput = useRef("");
+  const [
+    createTodo,
+    { data: createTodoData, loading: createTodoLoading, error: createTodoError }
+  ] = useMutation(createTodoListMutationString);
+
+  const createTodoListHandler = event => {
+    let name = newListInput.current.value;
+    event.preventDefault();
+    createTodo({
+      variables: {
+        name: name,
+        projectId: projectid
+      }
+    });
+  };
+
+  if (createTodoData) {
+    console.log(createTodoData);
+  }
+  //TodoList Subscription for new added TodoLists
+  const {
+    data: todoListCreatedData,
+    error: todoListCreatedError,
+    loading: todoListCreatedLoading
+  } = useSubscription(todoListCreatedSubscriptionString, {
+    variables: {
+      projectId: projectid
+    },
+    onSubscriptionData({ subscriptionData: { data } }) {
+      console.log(data);
+      setProjectData({
+        ...projectData,
+        todoLists: [...projectData.todoLists, data.todoListCreated._id]
+      });
+    }
+  });
+
+  if (todoListCreatedData) {
+    // console.log(`Subcription`);
+    // console.log(todoListCreatedData.todoListCreated._id);
+  }
+
+  if (todoListCreatedError) {
+    console.log(todoListCreatedError);
+  }
 
   const toggleProjectList = () => {
     setProjectListEnabled(!projectListEnabled);
@@ -72,13 +143,13 @@ const Project = props => {
             }}
             className="fas fa-ellipsis-v fa-lg"
           ></i>
-          <h1>{props.title}</h1>
+          <h1>{projectData.name}</h1>
         </div>
         <div className="todolists">
           {/*Hier würden normalerweise die todolists von der datenbank hinkommen in einem array.map => todolist*/}
           {/* {todoListsComponents} */}
-
-          <form action="">
+          {todoLists}
+          <form onSubmit={event => createTodoListHandler(event)} action="">
             <div className="newListControl">
               <input ref={newListInput} type="text" placeholder="New List" />
               <button className="newList">

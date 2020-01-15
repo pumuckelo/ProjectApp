@@ -1,11 +1,12 @@
 body {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .dark-bg-100 {
   top: 0;
   left: 0;
-  height: 100vh;
+  min-height: 100%;
+
   width: 100%;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.306);
