@@ -36,12 +36,21 @@ const TodoList = props => {
     }
   `;
 
+  const todoItemCreatedSubscriptionString = gql`
+    subscription todoItemCreated($todoListId: ID) {
+      todoItemCreated(todoListId: $todoListId) {
+        _id
+      }
+    }
+  `;
+
   const {
     data: getTodoListData,
     error: getTodoListError,
     loading: getTodoListLoading
   } = useQuery(getTodoListQueryString, {
     onCompleted({ getTodoList }) {
+      console.log(getTodoList);
       setTodoListData(getTodoList);
     }
   });
@@ -67,6 +76,29 @@ const TodoList = props => {
     }).catch(err => console.log(err));
     newTodoInput.current.value = "";
   };
+
+  //Render TodoItems
+  const {
+    data: todoItemCreatedData,
+    loading: todoItemCreatedLoading,
+    error: todoItemCreatedError
+  } = useSubscription(todoItemCreatedSubscriptionString, {
+    variables: {
+      todoListId: todoListData._id
+    },
+    onSubscriptionData({ subscriptionData: { data } }) {
+      console.log(data.todoItemCreated._id);
+      setTodoListData({
+        ...todoListData,
+        todoItems: [...todoListData.todoItems, data.todoItemCreated._id]
+      });
+    }
+  });
+
+  const todoItems = todoListData.todoItems.map(id => {
+    return <TodoItem _id={id} />;
+  });
+
   /*{title: "App designen", completed: true}, {
             title: "App strukturieren",
             completed: false
@@ -129,6 +161,7 @@ const TodoList = props => {
         ></i>
         <h2>{todoListData.name}</h2>
         {/* {todoItems} */}
+        {todoItems}
         <form
           className="newTodoForm"
           onSubmit={event => createTodoItemHandler(event)}

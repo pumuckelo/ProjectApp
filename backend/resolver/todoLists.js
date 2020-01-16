@@ -55,10 +55,10 @@ module.exports = {
   },
   Query: {
     getTodoList: async (_, { id }, { req, res }) => {
+      console.log(id);
       checkIfAuthenticated(req, res);
-      const todoList = await db.TodoList.findById(id).catch(err => {
-        throw err;
-      });
+      const todoList = await db.TodoList.findById(id);
+      console.log(todoList);
       return todoList;
     }
   },
