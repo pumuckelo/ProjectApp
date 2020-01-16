@@ -58,7 +58,7 @@ const Project = props => {
   }
 
   let todoLists = projectData.todoLists.map(id => {
-    return <TodoList _id={id} />;
+    return <TodoList key={id} _id={id} />;
   });
 
   // addTodoListHandler
