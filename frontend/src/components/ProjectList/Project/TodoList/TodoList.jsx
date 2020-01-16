@@ -22,8 +22,18 @@ const TodoList = props => {
       startDate
       dueDate
       project
+      todoItems
     }
   }
+  `;
+
+  const createTodoItemMutationString = gql`
+    mutation createTodoItem($name: String, $todoListId: ID) {
+      createTodoItem(name: $name, todoListId: $todoListId) {
+        name
+        _id
+      }
+    }
   `;
 
   const {
@@ -36,8 +46,27 @@ const TodoList = props => {
     }
   });
 
+  //add new TodoItem
   const newTodoInput = useRef("");
-
+  const [
+    createTodoItem,
+    {
+      data: createTodoItemData,
+      loading: createTodoItemLoading,
+      error: createTodoItemError
+    }
+  ] = useMutation(createTodoItemMutationString);
+  const createTodoItemHandler = event => {
+    event.preventDefault();
+    let name = newTodoInput.current.value;
+    createTodoItem({
+      variables: {
+        name: name,
+        todoListId: todoListData._id
+      }
+    }).catch(err => console.log(err));
+    newTodoInput.current.value = "";
+  };
   /*{title: "App designen", completed: true}, {
             title: "App strukturieren",
             completed: false
@@ -90,7 +119,7 @@ const TodoList = props => {
   // });
   return (
     <Fragment>
-      {settingsVisible && <TodoListSettings listname={props.title} />}
+      {settingsVisible && <TodoListSettings listname={todoListData.name} />}
       <div className="todolist">
         <i
           onClick={() => {
@@ -102,9 +131,7 @@ const TodoList = props => {
         {/* {todoItems} */}
         <form
           className="newTodoForm"
-          // onSubmit={event => {
-          //   newTodoSubmitHandler(event);
-          // }}
+          onSubmit={event => createTodoItemHandler(event)}
           action=""
         >
           <div className="newTodoForm-control">
