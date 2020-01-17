@@ -77,6 +77,7 @@ const Project = props => {
         projectId: projectid
       }
     });
+    newListInput.current.value = "";
   };
 
   if (createTodoData) {
