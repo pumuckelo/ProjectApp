@@ -1,4 +1,4 @@
-.login-window {
+.register-window {
   max-width: 40rem;
   padding: 2rem;
   position: absolute;
@@ -13,7 +13,7 @@
   background-color: white;
 }
 
-.login-window form {
+.register-window form {
   display: flex;
   flex-direction: column;
 }

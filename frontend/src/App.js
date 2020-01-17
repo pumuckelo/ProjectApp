@@ -16,6 +16,7 @@ import { getMainDefinition } from "apollo-utilities";
 
 import Login from "./components/Authentication/Login/Login";
 import Navbar from "./components/Navbar/Navbar";
+import Register from "./components/Authentication/Register/Register";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:12000/graphql",
@@ -85,6 +86,7 @@ function App() {
               <Route exact path="/login" component={Login} />
             )} */}
             <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
             {authData.userId && <Route exact path="/" component={Home} />}
             {authData.userId && (
               <Route exact path="/projects" component={ProjectList} />

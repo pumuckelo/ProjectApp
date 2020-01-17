@@ -38,11 +38,17 @@ module.exports = {
         username: username,
         email: email,
         password: hashedPassword
-      }).then(createdUser => {
-        createdUser.save();
-        //Return a string for the graphql mutation
-        return `Created "${createdUser.username}" with "${createdUser.email}"`;
-      });
+      })
+        .then(createdUser => {
+          createdUser.save().catch(err => {
+            throw err;
+          });
+          //Return a string for the graphql mutation
+          return `Created "${createdUser.username}" with "${createdUser.email}"`;
+        })
+        .catch(err => {
+          throw err;
+        });
     },
     loginUser: async (_, { username_or_email, password }, { req, res }) => {
       // Try to find user in db based on username or email

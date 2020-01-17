@@ -8,7 +8,10 @@ import CustomMessage from "../Utils/ErrorMessage/CustomMessage";
 
 const createProjectMutation = gql`
   mutation createProject($name: String) {
-    createProject(name: $name)
+    createProject(name: $name) {
+      name
+      _id
+    }
   }
 `;
 
@@ -21,7 +24,12 @@ const myProjectsQuery = gql`
   }
 `;
 
+const myProjectSubscription = "";
+
 const Home = props => {
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [myProjectsState, setMyProjectsState] = useState([]);
+
   //graphql function to create project
   const [
     createProject,
@@ -30,25 +38,67 @@ const Home = props => {
       loading: createProjectLoading,
       data: createProjectData
     }
-  ] = useMutation(createProjectMutation);
+  ] = useMutation(createProjectMutation, {
+    // update(cache, { data: { createProject } }) {
+    //   const { myProjects } = cache.readQuery({ query: myProjectsQuery });
+    //   console.log("updatecache fired");
+    //   // console.log(data);
+    //   console.log(myProjects);
+    //   console.log(createProject);
+    //   cache.writeQuery({
+    //     query: myProjectsQuery,
+    //     data: { myProjects: [...myProjects, createProject] }
+    //   });
+    // }
+    refetchQueries: () => [
+      {
+        query: myProjectsQuery
+      }
+    ]
+  });
 
   const projectNameInput = useRef();
   const {
     error: myProjectsError,
     loading: myProjectsLoading,
     data: myProjectsData
-  } = useQuery(myProjectsQuery);
+  } = useQuery(myProjectsQuery, {
+    onCompleted() {
+      setMyProjectsState(myProjectsData.myProjects);
+    }
+  });
 
-  //STATES
+  const createProjectHandler = async event => {
+    event.preventDefault();
+    let projectName = projectNameInput.current.value;
+    await createProject({ variables: { name: projectName } })
+      .then(() => {
+        setShowSuccessMessage(true);
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+        }, 2000);
+      })
+      .catch(err => console.log(err));
 
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+    projectNameInput.current.value = "";
+  };
+
+  // const myProjects = myProjectsState.map(project => {
+  //   return (
+  //     <NavLink key={project._id} to={`/projects/${project._id}`}>
+  //       <div className="projectCard">
+  //         <p>{project.name}</p>
+  //       </div>
+  //     </NavLink>
+  //   );
+  // });
 
   let myProjects;
   if (myProjectsData) {
-    myProjects = myProjectsData.myProjects.map(project => {
+    myProjects = myProjectsState.map(project => {
       return (
-        <NavLink to={`/projects/${project._id}`}>
-          <div key={project._id} className="projectCard">
+        <NavLink key={project._id} to={`/projects/${project._id}`}>
+          <div className="projectCard">
             <p>{project.name}</p>
           </div>
         </NavLink>
@@ -56,17 +106,13 @@ const Home = props => {
     });
   }
 
-  const createProjectHandler = event => {
-    event.preventDefault();
-    let projectName = projectNameInput.current.value;
-    createProject({ variables: { name: projectName } }).then(() => {
-      setShowSuccessMessage(true);
-      setTimeout(() => {
-        setShowSuccessMessage(false);
-      }, 2000);
-    });
-    projectNameInput.current.value = "";
-  };
+  if (myProjectsData) {
+  }
+
+  //ERROR HANDLING
+  if (myProjectsError) {
+    console.log(myProjectsError.message);
+  }
 
   return (
     <div className="gridbox">
@@ -87,9 +133,10 @@ const Home = props => {
           <h1>Create a project</h1>
           <form
             action=""
-            onSubmit={event => {
-              createProjectHandler(event);
-            }}
+            // onSubmit={event => {
+            //   createProjectHandler(event);
+            // }}
+            onSubmit={e => createProjectHandler(e)}
           >
             <input
               ref={projectNameInput}

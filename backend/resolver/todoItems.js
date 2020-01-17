@@ -1,5 +1,6 @@
 const db = require("../models");
 const { withFilter } = require("apollo-server-express");
+const checkIfAuthenticated = require("../helpers/checkIfAuthenticated");
 
 module.exports = {
   Mutation: {
@@ -25,7 +26,16 @@ module.exports = {
       return todoItem;
     }
   },
-  Query: {},
+  Query: {
+    getTodoItem: async (parent, { id }, { req, res, pubsub }) => {
+      // checkIfAuthenticated(req, res);
+      const todoItem = await db.TodoItem.findById(id).catch(err => {
+        throw err;
+      });
+      console.log(todoItem);
+      return todoItem;
+    }
+  },
   Subscription: {
     todoItemCreated: {
       resolve: payload => payload,

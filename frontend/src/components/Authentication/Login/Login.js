@@ -1,4 +1,5 @@
 import React, { useRef, Fragment, useContext } from "react";
+import { NavLink } from "react-router-dom";
 import "./Login.css";
 import { Redirect } from "react-router-dom";
 
@@ -29,19 +30,22 @@ const Login = props => {
     event.preventDefault();
     let emailOrUsername = emailUsernameInput.current.value;
     let password = passwordInput.current.value;
-    console.log(emailOrUsername);
-    console.log(password);
+
     //graphql user function and then set auth data to state
     loginUser({
       variables: {
         username_or_email: emailOrUsername,
         password: password
       }
-    }).then(() => {
-      console.log("now trying to importcookies");
-      authData.importCookiesToAuthContext();
-      return <Redirect to="/" />;
-    });
+    })
+      .then(() => {
+        console.log("now trying to importcookies");
+        authData.importCookiesToAuthContext();
+        return <Redirect to="/" />;
+      })
+      .catch(err => {
+        console.log(err);
+      });
     //Reset form inputs
     emailUsernameInput.current.value = "";
     passwordInput.current.value = "";
@@ -49,6 +53,9 @@ const Login = props => {
 
   //redirect if gets data
   if (data) {
+  }
+  if (error) {
+    console.log(error);
   }
 
   return (
@@ -77,9 +84,11 @@ const Login = props => {
             "..Loggin in"
           ) : (
             <Fragment>
-              <button type="button" className="mg-left-1 btn btn-secondary">
-                Register
-              </button>
+              <NavLink to="/register">
+                <button type="button" className="mg-left-1 btn btn-secondary">
+                  Need an Account?
+                </button>
+              </NavLink>
               <button type="submit" className="btn btn-primary mg-left-1">
                 Login
               </button>

@@ -1,8 +1,52 @@
 import React, { useState, useEffect, Fragment } from "react";
 import "./TodoItem.css";
+import { gql, useQuery, useMutation, useSubscription } from "@apollo/client";
 import TodoItemDetails from "./TodoItemDetails/TodoItemDetails";
 
 const TodoItem = props => {
+  const [todoItemData, setTodoItemData] = useState({
+    name: "",
+    checklist: []
+  });
+  const { _id } = props;
+  console.log(_id);
+  const getTodoItemQueryString = gql`
+    {
+      getTodoItem(id: "${_id}") {
+        _id
+        name
+        checklist {
+          name
+          completed
+        }
+        assignedTo {
+          username
+        }
+        comments {
+          content
+          created
+        }
+        status
+        notes
+        startDate
+        dueDate
+        todoList
+      }
+    }
+  `;
+
+  const {
+    data: getTodoItemData,
+    loading: getTodoItemLoading,
+    error: getTodoItemError
+  } = useQuery(getTodoItemQueryString, {
+    onCompleted({ getTodoItem }) {
+      console.log("getTodoItemData");
+      console.log(getTodoItem);
+      setTodoItemData(getTodoItem);
+    }
+  });
+
   const [onTodoItemDetails, setOnTodoItemDetails] = useState(false);
   const [checklistStatus, setChecklistStatus] = useState({
     completed: null,
@@ -10,19 +54,19 @@ const TodoItem = props => {
     length: null
   });
 
-  useEffect(() => {
-    getCompletedChecklist();
-  }, []);
+  // useEffect(() => {
+  //   getCompletedChecklist();
+  // }, []);
 
-  const getCompletedChecklist = () => {
-    let completed = props.todoItem.checklist.filter(item => item.completed);
-    let notcompleted = props.todoItem.checklist.filter(item => !item.completed);
-    setChecklistStatus({
-      completed: completed.length,
-      notcompleted: notcompleted.length,
-      length: props.todoItem.checklist.length
-    });
-  };
+  // const getCompletedChecklist = () => {
+  //   let completed = props.todoItem.checklist.filter(item => item.completed);
+  //   let notcompleted = props.todoItem.checklist.filter(item => !item.completed);
+  //   setChecklistStatus({
+  //     completed: completed.length,
+  //     notcompleted: notcompleted.length,
+  //     length: props.todoItem.checklist.length
+  //   });
+  // };
 
   const toggleTodoItemDetails = () => {
     setOnTodoItemDetails(!onTodoItemDetails);
@@ -34,15 +78,15 @@ const TodoItem = props => {
         onClick={() => toggleTodoItemDetails()}
         className="newdesign-todoitem"
       >
-        <div className="name">{props.todoItem.title}</div>
-        <div className="status">Status: {props.todoItem.status}</div>
+        <div className="name">{todoItemData.name}</div>
+        <div className="status">Status: {todoItemData.status}</div>
         <div className="checklist-status">
-          Completed: {checklistStatus.completed} / {checklistStatus.length}
+          {/* Completed: {checklistStatus.completed} / {checklistStatus.length} */}
         </div>
-        {props.todoItem.assignedTo && (
+        {todoItemData.assignedTo && (
           <div className="assignedTo">
             <i className="fas fa-user"></i>
-            <p>{props.todoItem.assignedTo.username}</p>
+            <p>{todoItemData.assignedTo.username}</p>
           </div>
         )}
       </div>
@@ -50,7 +94,7 @@ const TodoItem = props => {
       {onTodoItemDetails && (
         <TodoItemDetails
           closeDetails={() => toggleTodoItemDetails()}
-          todoItem={props.todoItem}
+          todoItem={todoItemData}
         />
       )}
     </Fragment>

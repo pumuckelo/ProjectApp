@@ -45,9 +45,9 @@ module.exports = {
         foundUser.projects.push(createdProject.id);
         foundUser.save();
       });
-
+      console.log("jo angekommen");
       if (createdProject) {
-        return `Created Project "${createdProject.name}"`;
+        return createdProject;
       }
     }
   },

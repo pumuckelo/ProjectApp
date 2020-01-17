@@ -58,7 +58,7 @@ const typeDefs = gql`
     loginUser(username_or_email: String, password: String): String
     hello: String
     createProjectTest(name: String, owner: String): String
-    createProject(name: String): String
+    createProject(name: String): Project
     createTodoList(name: String, projectId: ID): TodoList
     createTodoItem(name: String, todoListId: ID): TodoItem
   }
@@ -66,8 +66,9 @@ const typeDefs = gql`
   type Query {
     hello: String
     myProjects: [Project]
-    getProject(id: String): Project
+    getProject(id: ID): Project
     getTodoList(id: ID): TodoList
+    getTodoItem(id: ID): TodoItem
   }
 
   type Subscription {
