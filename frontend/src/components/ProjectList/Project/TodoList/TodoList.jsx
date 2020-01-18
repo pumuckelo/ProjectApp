@@ -96,7 +96,7 @@ const TodoList = props => {
   });
 
   const todoItems = todoListData.todoItems.map(id => {
-    return <TodoItem _id={id} />;
+    return <TodoItem key={id} _id={id} />;
   });
 
   /*{title: "App designen", completed: true}, {

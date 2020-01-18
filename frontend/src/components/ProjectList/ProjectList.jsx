@@ -27,7 +27,11 @@ const ProjectList = props => {
   const [projectList, setProjectList] = useState([]);
 
   const projectsLinks = projectList.map(project => {
-    return <NavLink to={`/projects/${project._id}`}>{project.name}</NavLink>;
+    return (
+      <NavLink key={project._id} to={`/projects/${project._id}`}>
+        {project.name}
+      </NavLink>
+    );
   });
   return (
     <div className="projectlist">

@@ -124,6 +124,22 @@ module.exports = {
 
       return user.username;
     },
+    logoutUser: async (parent, args, { req, res }) => {
+      // find user based on req.userId
+      const user = await db.User.findById(req.userId);
+
+      // reset the refresh token in database
+      user.refreshToken = "";
+      await user.save().catch(err => {
+        throw err;
+      });
+
+      //reset cookies of client
+      res.cookie("accessToken", "");
+      res.cookie("refreshToken", "");
+      res.cookie("username", "");
+      res.cookie("userId", "");
+    },
     hello: () => "HELLO WORKS"
   },
   Query: {}

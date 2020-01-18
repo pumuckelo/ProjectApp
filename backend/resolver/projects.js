@@ -61,7 +61,7 @@ module.exports = {
         "projects",
         "name"
       );
-      console.log(user.projects);
+
       return user.projects;
     },
     getProject: async (_, { id }, { req, res }) => {

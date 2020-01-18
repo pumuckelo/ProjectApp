@@ -1,10 +1,17 @@
-import React, { useState, useRef, Fragment } from "react";
+import React, { useState, useRef, Fragment, useEffect } from "react";
 import "./Project.css";
 import TodoList from "./TodoList/TodoList";
 import ProjectList from "../ProjectList";
-import { gql, useQuery, useMutation, useSubscription } from "@apollo/client";
+import {
+  gql,
+  useQuery,
+  useMutation,
+  useSubscription,
+  useApolloClient
+} from "@apollo/client";
 
 const Project = props => {
+  const client = useApolloClient();
   const { projectid } = props.match.params;
   const [projectListEnabled, setProjectListEnabled] = useState(false);
   const [projectData, setProjectData] = useState({
@@ -13,6 +20,12 @@ const Project = props => {
   });
 
   //----- Query / Mutation Strings
+
+  // useEffect(() => {
+  //   if (projectData) {
+  //     setProjectData(getProjectData);
+  //   }
+  // }, []);
 
   const getProjectQueryString = gql`
   {
@@ -25,6 +38,19 @@ const Project = props => {
     }
   }
   `;
+
+  // Not needed since writequery on subscription doesnt work
+
+  // try {
+  //   let data = client.readQuery({
+  //     query: getProjectQueryString
+  //   });
+  //   setProjectData(data.getProject);
+  //   console.log("hat getried");
+  //   console.log(data);
+  // } catch (error) {
+  //   console.log(error);
+  // }
 
   const createTodoListMutationString = gql`
     mutation createTodoList($name: String, $projectId: ID) {
@@ -64,14 +90,18 @@ const Project = props => {
   // addTodoListHandler
   const newListInput = useRef("");
   const [
-    createTodo,
-    { data: createTodoData, loading: createTodoLoading, error: createTodoError }
+    createTodoList,
+    {
+      data: createTodoListData,
+      loading: createTodoListLoading,
+      error: createTodoListError
+    }
   ] = useMutation(createTodoListMutationString);
 
   const createTodoListHandler = event => {
     let name = newListInput.current.value;
     event.preventDefault();
-    createTodo({
+    createTodoList({
       variables: {
         name: name,
         projectId: projectid
@@ -80,8 +110,8 @@ const Project = props => {
     newListInput.current.value = "";
   };
 
-  if (createTodoData) {
-    console.log(createTodoData);
+  if (createTodoListData) {
+    console.log(createTodoListData);
   }
   //TodoList Subscription for new added TodoLists
   const {
@@ -93,7 +123,15 @@ const Project = props => {
       projectId: projectid
     },
     onSubscriptionData({ subscriptionData: { data } }) {
-      console.log(data);
+      console.log("subscription fulfilled");
+      //Not working for some reason
+      // client.cache.writeQuery({
+      //   query: getProjectQueryString,
+      //   data: {
+      //     ...projectData,
+      //     todoLists: [...projectData.todoLists, data.todoListCreated._id]
+      //     }
+      // });
       setProjectData({
         ...projectData,
         todoLists: [...projectData.todoLists, data.todoListCreated._id]
@@ -152,7 +190,12 @@ const Project = props => {
           {todoLists}
           <form onSubmit={event => createTodoListHandler(event)} action="">
             <div className="newListControl">
-              <input ref={newListInput} type="text" placeholder="New List" />
+              <input
+                required
+                ref={newListInput}
+                type="text"
+                placeholder="New List"
+              />
               <button className="newList">
                 Add <i className="fas fa-clipboard-list"></i>
               </button>

@@ -5,6 +5,7 @@
   height: 100vh;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.36);
+  z-index: 300;
 
   .todolistsettings_modal {
     border-radius: 20px;
@@ -16,7 +17,7 @@
     margin: auto;
     background-color: white;
     padding: 1rem;
-
+    z-index: 400;
     text-align: center;
 
     form {

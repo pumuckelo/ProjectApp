@@ -80,6 +80,7 @@ body {
 
 .btn-secondary {
   background: none;
+  background-color: white;
   border: 1px solid rgb(3, 110, 202);
   color: rgb(3, 110, 202);
 }
