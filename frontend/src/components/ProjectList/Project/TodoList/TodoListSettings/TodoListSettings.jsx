@@ -4,13 +4,19 @@ import ConfirmationPopup from "../../../../Utils/ConfirmationPopup/ConfirmationP
 import "./TodoListSettings.css";
 
 const TodoListSettings = props => {
+  //Add DOM references to the input fields
   const nameInput = useRef("");
   const descriptionInput = useRef("");
   const startDateInput = useRef("");
   const dueDateInput = useRef("");
 
+  //Create State for the ConfirmationPopup, so we can handle if it
+  //should be displayed or not
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
 
+  //This is the updateTodoList Mutation String
+  // $todoListId, $name etc are variables that can be used in the function below
+  // Take a look at updateTodoListHandler below for better understanding
   const updateTodoListMutationString = gql`
     mutation updateTodoList(
       $todoListId: ID
@@ -32,6 +38,8 @@ const TodoListSettings = props => {
     }
   `;
 
+  //Apollo Use Mutation Hook for the updateTodoList Mutation
+  // Creates the function 'updateTodoList' that can take variables as parameters
   const [
     updateTodoList,
     {
@@ -41,6 +49,8 @@ const TodoListSettings = props => {
     }
   ] = useMutation(updateTodoListMutationString);
 
+  //This function will send a mutation with the data from the inputs, to update the todolist
+  // the default value of the inputs is the current data so if someone doesnt change the title, it wont be seen as empty title
   const updateTodoListHandler = e => {
     e.preventDefault();
     updateTodoList({
@@ -60,6 +70,7 @@ const TodoListSettings = props => {
     console.log(dueDateInput.current.value);
   };
 
+  //This function will show/close the popup that will be displayed when user clicks delete
   const toggleConfirmationPopup = () => {
     setShowConfirmationPopup(!showConfirmationPopup);
   };
@@ -125,6 +136,8 @@ const TodoListSettings = props => {
             <button className="btn btn-primary" type="submit">
               Save
             </button>
+
+            {/* If user clicks on Delete, Popup should display */}
             {showConfirmationPopup && (
               <ConfirmationPopup
                 confirm={() => toggleConfirmationPopup()}
