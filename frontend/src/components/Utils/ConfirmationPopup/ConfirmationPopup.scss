@@ -14,7 +14,7 @@
   background-color: white;
   box-shadow: $standard-boxshadow;
 
-  animation: drop 1s linear;
+  animation: drop 0.7s linear;
 
   p {
     margin-top: 0;
@@ -33,7 +33,7 @@
 
 @keyframes drop {
   0% {
-    margin-top: -20rem;
+    margin-top: -13rem;
   }
 
   50% {

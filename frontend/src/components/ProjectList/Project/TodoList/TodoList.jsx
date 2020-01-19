@@ -57,7 +57,7 @@ const TodoList = props => {
 
       if (getTodoList.startDate) {
         startDate = convertMongoDateToIsoDate(getTodoList.startDate);
-
+        console.log(getTodoList.startDate);
         console.log(startDate);
       }
       if (getTodoList.dueDate) {

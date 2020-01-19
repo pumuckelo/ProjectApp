@@ -121,6 +121,7 @@ const TodoListSettings = props => {
 
           <div className="buttons">
             <button
+              type="button"
               onClick={() => toggleConfirmationPopup()}
               className="btn btn-danger"
             >
