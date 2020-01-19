@@ -2,7 +2,7 @@ import React, { useRef, useState, Fragment } from "react";
 import "./TodoList.css";
 import TodoItem from "./TodoItem/TodoItem";
 import TodoListSettings from "./TodoListSettings/TodoListSettings";
-
+import { convertMongoDateToIsoDate } from "../../../../helpers/dateFunctions";
 import { useQuery, gql, useMutation, useSubscription } from "@apollo/client";
 const TodoList = props => {
   const { _id } = props;
@@ -49,9 +49,27 @@ const TodoList = props => {
     error: getTodoListError,
     loading: getTodoListLoading
   } = useQuery(getTodoListQueryString, {
-    onCompleted({ getTodoList }) {
+    async onCompleted({ getTodoList }) {
       console.log(getTodoList);
-      setTodoListData(getTodoList);
+      // console.log(getTodoList.startDate.split("T")[0]);
+      let startDate;
+      let dueDate;
+
+      if (getTodoList.startDate) {
+        startDate = convertMongoDateToIsoDate(getTodoList.startDate);
+
+        console.log(startDate);
+      }
+      if (getTodoList.dueDate) {
+        dueDate = convertMongoDateToIsoDate(getTodoList.dueDate);
+        console.log(dueDate);
+      }
+
+      setTodoListData({
+        ...getTodoList,
+        startDate: startDate,
+        dueDate: dueDate
+      });
     }
   });
 
@@ -151,7 +169,14 @@ const TodoList = props => {
   // });
   return (
     <Fragment>
-      {settingsVisible && <TodoListSettings listname={todoListData.name} />}
+      {settingsVisible && (
+        <TodoListSettings
+          _id={_id}
+          closeSettings={() => toggleListSettingsHandler()}
+          listname={todoListData.name}
+          todoListData={todoListData}
+        />
+      )}
       <div className="todolist">
         <i
           onClick={() => {

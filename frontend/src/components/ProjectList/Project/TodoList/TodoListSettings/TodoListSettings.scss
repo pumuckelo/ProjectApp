@@ -2,51 +2,74 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.36);
   z-index: 300;
 
   .todolistsettings_modal {
-    border-radius: 20px;
+    box-shadow: 0 2px 10px 1px #cfcfcf;
+    border-radius: 10px;
     box-sizing: border-box;
-    position: relative;
+    position: absolute;
     max-width: 40rem;
     min-width: 10rem;
-    top: 20vh;
+    max-height: 85vh;
+    top: 10vh;
+    left: 0;
+    right: 0;
     margin: auto;
     background-color: white;
     padding: 1rem;
     z-index: 400;
     text-align: center;
+    overflow-y: scroll;
+
+    h2 {
+      margin-top: 0;
+    }
 
     form {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
 
-      input[type="text"] {
-        padding: 1rem;
-        width: 50%;
+      // input[type="text"] {
+      //   width: 50%;
+      // }
+
+      .buttons {
+        display: flex;
+        align-self: flex-end;
+        width: 100%;
+
+        .btn-danger {
+          margin-right: auto;
+        }
       }
 
       button {
-        align-self: flex-end;
-        cursor: pointer;
-        max-width: 30%;
-        margin: 0.5rem 0;
-        padding: 0.7rem 1rem;
-        background-color: rgb(0, 128, 255);
-        color: white;
-        border: none;
-        border-radius: 20px;
-        font: inherit;
-        transition: transform 0.3s;
-
-        &:hover {
-          transform: scale(1.05);
-        }
+        justify-self: flex-end;
       }
+
+      // button {
+      //   align-self: flex-end;
+      //   cursor: pointer;
+      //   max-width: 30%;
+      //   margin: 0.5rem 0;
+      //   padding: 0.7rem 1rem;
+      //   background-color: rgb(0, 128, 255);
+      //   color: white;
+      //   border: none;
+      //   border-radius: 20px;
+      //   font: inherit;
+      //   transition: transform 0.3s;
+
+      //   &:hover {
+      //     transform: scale(1.05);
+      //   }
+      // }
     }
   }
 }

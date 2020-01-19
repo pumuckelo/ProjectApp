@@ -51,6 +51,26 @@ module.exports = {
       pubsub.publish("todoListCreated", createdTodoList);
 
       return createdTodoList;
+    },
+    updateTodoList: async (
+      parent,
+      { todoListId, name, description, startDate, dueDate },
+      { req, res, pubsub }
+    ) => {
+      const updatedTodoList = await db.TodoList.findByIdAndUpdate(
+        todoListId,
+        {
+          name,
+          description,
+          startDate,
+          dueDate
+        },
+        { new: true }
+      ).catch(err => {
+        throw err;
+      });
+      pubsub.publish("todoListUpdated", updatedTodoList);
+      return updatedTodoList;
     }
   },
   Query: {
@@ -75,6 +95,15 @@ module.exports = {
             console.log("CORRECT MATCH");
           }
           return payload.project == variables.projectId;
+        }
+      )
+    },
+    todoListUpdated: {
+      resolve: payload => payload,
+      subscribe: withFilter(
+        (_, args, { pubsub }) => pubsub.asyncIterator("todoListUpdated"),
+        (payload, variables) => {
+          return payload._id == variables.todoListId;
         }
       )
     }

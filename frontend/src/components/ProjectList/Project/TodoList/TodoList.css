@@ -1,6 +1,6 @@
 .todolist {
   margin: 1rem;
-  padding: 2rem;
+  padding: 1rem 2rem;
   background-color: white;
   -webkit-box-shadow: 0 2px 10px 1px #cfcfcf;
           box-shadow: 0 2px 10px 1px #cfcfcf;
@@ -22,7 +22,6 @@
   -ms-flex-item-align: end;
       align-self: flex-end;
   position: relative;
-  top: -1em;
   right: -1em;
   cursor: pointer;
 }

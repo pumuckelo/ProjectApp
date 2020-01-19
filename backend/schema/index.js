@@ -61,6 +61,13 @@ const typeDefs = gql`
     createProjectTest(name: String, owner: String): String
     createProject(name: String): Project
     createTodoList(name: String, projectId: ID): TodoList
+    updateTodoList(
+      todoListId: ID
+      name: String
+      description: String
+      startDate: String
+      dueDate: String
+    ): TodoList
     createTodoItem(name: String, todoListId: ID): TodoItem
   }
 
@@ -74,6 +81,7 @@ const typeDefs = gql`
 
   type Subscription {
     todoListCreated(projectId: ID): TodoList
+    todoListUpdated(todoListId: ID): TodoList
     todoItemCreated(todoListId: ID): TodoItem
   }
 `;

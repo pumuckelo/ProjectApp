@@ -1,0 +1,63 @@
+@import "../variables";
+
+.confirmation-popup {
+  z-index: 500;
+  position: fixed;
+  top: 5vh;
+  right: 0;
+  left: 0;
+  margin: auto;
+  width: 15rem;
+  border-radius: 10px;
+  max-width: 20rem;
+  padding: 1rem;
+  background-color: white;
+  box-shadow: $standard-boxshadow;
+
+  animation: drop 1s linear;
+
+  p {
+    margin-top: 0;
+  }
+
+  .buttons-popup {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly !important;
+
+    button {
+      margin: 0 !important;
+    }
+  }
+}
+
+@keyframes drop {
+  0% {
+    margin-top: -20rem;
+  }
+
+  50% {
+    margin-top: 0;
+    transform: rotate(2.4deg);
+  }
+
+  65% {
+    margin-top: -2rem;
+    transform: rotate(2.4deg);
+  }
+
+  80% {
+    margin-top: 0;
+    transform: rotate(0);
+  }
+
+  90% {
+    margin-top: -0.5rem;
+    transform: rotate(-1.5deg);
+  }
+
+  100% {
+    transform: rotate(0);
+    margin-top: 0;
+  }
+}
