@@ -38,6 +38,15 @@ const TodoListSettings = props => {
     }
   `;
 
+  const deleteTodoListMutationString = gql`
+    mutation deleteTodoList($todoListId: ID) {
+      deleteTodoList(todoListId: $todoListId) {
+        _id
+        name
+      }
+    }
+  `;
+
   //Apollo Use Mutation Hook for the updateTodoList Mutation
   // Creates the function 'updateTodoList' that can take variables as parameters
   const [
@@ -48,6 +57,18 @@ const TodoListSettings = props => {
       loading: updateTodoListLoading
     }
   ] = useMutation(updateTodoListMutationString);
+
+  //Apollo Use Mutation Hook for the deleteTodoList Mutation
+  //Creates the function deleteTodoList that requires todoListId as parameter
+
+  const [
+    deleteTodoList,
+    {
+      data: deleteTodoListData,
+      error: deleteTodoListError,
+      loading: deleteTodoListLoading
+    }
+  ] = useMutation(deleteTodoListMutationString);
 
   //This function will send a mutation with the data from the inputs, to update the todolist
   // the default value of the inputs is the current data so if someone doesnt change the title, it wont be seen as empty title
@@ -69,6 +90,19 @@ const TodoListSettings = props => {
     // .catch(err => console.log(err));
     console.log(startDateInput.current.value);
     console.log(dueDateInput.current.value);
+  };
+
+  const deleteTodoListHandler = () => {
+    deleteTodoList({
+      variables: {
+        todoListId: props.todoListData._id
+      }
+    }).then(data => {
+      console.log("TodoList Deleted");
+      console.log(data);
+      toggleConfirmationPopup();
+      props.closeSettings();
+    });
   };
 
   //This function will show/close the popup that will be displayed when user clicks delete
@@ -142,7 +176,7 @@ const TodoListSettings = props => {
             {/* If user clicks on Delete, Popup should display */}
             {showConfirmationPopup && (
               <ConfirmationPopup
-                confirm={() => toggleConfirmationPopup()}
+                confirm={() => deleteTodoListHandler()}
                 cancel={() => toggleConfirmationPopup()}
                 message="Are you sure you want to delete this List?"
                 style="danger"

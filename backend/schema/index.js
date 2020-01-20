@@ -68,6 +68,7 @@ const typeDefs = gql`
       startDate: String
       dueDate: String
     ): TodoList
+    deleteTodoList(todoListId: ID): TodoList
     createTodoItem(name: String, todoListId: ID): TodoItem
   }
 
@@ -81,6 +82,7 @@ const typeDefs = gql`
 
   type Subscription {
     todoListCreated(projectId: ID): TodoList
+    todoListDeleted(projectId: ID): TodoList
     todoListUpdated(todoListId: ID): TodoList
     todoItemCreated(todoListId: ID): TodoItem
   }

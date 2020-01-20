@@ -71,6 +71,36 @@ module.exports = {
       });
       pubsub.publish("todoListUpdated", updatedTodoList);
       return updatedTodoList;
+    },
+    deleteTodoList: async (parent, { todoListId }, { req, res, pubsub }) => {
+      checkIfAuthenticated(req, res);
+
+      //find todolist and remove it, also assign removed object to deletedTodoList
+
+      const deletedTodoList = await db.TodoList.findByIdAndRemove(todoListId);
+
+      //delete TodoList from associated project
+      //
+      const associatedProject = await db.Project.findById(
+        deletedTodoList.project
+      ).catch(err => {
+        throw err;
+      });
+      //filter the removed id of the todoLists array
+      associatedProject.todoLists = associatedProject.todoLists.filter(
+        todoList => {
+          return todoList != todoListId;
+        }
+      );
+      //save
+      associatedProject.save().catch(err => {
+        throw err;
+      });
+
+      //fire to the subscription
+      pubsub.publish("todoListDeleted", deletedTodoList);
+
+      return deletedTodoList;
     }
   },
   Query: {
@@ -94,6 +124,15 @@ module.exports = {
           if (payload.project == variables.projectId) {
             console.log("CORRECT MATCH");
           }
+          return payload.project == variables.projectId;
+        }
+      )
+    },
+    todoListDeleted: {
+      resolve: payload => payload,
+      subscribe: withFilter(
+        (_, args, { pubsub }) => pubsub.asyncIterator("todoListDeleted"),
+        (payload, variables) => {
           return payload.project == variables.projectId;
         }
       )

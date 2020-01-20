@@ -59,6 +59,14 @@ const TodoList = props => {
     }
   `;
 
+  const todoListDeletedSubscriptionString = gql`
+    subscription todoListDeleted($projectId: ID) {
+      todoListDeleted(projectId: $projectId) {
+        _id
+      }
+    }
+  `;
+
   const {
     data: getTodoListData,
     error: getTodoListError,

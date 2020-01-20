@@ -67,8 +67,18 @@ const Project = props => {
       }
     }
   `;
+
+  const todoListDeletedSubscriptionString = gql`
+    subscription todoListDeleted($projectId: ID) {
+      todoListDeleted(projectId: $projectId) {
+        _id
+      }
+    }
+  `;
   //-----------
 
+  // Get Data about the project and then set it to the state
+  // also render todoList components for every id in todoLists array of the project
   const {
     data: getProjectData,
     error: getProjectError,
@@ -78,11 +88,9 @@ const Project = props => {
       setProjectData(data.getProject);
     }
   });
-
   if (getProjectError) {
     console.log(getProjectError);
   }
-
   let todoLists = projectData.todoLists.map(id => {
     return <TodoList key={id} _id={id} />;
   });
@@ -98,21 +106,6 @@ const Project = props => {
     }
   ] = useMutation(createTodoListMutationString);
 
-  const createTodoListHandler = event => {
-    let name = newListInput.current.value;
-    event.preventDefault();
-    createTodoList({
-      variables: {
-        name: name,
-        projectId: projectid
-      }
-    });
-    newListInput.current.value = "";
-  };
-
-  if (createTodoListData) {
-    console.log(createTodoListData);
-  }
   //TodoList Subscription for new added TodoLists
   const {
     data: todoListCreatedData,
@@ -139,14 +132,42 @@ const Project = props => {
     }
   });
 
-  if (todoListCreatedData) {
-    // console.log(`Subcription`);
-    // console.log(todoListCreatedData.todoListCreated._id);
-  }
+  const {
+    data: todoListDeletedData,
+    error: todoListDeletedError,
+    loading: todoListDeletedLoading
+  } = useSubscription(todoListDeletedSubscriptionString, {
+    variables: {
+      projectId: projectid
+    },
+    onSubscriptionData({
+      subscriptionData: {
+        data: { todoListDeleted }
+      }
+    }) {
+      //set state and filter out the todolist that got deleted
+      setProjectData({
+        ...projectData,
+        todoLists: projectData.todoLists.filter(
+          todoListId => todoListId != todoListDeleted._id
+        )
+      });
+      console.log("SUBSCRIPTION TODOLISTDELETED ");
+      console.log(todoListDeleted);
+    }
+  });
 
-  if (todoListCreatedError) {
-    console.log(todoListCreatedError);
-  }
+  const createTodoListHandler = event => {
+    let name = newListInput.current.value;
+    event.preventDefault();
+    createTodoList({
+      variables: {
+        name: name,
+        projectId: projectid
+      }
+    }).catch(err => console.log(err));
+    newListInput.current.value = "";
+  };
 
   const toggleProjectList = () => {
     setProjectListEnabled(!projectListEnabled);
