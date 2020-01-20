@@ -120,6 +120,7 @@ const TodoItem = props => {
           <div className="status">
             Status:{"  "}
             <select
+              className={todoItemData.status}
               ref={statusInput}
               defaultValue={todoItemData.status}
               onChange={() => {

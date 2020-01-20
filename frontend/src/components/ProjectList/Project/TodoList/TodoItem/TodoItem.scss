@@ -38,12 +38,15 @@
   }
 }
 
-.completed {
-  opacity: 0.5;
+// .completed {
+//   opacity: 0.5;
 
-  p {
-    text-decoration: line-through;
-  }
+//   p {
+//     text-decoration: line-through;
+//   }
+// }
+.completed {
+  background-color: rgb(0, 175, 0);
 }
 
 .newdesign-todoitem {
@@ -68,6 +71,10 @@
 
     select {
       padding: 0.3rem;
+    }
+
+    .completed {
+      background-color: rgb(0, 175, 0);
     }
   }
 

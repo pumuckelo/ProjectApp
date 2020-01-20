@@ -48,11 +48,7 @@
 }
 
 .completed {
-  opacity: 0.5;
-}
-
-.completed p {
-  text-decoration: line-through;
+  background-color: #00af00;
 }
 
 .newdesign-todoitem {
@@ -92,6 +88,10 @@
 
 .newdesign-todoitem .status select {
   padding: 0.3rem;
+}
+
+.newdesign-todoitem .status .completed {
+  background-color: #00af00;
 }
 
 .newdesign-todoitem .checklist-status {
