@@ -44,6 +44,21 @@ const TodoList = props => {
     }
   `;
 
+  const todoListUpdatedSubscriptionString = gql`
+    subscription todoListUpdated($todoListId: ID) {
+      todoListUpdated(todoListId: $todoListId) {
+        name
+        _id
+        description
+        description
+        startDate
+        dueDate
+        project
+        todoItems
+      }
+    }
+  `;
+
   const {
     data: getTodoListData,
     error: getTodoListError,
@@ -70,6 +85,26 @@ const TodoList = props => {
         startDate: startDate,
         dueDate: dueDate
       });
+    }
+  });
+
+  //Subscription for updates of the todolist
+  const {
+    data: todoListUpdatedData,
+    error: todoListUpdatedError,
+    loading: todoListUpdatedLoading
+  } = useSubscription(todoListUpdatedSubscriptionString, {
+    variables: {
+      todoListId: _id
+    },
+    onSubscriptionData({
+      subscriptionData: {
+        data: { todoListUpdated }
+      }
+    }) {
+      console.log("todoListUpdated SUBSCRIPTION");
+      console.log(todoListUpdated);
+      setTodoListData(todoListUpdated);
     }
   });
 

@@ -64,6 +64,7 @@ const TodoListSettings = props => {
     }).then(data => {
       console.log("updated todolist");
       console.log(data);
+      props.closeSettings();
     });
     // .catch(err => console.log(err));
     console.log(startDateInput.current.value);
@@ -143,8 +144,8 @@ const TodoListSettings = props => {
               <ConfirmationPopup
                 confirm={() => toggleConfirmationPopup()}
                 cancel={() => toggleConfirmationPopup()}
-                message="Do you want to create this List?"
-                style="success"
+                message="Are you sure you want to delete this List?"
+                style="danger"
               />
             )}
           </div>
