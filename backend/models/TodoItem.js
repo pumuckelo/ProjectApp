@@ -28,7 +28,10 @@ const todoItemSchema = new mongoose.Schema({
       }
     }
   ],
-  status: String,
+  status: {
+    type: String,
+    default: "notstarted"
+  },
   notes: String,
   startDate: Date,
   dueDate: Date,

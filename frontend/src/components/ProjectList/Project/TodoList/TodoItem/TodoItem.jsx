@@ -1,9 +1,12 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import "./TodoItem.css";
 import { gql, useQuery, useMutation, useSubscription } from "@apollo/client";
 import TodoItemDetails from "./TodoItemDetails/TodoItemDetails";
 
 const TodoItem = props => {
+  const nameInput = useRef();
+  const statusInput = useRef();
+
   const [todoItemData, setTodoItemData] = useState({
     name: "",
     checklist: []
@@ -35,6 +38,16 @@ const TodoItem = props => {
     }
   `;
 
+  const updateTodoItemMutationString = gql`
+    mutation updateTodoItem($todoItemId: ID, $name: String, $status: String) {
+      updateTodoItem(todoItemId: $todoItemId, name: $name, status: $status) {
+        _id
+        name
+        status
+      }
+    }
+  `;
+
   const {
     data: getTodoItemData,
     loading: getTodoItemLoading,
@@ -46,6 +59,10 @@ const TodoItem = props => {
       setTodoItemData(getTodoItem);
     }
   });
+
+  const [updateTodoItem, dataErrorLoading] = useMutation(
+    updateTodoItemMutationString
+  );
 
   const [onTodoItemDetails, setOnTodoItemDetails] = useState(false);
   const [checklistStatus, setChecklistStatus] = useState({
@@ -72,14 +89,52 @@ const TodoItem = props => {
     setOnTodoItemDetails(!onTodoItemDetails);
   };
 
+  const updateTodoItemHandler = () => {
+    console.log(`Status Input ${statusInput.current.value}`);
+    updateTodoItem({
+      variables: {
+        todoItemId: todoItemData._id,
+        name: nameInput.current.value,
+        status: statusInput.current.value
+      }
+    })
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
+    console.log("tried to update todo");
+  };
+
   return (
     <Fragment>
-      <div
-        onClick={() => toggleTodoItemDetails()}
-        className="newdesign-todoitem"
-      >
-        <div className="name">{todoItemData.name}</div>
-        <div className="status">Status: {todoItemData.status}</div>
+      <div className="newdesign-todoitem">
+        <div className="name">
+          <input
+            onBlur={() => updateTodoItemHandler()}
+            ref={nameInput}
+            className="hidden-input"
+            type="text"
+            defaultValue={todoItemData.name}
+          />
+        </div>
+
+        {todoItemData.status && (
+          <div className="status">
+            Status:{"  "}
+            <select
+              ref={statusInput}
+              defaultValue={todoItemData.status}
+              onChange={() => {
+                updateTodoItemHandler();
+              }}
+              className="form-input"
+              name=""
+              id=""
+            >
+              <option value="notstarted">Not started</option>
+              <option value="progress">In progress</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+        )}
         <div className="checklist-status">
           {/* Completed: {checklistStatus.completed} / {checklistStatus.length} */}
         </div>

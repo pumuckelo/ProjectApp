@@ -24,6 +24,23 @@ module.exports = {
       pubsub.publish("todoItemCreated", todoItem);
 
       return todoItem;
+    },
+    updateTodoItem: async (
+      _,
+      { name, status, todoItemId },
+      { req, res, pubsub }
+    ) => {
+      checkIfAuthenticated(req, res);
+
+      const updatedTodoItem = await db.TodoItem.findByIdAndUpdate(
+        todoItemId,
+        { name: name, status: status },
+        { new: true }
+      ).catch(err => {
+        throw err;
+      });
+
+      return updatedTodoItem;
     }
   },
   Query: {

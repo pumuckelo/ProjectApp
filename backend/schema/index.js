@@ -70,6 +70,7 @@ const typeDefs = gql`
     ): TodoList
     deleteTodoList(todoListId: ID): TodoList
     createTodoItem(name: String, todoListId: ID): TodoItem
+    updateTodoItem(todoItemId: ID, name: String, status: String): TodoItem
   }
 
   type Query {

@@ -26,6 +26,21 @@ body {
   border: 1px solid rgb(0, 136, 255);
 }
 
+.hidden-input {
+  text-align: center;
+  /* padding: 0.3rem; */
+  /* line-height: 1rem; */
+  padding-bottom: 0.2rem;
+  border: none;
+  font: inherit;
+  outline: none;
+  border-radius: 10px;
+}
+
+.hidden-input:focus {
+  border: 1px dashed grey;
+}
+
 ::-webkit-scrollbar {
   width: 1rem;
 }
