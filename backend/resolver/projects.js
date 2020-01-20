@@ -35,7 +35,7 @@ module.exports = {
       await db.Project.create({
         name: name,
         owners: [req.userId],
-        member: [req.userId]
+        members: [req.userId]
       }).then(project => {
         createdProject = project;
       });
