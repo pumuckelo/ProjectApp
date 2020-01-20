@@ -30,7 +30,7 @@ module.exports = {
       { name, status, todoItemId },
       { req, res, pubsub }
     ) => {
-      checkIfAuthenticated(req, res);
+      // checkIfAuthenticated(req, res);
 
       const updatedTodoItem = await db.TodoItem.findByIdAndUpdate(
         todoItemId,
@@ -40,6 +40,7 @@ module.exports = {
         throw err;
       });
 
+      pubsub.publish("todoItemUpdated", updatedTodoItem);
       return updatedTodoItem;
     }
   },
@@ -65,6 +66,15 @@ module.exports = {
             console.log("NoMatch");
           }
           return payload.todoList == variables.todoListId;
+        }
+      )
+    },
+    todoItemUpdated: {
+      resolve: payload => payload,
+      subscribe: withFilter(
+        (parent, args, { pubsub }) => pubsub.asyncIterator("todoItemUpdated"),
+        (payload, variables) => {
+          return payload._id == variables.todoItemId;
         }
       )
     }

@@ -48,6 +48,31 @@ const TodoItem = props => {
     }
   `;
 
+  const todoItemUpdatedSubscriptionString = gql`
+    subscription todoItemUpdated($todoItemId: ID) {
+      todoItemUpdated(todoItemId: $todoItemId) {
+        _id
+        name
+        checklist {
+          name
+          completed
+        }
+        assignedTo {
+          username
+        }
+        comments {
+          content
+          created
+        }
+        status
+        notes
+        startDate
+        dueDate
+        todoList
+      }
+    }
+  `;
+
   const {
     data: getTodoItemData,
     loading: getTodoItemLoading,
@@ -63,6 +88,25 @@ const TodoItem = props => {
   const [updateTodoItem, dataErrorLoading] = useMutation(
     updateTodoItemMutationString
   );
+
+  const {
+    data: todoItemUpdatedData,
+    loading: todoItemUpdatedLoading,
+    error: todoItemUpdatedError
+  } = useSubscription(todoItemUpdatedSubscriptionString, {
+    variables: {
+      todoItemId: _id
+    },
+    onSubscriptionData({
+      subscriptionData: {
+        data: { todoItemUpdated }
+      }
+    }) {
+      console.log("TodoItem Update SUBSCRIPTION");
+      console.log(todoItemUpdated);
+      setTodoItemData(todoItemUpdated);
+    }
+  });
 
   const [onTodoItemDetails, setOnTodoItemDetails] = useState(false);
   const [checklistStatus, setChecklistStatus] = useState({
@@ -91,6 +135,11 @@ const TodoItem = props => {
 
   const updateTodoItemHandler = () => {
     console.log(`Status Input ${statusInput.current.value}`);
+    setTodoItemData({
+      ...todoItemData,
+      name: nameInput.current.value,
+      status: statusInput.current.value
+    });
     updateTodoItem({
       variables: {
         todoItemId: todoItemData._id,
@@ -117,12 +166,12 @@ const TodoItem = props => {
         </div>
 
         {todoItemData.status && (
-          <div className="status">
+          <div status={todoItemData.status} className="status">
             Status:{"  "}
             <select
+              value={todoItemData.status}
               className={todoItemData.status}
               ref={statusInput}
-              defaultValue={todoItemData.status}
               onChange={() => {
                 updateTodoItemHandler();
               }}

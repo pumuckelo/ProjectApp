@@ -86,6 +86,7 @@ const typeDefs = gql`
     todoListDeleted(projectId: ID): TodoList
     todoListUpdated(todoListId: ID): TodoList
     todoItemCreated(todoListId: ID): TodoItem
+    todoItemUpdated(todoItemId: ID): TodoItem
   }
 `;
 
