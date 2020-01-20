@@ -2,7 +2,10 @@ import React, { useRef, useState, Fragment } from "react";
 import "./TodoList.css";
 import TodoItem from "./TodoItem/TodoItem";
 import TodoListSettings from "./TodoListSettings/TodoListSettings";
-import { convertMongoDateToIsoDate } from "../../../../helpers/dateFunctions";
+import {
+  convertMongoDateToIsoDate,
+  convertIsoStringToLocalDateString
+} from "../../../../helpers/dateFunctions";
 import { useQuery, gql, useMutation, useSubscription } from "@apollo/client";
 const TodoList = props => {
   const { _id } = props;
@@ -59,14 +62,6 @@ const TodoList = props => {
     }
   `;
 
-  const todoListDeletedSubscriptionString = gql`
-    subscription todoListDeleted($projectId: ID) {
-      todoListDeleted(projectId: $projectId) {
-        _id
-      }
-    }
-  `;
-
   const {
     data: getTodoListData,
     error: getTodoListError,
@@ -112,7 +107,11 @@ const TodoList = props => {
     }) {
       console.log("todoListUpdated SUBSCRIPTION");
       console.log(todoListUpdated);
-      setTodoListData(todoListUpdated);
+      setTodoListData({
+        ...todoListUpdated,
+        startDate: convertMongoDateToIsoDate(todoListUpdated.startDate),
+        dueDate: convertMongoDateToIsoDate(todoListUpdated.dueDate)
+      });
     }
   });
 
@@ -228,6 +227,23 @@ const TodoList = props => {
           className="fas fa-cog"
         ></i>
         <h2>{todoListData.name}</h2>
+        {/* Only render if date exists in state */}
+        {(todoListData.startDate || todoListData.dueDate) && (
+          <div className="dates">
+            <div className="startDate">
+              <i className="far fa-calendar-plus"></i>{" "}
+              {todoListData.startDate
+                ? convertIsoStringToLocalDateString(todoListData.startDate)
+                : "-"}
+            </div>
+            <div className="dueDate">
+              <i className="far fa-calendar-times"></i>{" "}
+              {todoListData.dueDate
+                ? convertIsoStringToLocalDateString(todoListData.dueDate)
+                : "-"}
+            </div>
+          </div>
+        )}
         {/* {todoItems} */}
         {todoItems}
         <form

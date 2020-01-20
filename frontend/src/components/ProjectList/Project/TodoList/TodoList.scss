@@ -9,6 +9,16 @@
   align-items: stretch;
   max-width: 15rem;
 
+  .dates {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-evenly;
+
+    div {
+      min-width: 3rem;
+    }
+  }
+
   i.fas.fa-cog {
     align-self: flex-end;
     position: relative;

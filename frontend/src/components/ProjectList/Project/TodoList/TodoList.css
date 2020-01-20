@@ -18,6 +18,20 @@
   max-width: 15rem;
 }
 
+.todolist .dates {
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.todolist .dates div {
+  min-width: 3rem;
+}
+
 .todolist i.fas.fa-cog {
   -ms-flex-item-align: end;
       align-self: flex-end;
