@@ -1,0 +1,14 @@
+.member {
+  padding: 0.5rem;
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  p {
+    margin: 0;
+    margin-left: 1rem;
+  }
+}

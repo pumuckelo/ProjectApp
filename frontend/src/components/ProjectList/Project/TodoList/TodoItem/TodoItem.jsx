@@ -185,6 +185,12 @@ const TodoItem = props => {
             </select>
           </div>
         )}
+        {!todoItemData.assignedTo && (
+          <div className="assignedUser">
+            <i class="fas fa-user-plus"> </i>
+            Unassigned
+          </div>
+        )}
         <div className="checklist-status">
           {/* Completed: {checklistStatus.completed} / {checklistStatus.length} */}
         </div>

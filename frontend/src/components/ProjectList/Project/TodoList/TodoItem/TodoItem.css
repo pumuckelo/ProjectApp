@@ -60,7 +60,7 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   margin: 0.5rem 0;
   -webkit-box-shadow: 0 1px 5px 0.5px #dadada;
           box-shadow: 0 1px 5px 0.5px #dadada;
@@ -69,6 +69,7 @@
 .newdesign-todoitem .name {
   cursor: pointer;
   text-align: center;
+  margin-top: 0;
   margin-bottom: 0.5rem;
 }
 
@@ -92,6 +93,18 @@
 
 .newdesign-todoitem .status .completed {
   background-color: #00af00;
+}
+
+.newdesign-todoitem .assignedUser {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .newdesign-todoitem .checklist-status {

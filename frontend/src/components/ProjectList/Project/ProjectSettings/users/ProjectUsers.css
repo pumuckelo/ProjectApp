@@ -1,0 +1,45 @@
+.users {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 1px solid grey;
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-column: 2/3;
+  overflow-y: auto;
+  border-bottom-right-radius: 10px;
+  border-bottom: none;
+  border-right: none;
+}
+
+.users h4 {
+  text-align: center;
+}
+
+.users .members {
+  width: 80%;
+}
+
+.users .owners {
+  width: 80%;
+}
+
+.users .add-user {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/*# sourceMappingURL=ProjectUsers.css.map */

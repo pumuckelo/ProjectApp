@@ -1,0 +1,32 @@
+.users {
+  width: 100%;
+  height: 100%;
+
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid grey;
+  grid-row: 2/3;
+  grid-column: 2/3;
+  overflow-y: auto;
+  border-bottom-right-radius: 10px;
+  border-bottom: none;
+  border-right: none;
+
+  h4 {
+    text-align: center;
+  }
+
+  .members {
+    width: 80%;
+  }
+
+  .owners {
+    width: 80%;
+  }
+
+  .add-user {
+    display: flex;
+  }
+}

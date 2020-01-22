@@ -9,11 +9,13 @@ import {
   useSubscription,
   useApolloClient
 } from "@apollo/client";
+import ProjectSettings from "./ProjectSettings/ProjectSettings";
 
 const Project = props => {
   const client = useApolloClient();
   const { projectid } = props.match.params;
   const [projectListEnabled, setProjectListEnabled] = useState(false);
+  const [projectSettingsEnabled, setProjectSettingsEnabled] = useState(false);
   const [projectData, setProjectData] = useState({
     name: "",
     todoLists: []
@@ -35,6 +37,14 @@ const Project = props => {
       dueDate
       status
       todoLists
+      members {
+        username
+        _id
+      }
+      owners {
+        username
+        _id
+      }
     }
   }
   `;
@@ -172,6 +182,10 @@ const Project = props => {
   const toggleProjectList = () => {
     setProjectListEnabled(!projectListEnabled);
   };
+
+  const toggleProjectSettings = () => {
+    setProjectSettingsEnabled(!projectSettingsEnabled);
+  };
   // const addNewTodoListHandler = event => {
   //   event.preventDefault();
   //   let updatedTodoLists = [...todoLists];
@@ -195,6 +209,12 @@ const Project = props => {
           }}
         />
       )}
+      {projectSettingsEnabled && (
+        <ProjectSettings
+          closeSettings={() => toggleProjectSettings()}
+          projectData={projectData}
+        />
+      )}
       <div className="project">
         <div className="heading">
           <i
@@ -204,6 +224,7 @@ const Project = props => {
             className="fas fa-ellipsis-v fa-lg"
           ></i>
           <h1>{projectData.name}</h1>
+          <i onClick={() => toggleProjectSettings()} class="fas fa-cogs"></i>
         </div>
         <div className="todolists">
           {/*Hier würden normalerweise die todolists von der datenbank hinkommen in einem array.map => todolist*/}

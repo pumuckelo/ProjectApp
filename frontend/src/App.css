@@ -35,6 +35,7 @@ body {
   font: inherit;
   outline: none;
   border-radius: 10px;
+  transition: all 0.1s;
 }
 
 .hidden-input:focus {
