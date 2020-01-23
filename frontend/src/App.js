@@ -10,9 +10,10 @@ import Cookies from "js-cookie";
 import { InMemoryCache, ApolloClient, ApolloProvider } from "@apollo/client";
 
 import { WebSocketLink } from "apollo-link-ws";
-import { split } from "apollo-link";
+import { split, ApolloLink } from "apollo-link";
 import { HttpLink } from "apollo-link-http";
 import { getMainDefinition } from "apollo-utilities";
+import { onError } from "apollo-link-error";
 
 import Login from "./components/Authentication/Login/Login";
 import Navbar from "./components/Navbar/Navbar";
@@ -43,9 +44,19 @@ const link = split(
   httpLink
 );
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.map(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      )
+    );
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
+
 const gqlClient = new ApolloClient({
   cache: new InMemoryCache(),
-  link: link
+  link: ApolloLink.from([link, errorLink])
 });
 
 function App() {

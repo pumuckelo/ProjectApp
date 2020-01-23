@@ -49,6 +49,90 @@ module.exports = {
       if (createdProject) {
         return createdProject;
       }
+    },
+    createProjectInvitation: async (
+      parent,
+      { projectId, username },
+      { req, res, pubsub }
+    ) => {
+      ///check if invitation already exists
+      console.log("createprojectinvitation fired");
+      const user = await db.User.findOne({ username: username }).catch(err => {
+        throw err;
+      });
+
+      const exists = await db.ProjectInvitation.findOne({
+        project: projectId,
+        invitedUser: user._id
+      });
+
+      if (exists) {
+        throw new Error("User already invited.");
+      }
+
+      const projectInvitation = await db.ProjectInvitation.create({
+        project: projectId,
+        invitedUser: user
+      }).catch(err => {
+        throw err;
+      });
+      await projectInvitation.save();
+
+      return projectInvitation;
+    },
+    acceptProjectInvitation: async (
+      _,
+      { projectInvitationId },
+      { req, res, pubsub }
+    ) => {
+      //Find the projectInvitation by the id that was passed as a parameter
+      const projectInvitation = await db.ProjectInvitation.findById(
+        projectInvitationId
+      ).catch(err => {
+        throw err;
+      });
+      //Find the project of the invitation so we can push the user to the members
+      const project = await db.Project.findById(
+        projectInvitation.project
+      ).catch(err => {
+        throw err;
+      });
+      await project.members.addToSet(projectInvitation.invitedUser);
+      await project.save().catch(err => {
+        throw err;
+      });
+
+      //find the user that was invited to add the project to his projects
+      const user = await db.User.findById(projectInvitation.invitedUser).catch(
+        err => {
+          throw err;
+        }
+      );
+      await user.projects.push(project);
+      await user.save().catch(err => {
+        throw err;
+      });
+
+      //After accepting the invite should be deleted
+      await db.ProjectInvitation.findByIdAndDelete(projectInvitationId).catch(
+        err => {
+          throw err;
+        }
+      );
+      return "Invitation accepted";
+    },
+    declineProjectInvitation: async (
+      _,
+      { projectInvitationId },
+      { req, res, pubsub }
+    ) => {
+      await db.ProjectInvitation.findByIdAndDelete(projectInvitationId).catch(
+        err => {
+          throw err;
+        }
+      );
+
+      return "";
     }
   },
   Query: {
@@ -75,6 +159,17 @@ module.exports = {
         .populate("members");
 
       return project;
+    },
+    myProjectInvitations: async (parent, args, { req, res, pubsub }) => {
+      checkIfAuthenticated(req, res);
+      const myInvitations = await db.ProjectInvitation.find({
+        invitedUser: req.userId
+      })
+        .populate("project")
+        .catch(err => {
+          throw err;
+        });
+      return myInvitations;
     }
   }
 };

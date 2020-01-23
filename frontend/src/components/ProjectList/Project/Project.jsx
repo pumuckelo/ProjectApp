@@ -32,6 +32,7 @@ const Project = props => {
   const getProjectQueryString = gql`
   {
     getProject(id:"${projectid}"){
+      _id
       name
       startDate
       dueDate

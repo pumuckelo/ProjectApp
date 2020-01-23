@@ -9,7 +9,11 @@ const ProjectSettings = props => {
     <div className="project-settings">
       <i onClick={props.closeSettings} className="fas fa-window-close"></i>
       <div className="heading">{projectData.name}</div>
-      <ProjectUsers members={projectData.members} owners={projectData.owners} />
+      <ProjectUsers
+        projectId={projectData._id}
+        members={projectData.members}
+        owners={projectData.owners}
+      />
     </div>
   );
 };

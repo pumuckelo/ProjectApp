@@ -53,6 +53,18 @@ const typeDefs = gql`
     status: String
   }
 
+  type ProjectInvitation {
+    _id: ID
+    project: ID
+    invitedUser: ID
+  }
+
+  type ProjectInvitationPopulated {
+    _id: ID
+    project: Project
+    invitedUser: ID
+  }
+
   type Mutation {
     registerUser(username: String, email: String, password: String): String
     loginUser(username_or_email: String, password: String): String
@@ -60,6 +72,12 @@ const typeDefs = gql`
     hello: String
     createProjectTest(name: String, owner: String): String
     createProject(name: String): Project
+    createProjectInvitation(
+      projectId: String
+      username: String
+    ): ProjectInvitation
+    acceptProjectInvitation(projectInvitationId: ID): String
+    declineProjectInvitation(projectInvitationId: ID): String
     createTodoList(name: String, projectId: ID): TodoList
     updateTodoList(
       todoListId: ID
@@ -77,6 +95,7 @@ const typeDefs = gql`
     hello: String
     myProjects: [Project]
     getProject(id: ID): Project
+    myProjectInvitations: [ProjectInvitationPopulated]
     getTodoList(id: ID): TodoList
     getTodoItem(id: ID): TodoItem
   }
