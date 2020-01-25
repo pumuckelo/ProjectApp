@@ -20,7 +20,8 @@ module.exports = {
   },
   Subscription: {
     ...todoListResolver.Subscription,
-    ...todoItemResolver.Subscription
+    ...todoItemResolver.Subscription,
+    ...projectResolver.Subscription
   }
 
   //   ...projectResolver

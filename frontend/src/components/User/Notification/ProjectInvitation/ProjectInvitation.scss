@@ -1,0 +1,32 @@
+.project-invitation {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+
+  width: 10rem;
+
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: all 0.3s;
+  &:hover {
+    background-color: rgb(236, 236, 236);
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .project-invitation-buttons {
+    display: flex;
+    justify-content: space-evenly;
+
+    i {
+      transition: transform 0.2s;
+      cursor: pointer;
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+}

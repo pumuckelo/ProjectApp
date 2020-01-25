@@ -7,7 +7,7 @@ const projectInvitationSchema = new mongoose.Schema({
   },
   invitedUser: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User "
+    ref: "User"
   }
 });
 

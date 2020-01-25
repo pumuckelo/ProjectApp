@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "./ProjectUsers.css";
 import Member from "./Member/Member";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation, gql, useQuery } from "@apollo/client";
 
 const ProjectUsers = props => {
   const { members, owners, projectId } = props;
+  const [projectInvitations, setProjectInvitations] = useState([]);
   const addUserInput = useRef("");
   const createProjectInvitationMutationString = gql`
     mutation createProjectInvitation($projectId: String, $username: String) {
@@ -15,6 +16,28 @@ const ProjectUsers = props => {
       }
     }
   `;
+
+  const getProjectInvitationsQueryString = gql`
+    {
+      getProjectInvitations(projectId: "${projectId}"){
+        _id
+        invitedUser {
+          name
+        }
+      }
+    }
+  `;
+
+  const {
+    data: getProjectInvitationsData,
+    error: getProjectInvitationsError,
+    loading: getProjectInvitationsLoading
+  } = useQuery(getProjectInvitationsQueryString, {
+    onCompleted(data) {
+      console.log("getProjectInvitations");
+      console.log(data);
+    }
+  });
 
   const [
     createProjectInvitation,
@@ -77,6 +100,9 @@ const ProjectUsers = props => {
       <div className="owners">
         <h4>Owners</h4>
         {ownersComponents}
+      </div>
+      <div className="pending-invites">
+        <h4>Pending invites</h4>
       </div>
     </div>
   );

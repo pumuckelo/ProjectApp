@@ -59,10 +59,16 @@ const typeDefs = gql`
     invitedUser: ID
   }
 
-  type ProjectInvitationPopulated {
+  type ProjectInvitationPopulatedProject {
     _id: ID
     project: Project
     invitedUser: ID
+  }
+
+  type ProjectInvitationPopulatedUser {
+    _id: ID
+    project: ID
+    invitedUser: User
   }
 
   type Mutation {
@@ -95,7 +101,8 @@ const typeDefs = gql`
     hello: String
     myProjects: [Project]
     getProject(id: ID): Project
-    myProjectInvitations: [ProjectInvitationPopulated]
+    getProjectInvitations(projectId: ID): [ProjectInvitationPopulatedUser]
+    myProjectInvitations: [ProjectInvitationPopulatedProject]
     getTodoList(id: ID): TodoList
     getTodoItem(id: ID): TodoItem
   }
@@ -106,6 +113,7 @@ const typeDefs = gql`
     todoListUpdated(todoListId: ID): TodoList
     todoItemCreated(todoListId: ID): TodoItem
     todoItemUpdated(todoItemId: ID): TodoItem
+    userInvited(userId: ID): ProjectInvitation
   }
 `;
 

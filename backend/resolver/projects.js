@@ -1,5 +1,7 @@
 const db = require("../models/index");
 const checkIfAuthenticated = require("../helpers/checkIfAuthenticated");
+const { withFilter } = require("apollo-server-express");
+
 //project resolvers
 
 module.exports = {
@@ -77,6 +79,7 @@ module.exports = {
         throw err;
       });
       await projectInvitation.save();
+      pubsub.publish("userInvited", projectInvitation);
 
       return projectInvitation;
     },
@@ -86,12 +89,15 @@ module.exports = {
       { req, res, pubsub }
     ) => {
       //Find the projectInvitation by the id that was passed as a parameter
+      console.log(projectInvitationId);
       const projectInvitation = await db.ProjectInvitation.findById(
         projectInvitationId
       ).catch(err => {
         throw err;
       });
+
       //Find the project of the invitation so we can push the user to the members
+      console.log(projectInvitation);
       const project = await db.Project.findById(
         projectInvitation.project
       ).catch(err => {
@@ -160,6 +166,23 @@ module.exports = {
 
       return project;
     },
+    getProjectInvitations: async (
+      parent,
+      { projectId },
+      { req, res, pubsub }
+    ) => {
+      //find all project invitations for the project so you can list pending invites
+      // in project settings
+      const projectInvitations = await db.ProjectInvitation.find({
+        project: projectId
+      })
+        .populate("invitedUser")
+        .catch(err => {
+          throw err;
+        });
+
+      return projectInvitations;
+    },
     myProjectInvitations: async (parent, args, { req, res, pubsub }) => {
       checkIfAuthenticated(req, res);
       const myInvitations = await db.ProjectInvitation.find({
@@ -170,6 +193,17 @@ module.exports = {
           throw err;
         });
       return myInvitations;
+    }
+  },
+  Subscription: {
+    userInvited: {
+      resolve: payload => payload,
+      subscribe: withFilter(
+        (parent, args, { pubsub }) => pubsub.asyncIterator("userInvited"),
+        (payload, variables) => {
+          return (payload.invitedUser = variables.userId);
+        }
+      )
     }
   }
 };

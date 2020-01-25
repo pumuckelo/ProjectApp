@@ -7,11 +7,18 @@ const Notification = props => {
 
   const toggleShowNotifications = () => {
     setshowNotifications(!showNotifications);
+    console.log("wurde getoggelt");
   };
   return (
     <i onClick={() => toggleShowNotifications()} class="far fa-bell bell">
       {showNotifications && (
-        <div className="notifications">
+        <div
+          onClick={e => {
+            e.stopPropagation();
+          }}
+          className="notifications"
+        >
+          <h5>Notifications</h5>
           <ProjectInvitation />
         </div>
       )}

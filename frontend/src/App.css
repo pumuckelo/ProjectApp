@@ -98,6 +98,16 @@ body {
   margin-bottom: 1rem;
 }
 
+/* colors  */
+
+.danger {
+  color: red;
+}
+
+.primary {
+  color: rgb(0, 136, 255);
+}
+
 .btn {
   padding: 0.5rem;
   font: inherit;

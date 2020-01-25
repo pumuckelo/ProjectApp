@@ -9,13 +9,15 @@
   min-height: 25rem;
   background-color: white;
   padding: 1rem;
-  border: 1px solid grey;
+
   z-index: 500;
   border-radius: 10px;
+  padding-top: 0.5rem;
 
   display: grid;
-  grid-template-rows: 10% 90%;
+  grid-template-rows: 13% 87%;
   grid-template-columns: 50% 50%;
+  box-shadow: 0 1px 5px 0.5px rgb(218, 218, 218);
 
   .heading {
     align-self: center;

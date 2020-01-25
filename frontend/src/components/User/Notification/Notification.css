@@ -6,12 +6,40 @@
   height: 10rem;
   background-color: white;
   border-radius: 10px;
-  z-index: 100;
-  border: 1px solid grey;
+  z-index: 1000;
+  -webkit-box-shadow: 0 1px 5px 0.5px #dadada;
+          box-shadow: 0 1px 5px 0.5px #dadada;
+  color: black;
+  overflow-y: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: default;
+}
+
+.notifications h5 {
+  margin: 0;
+  margin-bottom: 0.5rem;
 }
 
 .bell {
   position: relative;
   cursor: pointer;
+}
+
+.bell p,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 /*# sourceMappingURL=Notification.css.map */
