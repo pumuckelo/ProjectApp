@@ -34,7 +34,6 @@ const Register = props => {
       }
     })
       .then(() => {
-        console.log("Created User");
         //redirect to login page
         return <Redirect to="/login" />;
       })

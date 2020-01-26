@@ -83,13 +83,9 @@ const TodoListSettings = props => {
         dueDate: dueDateInput.current.value
       }
     }).then(data => {
-      console.log("updated todolist");
-      console.log(data);
       props.closeSettings();
     });
     // .catch(err => console.log(err));
-    console.log(startDateInput.current.value);
-    console.log(dueDateInput.current.value);
   };
 
   const deleteTodoListHandler = () => {
@@ -98,8 +94,6 @@ const TodoListSettings = props => {
         todoListId: props.todoListData._id
       }
     }).then(data => {
-      console.log("TodoList Deleted");
-      console.log(data);
       toggleConfirmationPopup();
       props.closeSettings();
     });

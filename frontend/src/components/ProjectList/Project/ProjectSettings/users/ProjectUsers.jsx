@@ -62,10 +62,6 @@ const ProjectUsers = props => {
 
   const addUserHandler = e => {
     e.preventDefault();
-
-    console.log(
-      `PROJECTINVITATION: ${projectId}, ${addUserInput.current.value}`
-    );
     if (addUserInput.current.value != "") {
       createProjectInvitation({
         variables: {
@@ -74,7 +70,6 @@ const ProjectUsers = props => {
         }
       })
         .then(() => {
-          console.log("User invited .then");
           addUserInput.current.value = "";
         })
         .catch(err => console.log(err.message));

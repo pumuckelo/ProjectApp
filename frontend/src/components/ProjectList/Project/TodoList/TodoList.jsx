@@ -68,19 +68,14 @@ const TodoList = props => {
     loading: getTodoListLoading
   } = useQuery(getTodoListQueryString, {
     async onCompleted({ getTodoList }) {
-      console.log(getTodoList);
-      // console.log(getTodoList.startDate.split("T")[0]);
       let startDate;
       let dueDate;
 
       if (getTodoList.startDate) {
         startDate = convertMongoDateToIsoDate(getTodoList.startDate);
-        console.log(getTodoList.startDate);
-        console.log(startDate);
       }
       if (getTodoList.dueDate) {
         dueDate = convertMongoDateToIsoDate(getTodoList.dueDate);
-        console.log(dueDate);
       }
 
       setTodoListData({
@@ -105,8 +100,6 @@ const TodoList = props => {
         data: { todoListUpdated }
       }
     }) {
-      console.log("todoListUpdated SUBSCRIPTION");
-      console.log(todoListUpdated);
       setTodoListData({
         ...todoListUpdated,
         startDate: convertMongoDateToIsoDate(todoListUpdated.startDate),
@@ -147,7 +140,6 @@ const TodoList = props => {
       todoListId: todoListData._id
     },
     onSubscriptionData({ subscriptionData: { data } }) {
-      console.log(data.todoItemCreated._id);
       setTodoListData({
         ...todoListData,
         todoItems: [...todoListData.todoItems, data.todoItemCreated._id]

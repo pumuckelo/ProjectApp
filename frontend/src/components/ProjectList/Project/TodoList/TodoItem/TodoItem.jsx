@@ -12,7 +12,7 @@ const TodoItem = props => {
     checklist: []
   });
   const { _id } = props;
-  console.log(_id);
+
   const getTodoItemQueryString = gql`
     {
       getTodoItem(id: "${_id}") {
@@ -79,8 +79,6 @@ const TodoItem = props => {
     error: getTodoItemError
   } = useQuery(getTodoItemQueryString, {
     onCompleted({ getTodoItem }) {
-      console.log("getTodoItemData");
-      console.log(getTodoItem);
       setTodoItemData(getTodoItem);
     }
   });
@@ -102,8 +100,6 @@ const TodoItem = props => {
         data: { todoItemUpdated }
       }
     }) {
-      console.log("TodoItem Update SUBSCRIPTION");
-      console.log(todoItemUpdated);
       setTodoItemData(todoItemUpdated);
     }
   });
@@ -134,7 +130,6 @@ const TodoItem = props => {
   };
 
   const updateTodoItemHandler = () => {
-    console.log(`Status Input ${statusInput.current.value}`);
     setTodoItemData({
       ...todoItemData,
       name: nameInput.current.value,
@@ -149,7 +144,6 @@ const TodoItem = props => {
     })
       .then(data => console.log(data))
       .catch(err => console.log(err));
-    console.log("tried to update todo");
   };
 
   return (

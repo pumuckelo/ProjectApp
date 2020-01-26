@@ -46,9 +46,6 @@ const ProjectInvitation = props => {
     loading: myProjectInvitationsLoading
   } = useQuery(myProjectInvitationsQueryString, {
     onCompleted({ myProjectInvitations }) {
-      console.log("myprojectinvitations");
-
-      console.log(myProjectInvitations);
       setMyProjectInvitations(myProjectInvitations);
     }
   });
@@ -75,14 +72,12 @@ const ProjectInvitation = props => {
         data: { userInvited }
       }
     }) {
-      console.log(userInvited);
       setMyProjectInvitations([...myProjectInvitations, userInvited]);
     }
   });
 
   //accept invitation on backend via graphql mutation
   const acceptProjectInvitationHandler = id => {
-    console.log(id);
     acceptProjectInvitation({
       variables: {
         projectInvitationId: id

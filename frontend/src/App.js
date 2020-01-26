@@ -74,8 +74,6 @@ function App() {
       userId: Cookies.get("userId"),
       username: Cookies.get("username")
     });
-    console.log("clicked importcookies");
-    console.log(authData.userId);
   };
 
   const logout = () => {};

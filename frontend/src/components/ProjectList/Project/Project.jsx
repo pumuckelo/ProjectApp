@@ -127,7 +127,6 @@ const Project = props => {
       projectId: projectid
     },
     onSubscriptionData({ subscriptionData: { data } }) {
-      console.log("subscription fulfilled");
       //Not working for some reason
       // client.cache.writeQuery({
       //   query: getProjectQueryString,
@@ -163,8 +162,6 @@ const Project = props => {
           todoListId => todoListId != todoListDeleted._id
         )
       });
-      console.log("SUBSCRIPTION TODOLISTDELETED ");
-      console.log(todoListDeleted);
     }
   });
 

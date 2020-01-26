@@ -7,7 +7,6 @@ const Notification = props => {
 
   const toggleShowNotifications = () => {
     setshowNotifications(!showNotifications);
-    console.log("wurde getoggelt");
   };
   return (
     <i onClick={() => toggleShowNotifications()} class="far fa-bell bell">

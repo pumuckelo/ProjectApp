@@ -22,7 +22,6 @@ const Login = props => {
 
   //   if user is logged in redirect to homepage
   if (authData.userId) {
-    console.log("login js" + authData.userId);
     return <Redirect to="/" />;
   }
   //   loginUser(username_or_email: String, password: String)
@@ -39,7 +38,7 @@ const Login = props => {
       }
     })
       .then(() => {
-        console.log("now trying to importcookies");
+        //IMPORT COOKies to authcontext so username and userid is globally availaible
         authData.importCookiesToAuthContext();
         return <Redirect to="/" />;
       })
