@@ -1,0 +1,17 @@
+import React from "react";
+import "./PendingInvitation.css";
+
+const PendingInvitation = props => {
+  const { invitation } = props;
+  return (
+    <div className="pending-invitation">
+      <div className="user">
+        <i class="fas fa-user-clock"></i>
+        {invitation.invitedUser.username}
+      </div>
+      <i className="fas fa-times danger"></i>
+    </div>
+  );
+};
+
+export default PendingInvitation;

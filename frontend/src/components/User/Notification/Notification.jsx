@@ -9,7 +9,7 @@ const Notification = props => {
     setshowNotifications(!showNotifications);
   };
   return (
-    <i onClick={() => toggleShowNotifications()} class="far fa-bell bell">
+    <i onClick={() => toggleShowNotifications()} className="far fa-bell bell">
       {showNotifications && (
         <div
           onClick={e => {

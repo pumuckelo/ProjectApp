@@ -100,10 +100,15 @@ const TodoList = props => {
         data: { todoListUpdated }
       }
     }) {
+      // if there was set a new date, convert the updated date to iso date and set to state
       setTodoListData({
         ...todoListUpdated,
-        startDate: convertMongoDateToIsoDate(todoListUpdated.startDate),
-        dueDate: convertMongoDateToIsoDate(todoListUpdated.dueDate)
+        startDate:
+          todoListUpdated.startDate &&
+          convertMongoDateToIsoDate(todoListUpdated.startDate),
+        dueDate:
+          todoListUpdated.dueDate &&
+          convertMongoDateToIsoDate(todoListUpdated.dueDate)
       });
     }
   });

@@ -57,29 +57,43 @@ module.exports = {
       { projectId, username },
       { req, res, pubsub }
     ) => {
-      ///check if invitation already exists
+      ///check if the added User exists
       console.log("createprojectinvitation fired");
       const user = await db.User.findOne({ username: username }).catch(err => {
+        throw new Error(`Couldn't find user "${username}"`);
+      });
+
+      // get the project so we can later push this to subscription
+      const project = await db.Project.findById(projectId).catch(err => {
         throw err;
       });
 
+      //check if invitation already exists
       const exists = await db.ProjectInvitation.findOne({
         project: projectId,
         invitedUser: user._id
       });
-
       if (exists) {
         throw new Error("User already invited.");
       }
 
+      //create the invitation
       const projectInvitation = await db.ProjectInvitation.create({
         project: projectId,
-        invitedUser: user
+        invitedUser: user._id
       }).catch(err => {
         throw err;
       });
       await projectInvitation.save();
-      pubsub.publish("userInvited", projectInvitation);
+      // send new invitation to the susbcriptions
+      pubsub.publish("userInvited", {
+        invitedUser: user._id,
+        project: project
+      });
+      // pubsub.publish("projectInvitationCreated", {
+      //   ...projectInvitation,
+      //   invitedUser: user
+      // });
 
       return projectInvitation;
     },
@@ -201,7 +215,17 @@ module.exports = {
       subscribe: withFilter(
         (parent, args, { pubsub }) => pubsub.asyncIterator("userInvited"),
         (payload, variables) => {
-          return (payload.invitedUser = variables.userId);
+          return payload.invitedUser == variables.userId;
+        }
+      )
+    },
+    projectInvitationCreated: {
+      resolve: payload => payload,
+      subscribe: withFilter(
+        (parent, args, { pubsub }) =>
+          pubsub.asyncIterator("projectInvitationCreated"),
+        (payload, variables) => {
+          return payload.project == variables.projectId;
         }
       )
     }

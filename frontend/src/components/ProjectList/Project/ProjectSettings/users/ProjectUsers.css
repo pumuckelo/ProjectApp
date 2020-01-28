@@ -37,9 +37,30 @@
   width: 80%;
 }
 
+.users .pending-invites {
+  width: 80%;
+}
+
 .users .add-user {
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+.users .add-user input {
+  max-width: 60%;
 }
 /*# sourceMappingURL=ProjectUsers.css.map */

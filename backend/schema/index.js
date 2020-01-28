@@ -113,7 +113,8 @@ const typeDefs = gql`
     todoListUpdated(todoListId: ID): TodoList
     todoItemCreated(todoListId: ID): TodoItem
     todoItemUpdated(todoItemId: ID): TodoItem
-    userInvited(userId: ID): ProjectInvitation
+    userInvited(userId: ID): ProjectInvitationPopulatedProject
+    projectInvitationCreated(projectId: ID): ProjectInvitationPopulatedUser
   }
 `;
 

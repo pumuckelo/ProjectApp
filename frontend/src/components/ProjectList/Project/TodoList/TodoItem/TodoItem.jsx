@@ -181,7 +181,7 @@ const TodoItem = props => {
         )}
         {!todoItemData.assignedTo && (
           <div className="assignedUser">
-            <i class="fas fa-user-plus"> </i>
+            <i className="fas fa-user-plus"> </i>
             Unassigned
           </div>
         )}

@@ -6,7 +6,7 @@ const Member = props => {
 
   return (
     <div key={_id} className="member">
-      <i class="fas fa-user"></i> <p>{username}</p>
+      <i className="fas fa-user"></i> <p>{username}</p>
     </div>
   );
 };

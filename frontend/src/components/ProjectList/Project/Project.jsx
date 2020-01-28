@@ -222,7 +222,10 @@ const Project = props => {
             className="fas fa-ellipsis-v fa-lg"
           ></i>
           <h1>{projectData.name}</h1>
-          <i onClick={() => toggleProjectSettings()} class="fas fa-cogs"></i>
+          <i
+            onClick={() => toggleProjectSettings()}
+            className="fas fa-cogs"
+          ></i>
         </div>
         <div className="todolists">
           {/*Hier würden normalerweise die todolists von der datenbank hinkommen in einem array.map => todolist*/}

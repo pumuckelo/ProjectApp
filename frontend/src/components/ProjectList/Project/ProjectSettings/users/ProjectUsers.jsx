@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react";
 import "./ProjectUsers.css";
 import Member from "./Member/Member";
-import { useMutation, gql, useQuery } from "@apollo/client";
+import { useMutation, gql, useQuery, useSubscription } from "@apollo/client";
+import { getDirectiveValues } from "graphql";
+import PendingInvitation from "./PendingInvitation/PendingInvitation";
 
 const ProjectUsers = props => {
   const { members, owners, projectId } = props;
@@ -22,7 +24,7 @@ const ProjectUsers = props => {
       getProjectInvitations(projectId: "${projectId}"){
         _id
         invitedUser {
-          name
+          username
         }
       }
     }
@@ -33,11 +35,34 @@ const ProjectUsers = props => {
     error: getProjectInvitationsError,
     loading: getProjectInvitationsLoading
   } = useQuery(getProjectInvitationsQueryString, {
-    onCompleted(data) {
-      console.log("getProjectInvitations");
-      console.log(data);
+    onCompleted({ getProjectInvitations }) {
+      console.log(getProjectInvitations);
+      setProjectInvitations(getProjectInvitations);
     }
   });
+
+  const projectInvitationCreatedSubscriptionString = gql`
+    subscription projectInvitationCreated($projectId: ID) {
+      projectInvitationCreated(projectId: $projectId) {
+        _id
+        invitedUser {
+          username
+        }
+      }
+    }
+  `;
+
+  const projectInvitationCreatedData = useSubscription(
+    projectInvitationCreatedSubscriptionString,
+    {
+      variables: {
+        projectId: projectId
+      },
+      onSubscriptionData(data) {
+        console.log(data);
+      }
+    }
+  );
 
   const [
     createProjectInvitation,
@@ -53,11 +78,17 @@ const ProjectUsers = props => {
   }
 
   let membersComponents = members.map(member => {
-    return <Member _id={member._id} username={member.username} />;
+    return (
+      <Member key={member._id} _id={member._id} username={member.username} />
+    );
   });
 
   let ownersComponents = owners.map(owner => {
-    return <Member _id={owner._id} username={owner.username} />;
+    return <Member key={owner._id} _id={owner._id} username={owner.username} />;
+  });
+
+  let pendingInvites = projectInvitations.map(invitation => {
+    return <PendingInvitation key={invitation._id} invitation={invitation} />;
   });
 
   const addUserHandler = e => {
@@ -86,7 +117,7 @@ const ProjectUsers = props => {
             ref={addUserInput}
             className="form-input"
             type="text"
-            placeholder="Add User by Username"
+            placeholder="Username"
           />
           <button className="btn btn-primary mg-left-05">Add</button>
         </form>
@@ -98,6 +129,7 @@ const ProjectUsers = props => {
       </div>
       <div className="pending-invites">
         <h4>Pending invites</h4>
+        {pendingInvites}
       </div>
     </div>
   );

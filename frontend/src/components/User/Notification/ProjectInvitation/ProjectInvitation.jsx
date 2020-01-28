@@ -73,6 +73,7 @@ const ProjectInvitation = props => {
       }
     }) {
       setMyProjectInvitations([...myProjectInvitations, userInvited]);
+      console.log(userInvited);
     }
   });
 
@@ -117,11 +118,11 @@ const ProjectInvitation = props => {
             onClick={() => {
               acceptProjectInvitationHandler(invitation._id);
             }}
-            class="fas fa-check-square primary mg-right-1"
+            className="fas fa-check-square primary mg-right-1"
           ></i>
           <i
             onClick={() => declineProjectInvitationHandler(invitation._id)}
-            class="fas fa-times danger"
+            className="fas fa-times danger"
           ></i>
         </div>
       </div>
