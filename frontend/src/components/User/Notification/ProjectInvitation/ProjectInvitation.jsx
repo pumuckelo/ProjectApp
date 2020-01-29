@@ -23,9 +23,9 @@ const ProjectInvitation = props => {
     }
   `;
 
-  const declineProjectInvitationMutationString = gql`
-    mutation declineProjectInvitation($projectInvitationId: ID) {
-      declineProjectInvitation(projectInvitationId: $projectInvitationId)
+  const deleteProjectInvitationMutationString = gql`
+    mutation deleteProjectInvitation($projectInvitationId: ID) {
+      deleteProjectInvitation(projectInvitationId: $projectInvitationId)
     }
   `;
 
@@ -54,8 +54,8 @@ const ProjectInvitation = props => {
     acceptProjectInvitationMutationString
   );
 
-  const [declineProjectInvitation, declineData] = useMutation(
-    declineProjectInvitationMutationString
+  const [deleteProjectInvitation, deleteData] = useMutation(
+    deleteProjectInvitationMutationString
   );
 
   //Subscribe to Project Invitations for currently logged in User
@@ -93,9 +93,9 @@ const ProjectInvitation = props => {
       );
   };
 
-  const declineProjectInvitationHandler = id => {
+  const deleteProjectInvitationHandler = id => {
     // decline invitation on graphql backend
-    declineProjectInvitation({
+    deleteProjectInvitation({
       variables: {
         projectInvitationId: id
       }
@@ -121,7 +121,7 @@ const ProjectInvitation = props => {
             className="fas fa-check-square primary mg-right-1"
           ></i>
           <i
-            onClick={() => declineProjectInvitationHandler(invitation._id)}
+            onClick={() => deleteProjectInvitationHandler(invitation._id)}
             className="fas fa-times danger"
           ></i>
         </div>

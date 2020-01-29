@@ -9,7 +9,10 @@ const PendingInvitation = props => {
         <i class="fas fa-user-clock"></i>
         {invitation.invitedUser.username}
       </div>
-      <i className="fas fa-times danger"></i>
+      <i
+        onClick={props.deleteProjectInvitation}
+        className="fas fa-times danger"
+      ></i>
     </div>
   );
 };

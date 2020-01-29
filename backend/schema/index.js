@@ -83,7 +83,7 @@ const typeDefs = gql`
       username: String
     ): ProjectInvitation
     acceptProjectInvitation(projectInvitationId: ID): String
-    declineProjectInvitation(projectInvitationId: ID): String
+    deleteProjectInvitation(projectInvitationId: ID): String
     createTodoList(name: String, projectId: ID): TodoList
     updateTodoList(
       todoListId: ID

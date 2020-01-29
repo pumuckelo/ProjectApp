@@ -90,10 +90,11 @@ module.exports = {
         invitedUser: user._id,
         project: project
       });
-      // pubsub.publish("projectInvitationCreated", {
-      //   ...projectInvitation,
-      //   invitedUser: user
-      // });
+      pubsub.publish("projectInvitationCreated", {
+        _id: projectInvitation._id,
+        project: projectInvitation.project,
+        invitedUser: user
+      });
 
       return projectInvitation;
     },
@@ -141,7 +142,7 @@ module.exports = {
       );
       return "Invitation accepted";
     },
-    declineProjectInvitation: async (
+    deleteProjectInvitation: async (
       _,
       { projectInvitationId },
       { req, res, pubsub }

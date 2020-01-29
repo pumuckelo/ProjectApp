@@ -10,12 +10,17 @@ const ProjectUsers = props => {
   const [projectInvitations, setProjectInvitations] = useState([]);
   const addUserInput = useRef("");
   const createProjectInvitationMutationString = gql`
-    mutation createProjectInvitation($projectId: String, $username: String) {
+    mutation createProjectInvitation($projectId: ID, $username: String) {
       createProjectInvitation(projectId: $projectId, username: $username) {
         project
         invitedUser
         _id
       }
+    }
+  `;
+  const deleteProjectInvitationMutationString = gql`
+    mutation deleteProjectInvitation($projectInvitationId: ID) {
+      deleteProjectInvitation(projectInvitationId: $projectInvitationId)
     }
   `;
 
@@ -36,10 +41,13 @@ const ProjectUsers = props => {
     loading: getProjectInvitationsLoading
   } = useQuery(getProjectInvitationsQueryString, {
     onCompleted({ getProjectInvitations }) {
-      console.log(getProjectInvitations);
       setProjectInvitations(getProjectInvitations);
     }
   });
+
+  const [deleteProjectInvitation, deleteProjectInvitationData] = useMutation(
+    deleteProjectInvitationMutationString
+  );
 
   const projectInvitationCreatedSubscriptionString = gql`
     subscription projectInvitationCreated($projectId: ID) {
@@ -58,8 +66,16 @@ const ProjectUsers = props => {
       variables: {
         projectId: projectId
       },
-      onSubscriptionData(data) {
-        console.log(data);
+      onSubscriptionData({
+        subscriptionData: {
+          data: { projectInvitationCreated }
+        }
+      }) {
+        setProjectInvitations([
+          ...projectInvitations,
+          projectInvitationCreated
+        ]);
+        console.log(projectInvitationCreated);
       }
     }
   );
@@ -88,7 +104,15 @@ const ProjectUsers = props => {
   });
 
   let pendingInvites = projectInvitations.map(invitation => {
-    return <PendingInvitation key={invitation._id} invitation={invitation} />;
+    return (
+      <PendingInvitation
+        deleteProjectInvitation={() =>
+          deleteProjectInvitationHandler(invitation._id)
+        }
+        key={invitation._id}
+        invitation={invitation}
+      />
+    );
   });
 
   const addUserHandler = e => {
@@ -105,6 +129,22 @@ const ProjectUsers = props => {
         })
         .catch(err => console.log(err.message));
     }
+  };
+
+  const deleteProjectInvitationHandler = projectInvitationId => {
+    deleteProjectInvitation({
+      variables: {
+        projectInvitationId: projectInvitationId
+      }
+    })
+      .then(() => {
+        setProjectInvitations(
+          projectInvitations.filter(
+            invitation => invitation._id != projectInvitationId
+          )
+        );
+      })
+      .catch(err => console.log(err));
   };
 
   return (
