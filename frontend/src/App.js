@@ -56,7 +56,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const gqlClient = new ApolloClient({
   cache: new InMemoryCache(),
-  link: ApolloLink.from([link, errorLink])
+  link: ApolloLink.from([errorLink, link])
 });
 
 function App() {

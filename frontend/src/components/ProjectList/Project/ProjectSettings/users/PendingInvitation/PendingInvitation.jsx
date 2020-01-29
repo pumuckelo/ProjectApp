@@ -6,7 +6,7 @@ const PendingInvitation = props => {
   return (
     <div className="pending-invitation">
       <div className="user">
-        <i class="fas fa-user-clock"></i>
+        <i className="fas fa-user-clock"></i>
         {invitation.invitedUser.username}
       </div>
       <i

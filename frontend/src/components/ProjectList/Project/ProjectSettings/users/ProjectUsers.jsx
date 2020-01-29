@@ -127,7 +127,10 @@ const ProjectUsers = props => {
         .then(() => {
           addUserInput.current.value = "";
         })
-        .catch(err => console.log(err.message));
+        .catch(err => {
+          console.log("schrott");
+          console.log(err.message);
+        });
     }
   };
 

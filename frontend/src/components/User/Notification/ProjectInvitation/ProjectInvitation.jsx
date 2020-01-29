@@ -112,7 +112,10 @@ const ProjectInvitation = props => {
   let invitationComponents = myProjectInvitations.map(invitation => {
     return (
       <div key={invitation._id} className="project-invitation">
-        <p>{invitation.project.name}</p>
+        <div className="flex">
+          <i className="fas fa-users mg-right-05"></i>
+          <p>{invitation.project.name}</p>
+        </div>
         <div className="project-invitation-buttons">
           <i
             onClick={() => {
@@ -129,12 +132,7 @@ const ProjectInvitation = props => {
     );
   });
   // need query and need subscription
-  return (
-    <div>
-      <h5>Project Invitations</h5>
-      {invitationComponents}
-    </div>
-  );
+  return <div>{invitationComponents}</div>;
 };
 
 export default ProjectInvitation;

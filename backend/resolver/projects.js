@@ -65,7 +65,7 @@ module.exports = {
 
       // get the project so we can later push this to subscription
       const project = await db.Project.findById(projectId).catch(err => {
-        throw err;
+        throw new Error("Couldn't find project");
       });
 
       //check if invitation already exists

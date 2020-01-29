@@ -25,6 +25,12 @@
   margin: 0;
 }
 
+.project-invitation .flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .project-invitation .project-invitation-buttons {
   display: -webkit-box;
   display: -ms-flexbox;

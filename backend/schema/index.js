@@ -78,10 +78,7 @@ const typeDefs = gql`
     hello: String
     createProjectTest(name: String, owner: String): String
     createProject(name: String): Project
-    createProjectInvitation(
-      projectId: String
-      username: String
-    ): ProjectInvitation
+    createProjectInvitation(projectId: ID, username: String): ProjectInvitation
     acceptProjectInvitation(projectInvitationId: ID): String
     deleteProjectInvitation(projectInvitationId: ID): String
     createTodoList(name: String, projectId: ID): TodoList
