@@ -8,7 +8,7 @@
 
   .heading {
     box-sizing: border-box;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
 
     align-items: center;
     justify-content: flex-start;
@@ -40,7 +40,7 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  overflow-x: auto;
+  overflow-x: scroll;
   margin: 0;
 }
 

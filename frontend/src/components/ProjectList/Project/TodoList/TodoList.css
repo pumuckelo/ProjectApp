@@ -15,7 +15,10 @@
   -webkit-box-align: stretch;
       -ms-flex-align: stretch;
           align-items: stretch;
+  min-width: 15rem;
   max-width: 15rem;
+  max-height: 69vh;
+  overflow-y: auto;
 }
 
 .todolist .dates {
