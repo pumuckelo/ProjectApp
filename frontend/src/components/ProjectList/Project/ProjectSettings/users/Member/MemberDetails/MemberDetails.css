@@ -1,0 +1,33 @@
+.member-details {
+  cursor: default;
+  position: absolute;
+  width: 8rem;
+  height: 8rem;
+  right: 0;
+  margin: auto;
+  top: 0rem;
+  -webkit-box-shadow: 0 1px 5px 0.5px #dadada;
+          box-shadow: 0 1px 5px 0.5px #dadada;
+  background-color: white;
+  border-radius: 10px;
+  z-index: 300;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 1rem;
+}
+
+.member-details * {
+  width: 100%;
+}
+/*# sourceMappingURL=MemberDetails.css.map */

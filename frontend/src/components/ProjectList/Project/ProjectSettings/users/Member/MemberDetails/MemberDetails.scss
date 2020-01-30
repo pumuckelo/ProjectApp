@@ -1,0 +1,24 @@
+.member-details {
+  cursor: default;
+  position: absolute;
+  width: 8rem;
+  height: 8rem;
+  right: 0;
+
+  margin: auto;
+  top: 0rem;
+
+  box-shadow: 0 1px 5px 0.5px rgb(218, 218, 218);
+  background-color: white;
+  border-radius: 10px;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1rem;
+
+  * {
+    width: 100%;
+  }
+}
