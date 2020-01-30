@@ -95,12 +95,24 @@ const ProjectUsers = props => {
 
   let membersComponents = members.map(member => {
     return (
-      <Member key={member._id} _id={member._id} username={member.username} />
+      <Member
+        key={member._id}
+        _id={member._id}
+        username={member.username}
+        isOwner={false}
+      />
     );
   });
 
   let ownersComponents = owners.map(owner => {
-    return <Member key={owner._id} _id={owner._id} username={owner.username} />;
+    return (
+      <Member
+        key={owner._id}
+        _id={owner._id}
+        username={owner.username}
+        isOwner={true}
+      />
+    );
   });
 
   let pendingInvites = projectInvitations.map(invitation => {

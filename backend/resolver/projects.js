@@ -63,6 +63,10 @@ module.exports = {
         throw new Error(`Couldn't find user "${username}"`);
       });
 
+      if (!user) {
+        throw new Error(`Couldn't find user "${username}"`);
+      }
+
       // get the project so we can later push this to subscription
       const project = await db.Project.findById(projectId).catch(err => {
         throw new Error("Couldn't find project");
