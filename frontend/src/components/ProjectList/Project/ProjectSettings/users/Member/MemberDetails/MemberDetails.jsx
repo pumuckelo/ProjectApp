@@ -35,7 +35,7 @@ const MemberDetails = props => {
       ) : (
         <button className="btn btn-secondary">Make owner</button>
       )}
-      <button onClick={props.removeUser} className="btn btn-danger">
+      <button onClick={props.removeMember} className="btn btn-danger">
         Remove
       </button>
     </div>

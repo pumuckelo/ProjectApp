@@ -4,10 +4,12 @@ import Member from "./Member/Member";
 import { useMutation, gql, useQuery, useSubscription } from "@apollo/client";
 import { getDirectiveValues } from "graphql";
 import PendingInvitation from "./PendingInvitation/PendingInvitation";
+import { useProjectData } from "../../Project";
 
 const ProjectUsers = props => {
-  let { members, owners, projectId } = props;
+  let { owners, projectId } = props;
   const [projectInvitations, setProjectInvitations] = useState([]);
+  const { members, removeMember } = useProjectData();
   const addUserInput = useRef("");
   const createProjectInvitationMutationString = gql`
     mutation createProjectInvitation($projectId: ID, $username: String) {
@@ -93,6 +95,40 @@ const ProjectUsers = props => {
     return createProjectInvitationError.message;
   }
 
+  const addUserHandler = e => {
+    e.preventDefault();
+    if (addUserInput.current.value != "") {
+      createProjectInvitation({
+        variables: {
+          projectId: projectId,
+          username: addUserInput.current.value
+        }
+      })
+        .then(() => {
+          addUserInput.current.value = "";
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+    }
+  };
+
+  const deleteProjectInvitationHandler = projectInvitationId => {
+    deleteProjectInvitation({
+      variables: {
+        projectInvitationId: projectInvitationId
+      }
+    })
+      .then(() => {
+        setProjectInvitations(
+          projectInvitations.filter(
+            invitation => invitation._id != projectInvitationId
+          )
+        );
+      })
+      .catch(err => console.log(err));
+  };
+
   let membersComponents = members.map(member => {
     return (
       <Member
@@ -100,7 +136,7 @@ const ProjectUsers = props => {
         _id={member._id}
         username={member.username}
         isOwner={false}
-        removeUser={() => removeUserHandler(member._id)}
+        removeMember={() => removeMember(member._id)}
       />
     );
   });
@@ -127,46 +163,6 @@ const ProjectUsers = props => {
       />
     );
   });
-
-  const addUserHandler = e => {
-    e.preventDefault();
-    if (addUserInput.current.value != "") {
-      createProjectInvitation({
-        variables: {
-          projectId: projectId,
-          username: addUserInput.current.value
-        }
-      })
-        .then(() => {
-          addUserInput.current.value = "";
-        })
-        .catch(err => {
-          console.log("schrott");
-          console.log(err.message);
-        });
-    }
-  };
-
-  const removeUserHandler = userId => {
-    members = members.filter(member => member._id != userId);
-    console.log(`removeUser fired with ${userId}`);
-  };
-
-  const deleteProjectInvitationHandler = projectInvitationId => {
-    deleteProjectInvitation({
-      variables: {
-        projectInvitationId: projectInvitationId
-      }
-    })
-      .then(() => {
-        setProjectInvitations(
-          projectInvitations.filter(
-            invitation => invitation._id != projectInvitationId
-          )
-        );
-      })
-      .catch(err => console.log(err));
-  };
 
   return (
     <div className="users">

@@ -1,4 +1,10 @@
-import React, { useState, useRef, Fragment, useEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  Fragment,
+  useEffect,
+  useContext
+} from "react";
 import "./Project.css";
 import TodoList from "./TodoList/TodoList";
 import ProjectList from "../ProjectList";
@@ -21,6 +27,7 @@ const Project = props => {
     name: "",
     todoLists: []
   });
+  const newListInput = useRef("");
 
   //----- Query / Mutation Strings
 
@@ -51,7 +58,7 @@ const Project = props => {
   }
   `;
 
-  // Not needed since writequery on subscription doesnt work
+  // Not needed since writequery after subscription returns data doesnt work
 
   // try {
   //   let data = client.readQuery({
@@ -87,6 +94,12 @@ const Project = props => {
       }
     }
   `;
+
+  const memberRemovedSubscriptionString = gql`
+    subscription memberRemoved($projectId: ID) {
+      memberRemoved(projectId: $projectId)
+    }
+  `;
   //-----------
 
   // Get Data about the project and then set it to the state
@@ -108,7 +121,6 @@ const Project = props => {
   });
 
   // addTodoListHandler
-  const newListInput = useRef("");
   const [
     createTodoList,
     {
@@ -166,6 +178,19 @@ const Project = props => {
     }
   });
 
+  //If a member gets removed from project, also remove him from members in state
+  const memberRemovedData = useSubscription(memberRemovedSubscriptionString, {
+    variables: {
+      projectId: projectData._id
+    },
+    onSubscriptionData({ subscriptionData: { data } }) {
+      console.log("SUBSCRIPTION: MEMBER WAS REMOVED");
+      console.log(data.memberRemoved);
+      let removedMemberId = data.memberRemoved;
+      removeMemberHandler(removedMemberId);
+    }
+  });
+
   const createTodoListHandler = event => {
     let name = newListInput.current.value;
     event.preventDefault();
@@ -185,20 +210,11 @@ const Project = props => {
   const toggleProjectSettings = () => {
     setProjectSettingsEnabled(!projectSettingsEnabled);
   };
-  // const addNewTodoListHandler = event => {
-  //   event.preventDefault();
-  //   let updatedTodoLists = [...todoLists];
-  //   updatedTodoLists.push(newListInput.current.value);
-  //   setTodoLists(updatedTodoLists);
-  //   newListInput.current.value = "";
-  // };
 
-  // const todoListsComponents = todoLists.map((todoList, index) => {
-  //   return <TodoList title={todoList} key={index} />;
-  // });
-  //graphql query to get infos about project with the id you get from props.projectid
-  // then create array of todolists
+  //++++++++++++ Make the members globally available +++++++++++
 
+  //======== Functions to mutate the globally available State =======
+  //Function to remove Member from State
   const removeMemberHandler = userId => {
     const newMembers = projectData.members.filter(
       member => member._id != userId
@@ -214,7 +230,9 @@ const Project = props => {
   return (
     <ProjectMembersContext.Provider
       value={{
+        projectId: projectData._id,
         members: projectData.members,
+        owners: projectData.owners,
         removeMember: removeMemberHandler
       }}
     >
@@ -269,5 +287,8 @@ const Project = props => {
     </ProjectMembersContext.Provider>
   );
 };
+
+// Creating a hook so I can access the
+export const useProjectData = () => useContext(ProjectMembersContext);
 
 export default Project;

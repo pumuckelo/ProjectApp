@@ -4,6 +4,8 @@ import "./ProjectInvitation.css";
 import AuthContext from "../../../../context/auth-context";
 
 const ProjectInvitation = props => {
+  //TODO This whole data fetching and subscription part for Invitations should be moved to a global User Context where all the userData is stored.
+  //Otherwise the subscription is only active when the notification field is open...
   const [myProjectInvitations, setMyProjectInvitations] = useState([]);
   const context = useContext(AuthContext);
   const myProjectInvitationsQueryString = gql`

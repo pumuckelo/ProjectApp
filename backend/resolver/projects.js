@@ -181,16 +181,28 @@ module.exports = {
       );
       //also remove user from owners
       project.owners = await project.owners.filter(owner => owner != userId);
-      project.save();
+      project.save().catch(err => {
+        throw new Error("Couldn't remove Member");
+      });
 
       //remove the project from user
       const user = await db.User.findById(userId);
       user.projects = await user.projects.filter(
         project => project != projectId
       );
-      user.save();
+      user.save().catch(err => {
+        throw new Error("Couldn't remove Member");
+      });
 
       //TODO need to fire subscription for user removed
+
+      //this sends the projectid and userid of removed user to the subscription, so the client project can listen.
+      //client project listens to subscriptions for the project id and then gets notified if something gets published with the
+      //associated projectid. the client then gets the userid of the removed user and can remove the userid from the state for example
+      pubsub.publish("memberRemoved", {
+        projectId: projectId,
+        userId: userId
+      });
     }
   },
   Query: {
@@ -264,6 +276,15 @@ module.exports = {
           pubsub.asyncIterator("projectInvitationCreated"),
         (payload, variables) => {
           return payload.project == variables.projectId;
+        }
+      )
+    },
+    memberRemoved: {
+      resolve: payload => payload.userId,
+      subscribe: withFilter(
+        (parent, args, { pubsub }) => pubsub.asyncIterator("memberRemoved"),
+        (payload, variables) => {
+          return payload.projectId == variables.projectId;
         }
       )
     }
