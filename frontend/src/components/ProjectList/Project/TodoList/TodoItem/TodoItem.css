@@ -52,6 +52,7 @@
 }
 
 .newdesign-todoitem {
+  width: 100%;
   border-radius: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -64,6 +65,8 @@
   margin: 0.5rem 0;
   -webkit-box-shadow: 0 1px 5px 0.5px #dadada;
           box-shadow: 0 1px 5px 0.5px #dadada;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .newdesign-todoitem .name {

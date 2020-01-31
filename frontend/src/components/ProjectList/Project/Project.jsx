@@ -10,6 +10,7 @@ import {
   useApolloClient
 } from "@apollo/client";
 import ProjectSettings from "./ProjectSettings/ProjectSettings";
+import ProjectMembersContext from "../../../context/projectMembers-context";
 
 const Project = props => {
   const client = useApolloClient();
@@ -198,55 +199,74 @@ const Project = props => {
   //graphql query to get infos about project with the id you get from props.projectid
   // then create array of todolists
 
+  const removeMemberHandler = userId => {
+    const newMembers = projectData.members.filter(
+      member => member._id != userId
+    );
+    const newOwners = projectData.owners.filter(owner => owner != userId);
+    setProjectData({
+      ...projectData,
+      members: newMembers,
+      owners: newOwners
+    });
+  };
+
   return (
-    <Fragment>
-      {projectListEnabled && (
-        <ProjectList
-          close={() => {
-            toggleProjectList();
-          }}
-        />
-      )}
-      {projectSettingsEnabled && (
-        <ProjectSettings
-          closeSettings={() => toggleProjectSettings()}
-          projectData={projectData}
-        />
-      )}
-      <div className="project">
-        <div className="heading">
-          <i
-            onClick={() => {
+    <ProjectMembersContext.Provider
+      value={{
+        members: projectData.members,
+        removeMember: removeMemberHandler
+      }}
+    >
+      <Fragment>
+        {projectListEnabled && (
+          <ProjectList
+            close={() => {
               toggleProjectList();
             }}
-            className="fas fa-ellipsis-v fa-lg"
-          ></i>
-          <h1>{projectData.name}</h1>
-          <i
-            onClick={() => toggleProjectSettings()}
-            className="fas fa-cogs"
-          ></i>
+          />
+        )}
+        {projectSettingsEnabled && (
+          <ProjectSettings
+            closeSettings={() => toggleProjectSettings()}
+            projectData={projectData}
+          />
+        )}
+        <div className="project">
+          <div className="heading">
+            <i
+              onClick={() => {
+                toggleProjectList();
+              }}
+              className="fas fa-ellipsis-v fa-lg"
+            ></i>
+            <h1>{projectData.name}</h1>
+            <i
+              onClick={() => toggleProjectSettings()}
+              className="fas fa-cogs"
+            ></i>
+          </div>
+          <div className="todolists">
+            {/*Hier würden normalerweise die todolists von der datenbank hinkommen in einem array.map => todolist*/}
+            {/* {todoListsComponents} */}
+            {todoLists}
+            <form onSubmit={event => createTodoListHandler(event)} action="">
+              <div className="newListControl">
+                <input
+                  required
+                  ref={newListInput}
+                  type="text"
+                  placeholder="New List"
+                />
+                <button className="newList">
+                  Add <i className="fas fa-clipboard-list"></i>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="todolists">
-          {/*Hier würden normalerweise die todolists von der datenbank hinkommen in einem array.map => todolist*/}
-          {/* {todoListsComponents} */}
-          {todoLists}
-          <form onSubmit={event => createTodoListHandler(event)} action="">
-            <div className="newListControl">
-              <input
-                required
-                ref={newListInput}
-                type="text"
-                placeholder="New List"
-              />
-              <button className="newList">
-                Add <i className="fas fa-clipboard-list"></i>
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </Fragment>
+      </Fragment>
+    </ProjectMembersContext.Provider>
   );
 };
 

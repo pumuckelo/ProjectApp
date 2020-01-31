@@ -1,10 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import "./MemberDetails.css";
-import { useMutation } from "@apollo/client";
+import { useMutation, gql } from "@apollo/client";
 
 const MemberDetails = props => {
   const node = useRef();
-
   const handleClick = e => {
     if (node.current.contains(e.target)) {
       // if click is inside component, do nothing
@@ -13,7 +12,6 @@ const MemberDetails = props => {
       props.toggleMemberDetails();
     }
   };
-
   useEffect(() => {
     //add event listener when component is mounted
     document.addEventListener("mousedown", handleClick);
@@ -23,6 +21,8 @@ const MemberDetails = props => {
       document.removeEventListener("mousedown", handleClick);
     };
   }, []);
+
+  const removeMemberMutationString = () => {};
 
   return (
     <div
@@ -35,7 +35,9 @@ const MemberDetails = props => {
       ) : (
         <button className="btn btn-secondary">Make owner</button>
       )}
-      <button className="btn btn-danger">Remove</button>
+      <button onClick={props.removeUser} className="btn btn-danger">
+        Remove
+      </button>
     </div>
   );
 };

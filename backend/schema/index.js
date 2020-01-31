@@ -81,6 +81,7 @@ const typeDefs = gql`
     createProjectInvitation(projectId: ID, username: String): ProjectInvitation
     acceptProjectInvitation(projectInvitationId: ID): String
     deleteProjectInvitation(projectInvitationId: ID): String
+    removeMember(projectId: ID, userId: ID): String
     createTodoList(name: String, projectId: ID): TodoList
     updateTodoList(
       todoListId: ID

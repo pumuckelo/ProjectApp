@@ -12,13 +12,16 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   min-width: 15rem;
   max-width: 15rem;
   max-height: 69vh;
   overflow-y: auto;
+  overflow-x: unset;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
 }
 
 .todolist .dates {
@@ -29,6 +32,7 @@
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
+  width: 100%;
 }
 
 .todolist .dates div {
@@ -58,6 +62,7 @@
   display: flex;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  width: 100%;
 }
 
 .todolist form .newTodoForm-control {
@@ -67,11 +72,12 @@
   display: flex;
   -webkit-box-shadow: 0 2px 10px 1px #cfcfcf;
           box-shadow: 0 2px 10px 1px #cfcfcf;
+  width: 100%;
 }
 
 .todolist form .newTodoForm-control:focus-within {
-  -webkit-box-shadow: 0 0px 5px 2px dodgerblue;
-          box-shadow: 0 0px 5px 2px dodgerblue;
+  -webkit-box-shadow: 0 0px 2px 1px dodgerblue;
+          box-shadow: 0 0px 2px 1px dodgerblue;
   border-radius: 10px;
 }
 

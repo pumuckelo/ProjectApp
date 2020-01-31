@@ -6,7 +6,7 @@ import { getDirectiveValues } from "graphql";
 import PendingInvitation from "./PendingInvitation/PendingInvitation";
 
 const ProjectUsers = props => {
-  const { members, owners, projectId } = props;
+  let { members, owners, projectId } = props;
   const [projectInvitations, setProjectInvitations] = useState([]);
   const addUserInput = useRef("");
   const createProjectInvitationMutationString = gql`
@@ -100,6 +100,7 @@ const ProjectUsers = props => {
         _id={member._id}
         username={member.username}
         isOwner={false}
+        removeUser={() => removeUserHandler(member._id)}
       />
     );
   });
@@ -144,6 +145,11 @@ const ProjectUsers = props => {
           console.log(err.message);
         });
     }
+  };
+
+  const removeUserHandler = userId => {
+    members = members.filter(member => member._id != userId);
+    console.log(`removeUser fired with ${userId}`);
   };
 
   const deleteProjectInvitationHandler = projectInvitationId => {

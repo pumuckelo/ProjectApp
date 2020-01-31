@@ -72,6 +72,11 @@ module.exports = {
         throw new Error("Couldn't find project");
       });
 
+      //check if user is already member of project
+      if (project.members.includes(user._id)) {
+        throw new Error(`${username} is already member of the project`);
+      }
+
       //check if invitation already exists
       const exists = await db.ProjectInvitation.findOne({
         project: projectId,
@@ -144,6 +149,8 @@ module.exports = {
           throw err;
         }
       );
+
+      //TODO NEED TO FIRE SUBSCRIPTION FOR USER ADDED
       return "Invitation accepted";
     },
     deleteProjectInvitation: async (
@@ -158,6 +165,32 @@ module.exports = {
       );
 
       return "";
+    },
+    removeMember: async (
+      parent,
+      { userId, projectId },
+      { req, res, pubsub }
+    ) => {
+      //check if user that send request is owner
+
+      //find project
+      const project = await db.Project.findById(projectId);
+      //remove the user from members
+      project.members = await project.members.filter(
+        member => member != userId
+      );
+      //also remove user from owners
+      project.owners = await project.owners.filter(owner => owner != userId);
+      project.save();
+
+      //remove the project from user
+      const user = await db.User.findById(userId);
+      user.projects = await user.projects.filter(
+        project => project != projectId
+      );
+      user.save();
+
+      //TODO need to fire subscription for user removed
     }
   },
   Query: {

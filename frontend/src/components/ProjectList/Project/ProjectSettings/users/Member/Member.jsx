@@ -21,6 +21,7 @@ const Member = props => {
         <MemberDetails
           isOwner={props.isOwner}
           toggleMemberDetails={() => toggleShowDetailsHandler()}
+          removeUser={props.removeUser}
         />
       )}
     </div>
