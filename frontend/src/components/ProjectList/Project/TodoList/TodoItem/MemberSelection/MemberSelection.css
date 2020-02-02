@@ -1,0 +1,38 @@
+.memberSelection {
+  position: absolute;
+  padding: 1rem;
+  -webkit-box-shadow: 0 1px 5px 0.5px #dadada;
+          box-shadow: 0 1px 5px 0.5px #dadada;
+  background-color: white;
+  border-radius: 10px;
+  width: 5rem;
+  left: 4.5rem;
+  top: 1.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+.memberSelection .selectableMember {
+  padding: 0.5rem;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.memberSelection .selectableMember:hover {
+  background-color: #e4e4e4;
+}
+
+.memberSelection p {
+  margin-bottom: 0;
+}
+/*# sourceMappingURL=MemberSelection.css.map */

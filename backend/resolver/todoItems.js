@@ -27,19 +27,31 @@ module.exports = {
     },
     updateTodoItem: async (
       _,
-      { name, status, todoItemId },
+      { name, status, todoItemId, assignedTo },
       { req, res, pubsub }
     ) => {
       // checkIfAuthenticated(req, res);
-
+      console.log(assignedTo);
       const updatedTodoItem = await db.TodoItem.findByIdAndUpdate(
         todoItemId,
-        { name: name, status: status },
+        { name: name, status: status, assignedTo: assignedTo },
         { new: true }
       ).catch(err => {
         throw err;
       });
 
+      //if todo is assigned, populate the data that will be returned to the subscription
+      updatedTodoItem.assignedTo = await db.User.findById(
+        updatedTodoItem.assignedTo
+      );
+      //modify so only username and _id get returned
+      // updatedTodoItem.assignedTo = await {
+      //   username: updatedTodoItem.assignedTo.username,
+      //   _id: updatedTodoItem.assignedTo._id
+      // };
+      // if todo is unassigned, dont populate
+
+      console.log(updatedTodoItem);
       pubsub.publish("todoItemUpdated", updatedTodoItem);
       return updatedTodoItem;
     }
@@ -47,9 +59,11 @@ module.exports = {
   Query: {
     getTodoItem: async (parent, { id }, { req, res, pubsub }) => {
       // checkIfAuthenticated(req, res);
-      const todoItem = await db.TodoItem.findById(id).catch(err => {
-        throw err;
-      });
+      const todoItem = await db.TodoItem.findById(id)
+        .populate("assignedTo")
+        .catch(err => {
+          throw err;
+        });
       console.log(todoItem);
       return todoItem;
     }

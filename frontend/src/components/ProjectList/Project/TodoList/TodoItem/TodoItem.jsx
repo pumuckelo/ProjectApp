@@ -2,6 +2,8 @@ import React, { useState, useEffect, Fragment, useRef } from "react";
 import "./TodoItem.css";
 import { gql, useQuery, useMutation, useSubscription } from "@apollo/client";
 import TodoItemDetails from "./TodoItemDetails/TodoItemDetails";
+import { useProjectData } from "../../Project";
+import MemberSelection from "./MemberSelection/MemberSelection";
 
 const TodoItem = props => {
   const nameInput = useRef();
@@ -12,6 +14,7 @@ const TodoItem = props => {
     checklist: []
   });
   const { _id } = props;
+  const [isAssigningUser, setIsAssigningUser] = useState(false);
 
   const getTodoItemQueryString = gql`
     {
@@ -24,6 +27,7 @@ const TodoItem = props => {
         }
         assignedTo {
           username
+          _id
         }
         comments {
           content
@@ -39,8 +43,18 @@ const TodoItem = props => {
   `;
 
   const updateTodoItemMutationString = gql`
-    mutation updateTodoItem($todoItemId: ID, $name: String, $status: String) {
-      updateTodoItem(todoItemId: $todoItemId, name: $name, status: $status) {
+    mutation updateTodoItem(
+      $todoItemId: ID
+      $name: String
+      $status: String
+      $assignedTo: ID
+    ) {
+      updateTodoItem(
+        todoItemId: $todoItemId
+        name: $name
+        status: $status
+        assignedTo: $assignedTo
+      ) {
         _id
         name
         status
@@ -59,6 +73,7 @@ const TodoItem = props => {
         }
         assignedTo {
           username
+          _id
         }
         comments {
           content
@@ -100,6 +115,7 @@ const TodoItem = props => {
         data: { todoItemUpdated }
       }
     }) {
+      console.log(todoItemUpdated);
       setTodoItemData(todoItemUpdated);
     }
   });
@@ -130,19 +146,44 @@ const TodoItem = props => {
   };
 
   const updateTodoItemHandler = () => {
-    setTodoItemData({
-      ...todoItemData,
-      name: nameInput.current.value,
-      status: statusInput.current.value
-    });
+    // setTodoItemData({
+    //   ...todoItemData,
+    //   name: nameInput.current.value,
+    //   status: statusInput.current.value
+    // });
     updateTodoItem({
       variables: {
         todoItemId: todoItemData._id,
+        //TODO Maybe spreading here will result in bugs
+        ...todoItemData,
+        assignedTo: todoItemData.assignedTo
+          ? todoItemData.assignedTo._id
+          : null,
         name: nameInput.current.value,
         status: statusInput.current.value
       }
     })
       .then(data => console.log(data))
+      .catch(err => console.log(err));
+  };
+
+  const toggleIsAssigningUser = () => {
+    setIsAssigningUser(!isAssigningUser);
+  };
+
+  const assignUserHandler = userId => {
+    console.log(`assignUserhandler fired, Userid ${userId}`);
+    updateTodoItem({
+      variables: {
+        todoItemId: todoItemData._id,
+        ...todoItemData,
+        assignedTo: userId
+      }
+    })
+      .then(() => {
+        console.log("assigned");
+        toggleIsAssigningUser();
+      })
       .catch(err => console.log(err));
   };
 
@@ -179,21 +220,26 @@ const TodoItem = props => {
             </select>
           </div>
         )}
-        {!todoItemData.assignedTo && (
-          <div className="assignedUser">
-            <i className="fas fa-user-plus"> </i>
-            Unassigned
-          </div>
-        )}
+
+        <div className="assignedUser">
+          <i className="fas fa-user-plus"> </i>
+          <button className="btn" onClick={() => toggleIsAssigningUser()}>
+            {todoItemData.assignedTo
+              ? todoItemData.assignedTo.username
+              : "Unassigned"}
+          </button>
+          {isAssigningUser && (
+            <MemberSelection
+              assignUser={assignUserHandler}
+              closeMemberSelection={toggleIsAssigningUser}
+            />
+          )}
+        </div>
+
+        {/* TODO IF user already assigned, show assigned user and on click show selection field */}
         <div className="checklist-status">
           {/* Completed: {checklistStatus.completed} / {checklistStatus.length} */}
         </div>
-        {todoItemData.assignedTo && (
-          <div className="assignedTo">
-            <i className="fas fa-user"></i>
-            <p>{todoItemData.assignedTo.username}</p>
-          </div>
-        )}
       </div>
 
       {onTodoItemDetails && (

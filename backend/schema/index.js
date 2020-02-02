@@ -92,7 +92,13 @@ const typeDefs = gql`
     ): TodoList
     deleteTodoList(todoListId: ID): TodoList
     createTodoItem(name: String, todoListId: ID): TodoItem
-    updateTodoItem(todoItemId: ID, name: String, status: String): TodoItem
+    updateTodoItem(
+      todoItemId: ID
+      name: String
+      status: String
+      assignedTo: ID
+    ): TodoItem
+    #TODO THIS NEEDS TO BE UPDATED WITH TODOINPUT AS VARIABLES
   }
 
   type Query {
