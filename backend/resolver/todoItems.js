@@ -30,20 +30,27 @@ module.exports = {
       { name, status, todoItemId, assignedTo },
       { req, res, pubsub }
     ) => {
-      // checkIfAuthenticated(req, res);
+      checkIfAuthenticated(req, res);
       console.log(assignedTo);
+
+      // If assignedTo is nothing (unassigned function used by client) then dont
       const updatedTodoItem = await db.TodoItem.findByIdAndUpdate(
         todoItemId,
-        { name: name, status: status, assignedTo: assignedTo },
+        {
+          name: name,
+          status: status,
+          assignedTo: assignedTo
+        },
         { new: true }
       ).catch(err => {
         throw err;
       });
-
-      //if todo is assigned, populate the data that will be returned to the subscription
-      updatedTodoItem.assignedTo = await db.User.findById(
-        updatedTodoItem.assignedTo
-      );
+      console.log(updatedTodoItem);
+      if (assignedTo) {
+        updatedTodoItem.assignedTo = await db.User.findById(
+          updatedTodoItem.assignedTo
+        );
+      }
       //modify so only username and _id get returned
       // updatedTodoItem.assignedTo = await {
       //   username: updatedTodoItem.assignedTo.username,

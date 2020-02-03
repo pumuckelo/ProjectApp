@@ -187,6 +187,24 @@ const TodoItem = props => {
       .catch(err => console.log(err));
   };
 
+  const unassignUserHandler = () => {
+    console.log("unassigned fired");
+    //Only execute if todo is currently assigned to prevent unneccesary api calls
+    if (todoItemData.assignedTo) {
+      updateTodoItem({
+        variables: {
+          ...todoItemData,
+          todoItemId: todoItemData._id,
+          assignedTo: null
+        }
+      })
+        .catch(err => console.log(err))
+        .then(() => toggleIsAssigningUser());
+    } else {
+      toggleIsAssigningUser();
+    }
+  };
+
   return (
     <Fragment>
       <div className="newdesign-todoitem">
@@ -230,6 +248,7 @@ const TodoItem = props => {
           </button>
           {isAssigningUser && (
             <MemberSelection
+              unassignUser={unassignUserHandler}
               assignUser={assignUserHandler}
               closeMemberSelection={toggleIsAssigningUser}
             />

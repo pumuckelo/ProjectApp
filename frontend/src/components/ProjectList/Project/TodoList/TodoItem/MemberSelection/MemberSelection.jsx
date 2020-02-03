@@ -36,8 +36,9 @@ const MemberSelection = props => {
 
   return (
     <div ref={node} className="memberSelection">
+      <div className="triangle"></div>
       {selectableMembers}
-      <p>Unassign</p>
+      <p onClick={props.unassignUser}>Unassign</p>
     </div>
   );
 };
