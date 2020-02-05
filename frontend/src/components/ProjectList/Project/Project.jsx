@@ -17,6 +17,7 @@ import {
 } from "@apollo/client";
 import ProjectSettings from "./ProjectSettings/ProjectSettings";
 import ProjectMembersContext from "../../../context/projectMembers-context";
+import { checkIfLoggedIn } from "../../../helpers/authChecker";
 
 const Project = props => {
   const client = useApolloClient();
@@ -29,13 +30,7 @@ const Project = props => {
   });
   const newListInput = useRef("");
 
-  //----- Query / Mutation Strings
-
-  // useEffect(() => {
-  //   if (projectData) {
-  //     setProjectData(getProjectData);
-  //   }
-  // }, []);
+  //TODO CHECK IF PROJECT IS IN LIST OF PROJECTS OF LOGGED IN USER
 
   const getProjectQueryString = gql`
   {

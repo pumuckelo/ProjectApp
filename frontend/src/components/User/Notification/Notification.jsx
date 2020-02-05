@@ -32,20 +32,19 @@ const Notification = props => {
   };
   //I know i should have created another component for Notification or move the i element
   // out of here to the navbar and also add Notification to navbar but no time atm
+
   return (
     <i onClick={() => toggleShowNotifications()} className="far fa-bell bell">
-      {showNotifications && (
-        <div
-          ref={notificationNode}
-          onClick={e => {
-            e.stopPropagation();
-          }}
-          className="notifications"
-        >
-          <h5>Notifications</h5>
-          <ProjectInvitation />
-        </div>
-      )}
+      <div
+        ref={notificationNode}
+        onClick={e => {
+          e.stopPropagation();
+        }}
+        className={showNotifications ? "notifications" : "hide"}
+      >
+        <h5>Notifications</h5>
+        <ProjectInvitation />
+      </div>
     </i>
   );
 };

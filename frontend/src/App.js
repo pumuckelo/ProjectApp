@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./App.css";
 import ProjectList from "./components/ProjectList/ProjectList";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -113,3 +113,5 @@ function App() {
 }
 
 export default App;
+
+export const useAuthData = () => useContext(AuthContext);

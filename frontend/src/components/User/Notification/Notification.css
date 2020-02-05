@@ -29,6 +29,10 @@
   margin-bottom: 0.5rem;
 }
 
+.hide {
+  display: none;
+}
+
 .bell {
   position: relative;
   cursor: pointer;
