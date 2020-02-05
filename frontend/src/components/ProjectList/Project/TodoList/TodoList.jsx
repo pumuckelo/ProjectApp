@@ -249,7 +249,12 @@ const TodoList = props => {
           action=""
         >
           <div className="newTodoForm-control">
-            <input ref={newTodoInput} type="text" placeholder="New todo" />
+            <input
+              required
+              ref={newTodoInput}
+              type="text"
+              placeholder="New todo"
+            />
             <button type="submit">+</button>
           </div>
         </form>

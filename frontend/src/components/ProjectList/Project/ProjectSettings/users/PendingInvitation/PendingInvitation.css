@@ -22,6 +22,12 @@
 
 .pending-invitation .user i {
   margin-right: 0.5rem;
+  cursor: default;
+}
+
+.pending-invitation .user i:hover {
+  -webkit-transform: none;
+          transform: none;
 }
 
 .pending-invitation i {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./ProjectUsers.css";
 import Member from "./Member/Member";
 import { useMutation, gql, useQuery, useSubscription } from "@apollo/client";
@@ -7,6 +7,15 @@ import PendingInvitation from "./PendingInvitation/PendingInvitation";
 import { useProjectData } from "../../Project";
 
 const ProjectUsers = props => {
+  //TODO Need to update cache if a new projectinvitation gets created because otherwise after closing projects settings and reloading it,
+  // apollo reads the cache that was created as the project invitations got loaded the first time and thats without the new project invitation
+  // maybe the cache of the project invitations could also just be cleared -- easier and less possible bugs
+
+  //this should solve whats described above
+  useEffect(() => {
+    refetchProjectInvitations();
+  }, []);
+
   let { owners, projectId } = props;
   const [projectInvitations, setProjectInvitations] = useState([]);
   const { members, removeMember } = useProjectData();
@@ -40,7 +49,8 @@ const ProjectUsers = props => {
   const {
     data: getProjectInvitationsData,
     error: getProjectInvitationsError,
-    loading: getProjectInvitationsLoading
+    loading: getProjectInvitationsLoading,
+    refetch: refetchProjectInvitations
   } = useQuery(getProjectInvitationsQueryString, {
     onCompleted({ getProjectInvitations }) {
       setProjectInvitations(getProjectInvitations);

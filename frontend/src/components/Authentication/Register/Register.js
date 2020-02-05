@@ -55,7 +55,7 @@ const Register = props => {
           required
           className="form-input"
           type="text"
-          placeholder="Usermame"
+          placeholder="Username"
           ref={usernameInput}
         />
         <label htmlFor="email">E-Mail</label>

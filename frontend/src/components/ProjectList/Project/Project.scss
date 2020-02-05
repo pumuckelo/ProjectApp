@@ -40,8 +40,9 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
+  overflow-x: auto;
   margin: 0;
+  // height: 81.5vh;
 }
 
 .newListControl {

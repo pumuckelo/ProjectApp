@@ -51,6 +51,7 @@ module.exports = {
       if (createdProject) {
         return createdProject;
       }
+      //TODO NEED TO FIRE SUBSCRIPTION FOR USER THAT A NEW PROJECT WAS ADDED TO HIS LIST OF PROJECTS
     },
     createProjectInvitation: async (
       parent,
@@ -62,15 +63,22 @@ module.exports = {
       const user = await db.User.findOne({ username: username }).catch(err => {
         throw new Error(`Couldn't find user "${username}"`);
       });
-
       if (!user) {
         throw new Error(`Couldn't find user "${username}"`);
       }
 
       // get the project so we can later push this to subscription
-      const project = await db.Project.findById(projectId).catch(err => {
+      const project = await db.Project.findById(projectId);
+      if (!project) {
         throw new Error("Couldn't find project");
-      });
+      }
+
+      //check if requesting user is owner of group
+      if (!project.owners.includes(req.userId)) {
+        throw new Error(
+          "You need to be owner of the project to add new members!"
+        );
+      }
 
       //check if user is already member of project
       if (project.members.includes(user._id)) {
@@ -96,6 +104,7 @@ module.exports = {
       await projectInvitation.save();
       // send new invitation to the susbcriptions
       pubsub.publish("userInvited", {
+        _id: projectInvitation._id,
         invitedUser: user._id,
         project: project
       });
@@ -151,6 +160,8 @@ module.exports = {
       );
 
       //TODO NEED TO FIRE SUBSCRIPTION FOR USER ADDED
+
+      //TODO NEED TO FIRE SUBSCRIPTION FOR USER THAT A NEW PROJECT WAS ADDED TO HIS LIST OF PROJECTS
       return "Invitation accepted";
     },
     deleteProjectInvitation: async (
@@ -227,6 +238,14 @@ module.exports = {
         // })
         .populate("owners")
         .populate("members");
+      //If user isnt member of the project, send forbidden status code
+      if (
+        !project.members.some(function(member) {
+          return member._id == req.userId;
+        })
+      ) {
+        res.status(403);
+      }
 
       return project;
     },
