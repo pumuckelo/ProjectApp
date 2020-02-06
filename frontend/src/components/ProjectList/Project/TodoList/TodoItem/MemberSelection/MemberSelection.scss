@@ -40,6 +40,7 @@
     }
   }
   .selectableMember {
+    user-select: none;
     padding: 0.25rem;
     margin-bottom: 0.5rem;
     width: 100%;
@@ -70,8 +71,6 @@
   align-items: center;
   text-align: center;
   z-index: 10;
-  max-height: 20rem;
-  overflow-y: auto;
 
   &::before {
     content: "";
@@ -100,6 +99,7 @@
     }
   }
   .selectableMember {
+    user-select: none;
     padding: 0.25rem;
     margin-bottom: 0.5rem;
     width: 100%;

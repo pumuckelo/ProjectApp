@@ -249,7 +249,9 @@ const TodoItem = props => {
               //   {todoItemData.assignedTo.username.substring(0, 5) + ".."}
               // </button>
               <div className="user" onClick={() => toggleIsAssigningUser()}>
-                {todoItemData.assignedTo.username.substring(0, 5) + ".."}
+                {todoItemData.assignedTo.username.length > 6
+                  ? todoItemData.assignedTo.username.substring(0, 6) + ".."
+                  : todoItemData.assignedTo.username}
               </div>
             ) : (
               <i
@@ -266,6 +268,15 @@ const TodoItem = props => {
                 closeMemberSelection={toggleIsAssigningUser}
               />
             )}
+          </div>
+        </div>
+        <div className="flex">
+          <div className="date">
+            <i className="far fa-calendar-plus"></i>
+            <i className="far fa-calendar-times"></i>
+          </div>
+          <div className="checklist">
+            <i class="fas fa-tasks"></i>
           </div>
         </div>
 

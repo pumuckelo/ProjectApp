@@ -52,6 +52,10 @@
 }
 
 .memberSelection .selectableMember {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   padding: 0.25rem;
   margin-bottom: 0.5rem;
   width: 100%;
@@ -88,8 +92,6 @@
           align-items: center;
   text-align: center;
   z-index: 10;
-  max-height: 20rem;
-  overflow-y: auto;
 }
 
 .memberSelectionAbove::before {
@@ -124,6 +126,10 @@
 }
 
 .memberSelectionAbove .selectableMember {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   padding: 0.25rem;
   margin-bottom: 0.5rem;
   width: 100%;
