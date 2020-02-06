@@ -214,13 +214,13 @@ const TodoItem = props => {
             ref={nameInput}
             className="hidden-input"
             type="text"
+            required
             defaultValue={todoItemData.name}
           />
         </div>
 
-        {todoItemData.status && (
+        <div className="flex">
           <div status={todoItemData.status} className="status">
-            Status:{"  "}
             <select
               value={todoItemData.status}
               className={todoItemData.status}
@@ -237,22 +237,36 @@ const TodoItem = props => {
               <option value="completed">Completed</option>
             </select>
           </div>
-        )}
-
-        <div className="assignedUser">
-          <i className="fas fa-user-plus"> </i>
-          <button className="btn" onClick={() => toggleIsAssigningUser()}>
-            {todoItemData.assignedTo
-              ? todoItemData.assignedTo.username
-              : "Unassigned"}
-          </button>
-          {isAssigningUser && (
-            <MemberSelection
-              unassignUser={unassignUserHandler}
-              assignUser={assignUserHandler}
-              closeMemberSelection={toggleIsAssigningUser}
-            />
-          )}
+          <div
+            className={
+              isAssigningUser
+                ? "assignedUser mg-left-05 "
+                : "assignedUser mg-left-05"
+            }
+          >
+            {todoItemData.assignedTo ? (
+              // <button className="btn" onClick={() => toggleIsAssigningUser()}>
+              //   {todoItemData.assignedTo.username.substring(0, 5) + ".."}
+              // </button>
+              <div className="user" onClick={() => toggleIsAssigningUser()}>
+                {todoItemData.assignedTo.username.substring(0, 5) + ".."}
+              </div>
+            ) : (
+              <i
+                onClick={() => toggleIsAssigningUser()}
+                className="fas fa-user-plus"
+              >
+                {" "}
+              </i>
+            )}
+            {isAssigningUser && (
+              <MemberSelection
+                unassignUser={unassignUserHandler}
+                assignUser={assignUserHandler}
+                closeMemberSelection={toggleIsAssigningUser}
+              />
+            )}
+          </div>
         </div>
 
         {/* TODO IF user already assigned, show assigned user and on click show selection field */}

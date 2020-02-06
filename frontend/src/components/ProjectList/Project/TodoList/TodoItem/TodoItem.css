@@ -69,11 +69,22 @@
           box-sizing: border-box;
 }
 
+.newdesign-todoitem .flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
 .newdesign-todoitem .name {
   cursor: pointer;
   text-align: center;
   margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
 }
 
 .newdesign-todoitem .status {
@@ -99,7 +110,6 @@
 }
 
 .newdesign-todoitem .assignedUser {
-  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -109,6 +119,20 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  width: 100%;
+}
+
+.newdesign-todoitem .assignedUser i {
+  cursor: pointer;
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
+  transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
+}
+
+.newdesign-todoitem .assignedUser i:hover {
+  -webkit-transform: scale(1.15);
+          transform: scale(1.15);
 }
 
 .newdesign-todoitem .assignedUser .userSelection {
@@ -121,6 +145,10 @@
   width: 5rem;
   left: 4.5rem;
   top: 1.5rem;
+}
+
+.newdesign-todoitem .absolute {
+  position: absolute;
 }
 
 .newdesign-todoitem .checklist-status {

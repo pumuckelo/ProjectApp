@@ -216,48 +216,50 @@ const TodoList = props => {
           todoListData={todoListData}
         />
       )}
-      <div className="todolist">
-        <i
-          onClick={() => {
-            toggleListSettingsHandler();
-          }}
-          className="fas fa-cog"
-        ></i>
-        <h2>{todoListData.name}</h2>
-        {/* Only render if date exists in state */}
-        {(todoListData.startDate || todoListData.dueDate) && (
-          <div className="dates">
-            <div className="startDate">
-              <i className="far fa-calendar-plus"></i>{" "}
-              {todoListData.startDate
-                ? convertIsoStringToLocalDateString(todoListData.startDate)
-                : "-"}
+      <div className="relative-wrapper">
+        <div className="todolist">
+          <i
+            onClick={() => {
+              toggleListSettingsHandler();
+            }}
+            className="fas fa-cog"
+          ></i>
+          <h2>{todoListData.name}</h2>
+          {/* Only render if date exists in state */}
+          {(todoListData.startDate || todoListData.dueDate) && (
+            <div className="dates">
+              <div className="startDate">
+                <i className="far fa-calendar-plus"></i>{" "}
+                {todoListData.startDate
+                  ? convertIsoStringToLocalDateString(todoListData.startDate)
+                  : "-"}
+              </div>
+              <div className="dueDate">
+                <i className="far fa-calendar-times"></i>{" "}
+                {todoListData.dueDate
+                  ? convertIsoStringToLocalDateString(todoListData.dueDate)
+                  : "-"}
+              </div>
             </div>
-            <div className="dueDate">
-              <i className="far fa-calendar-times"></i>{" "}
-              {todoListData.dueDate
-                ? convertIsoStringToLocalDateString(todoListData.dueDate)
-                : "-"}
+          )}
+          {/* {todoItems} */}
+          {todoItems}
+          <form
+            className="newTodoForm"
+            onSubmit={event => createTodoItemHandler(event)}
+            action=""
+          >
+            <div className="newTodoForm-control">
+              <input
+                required
+                ref={newTodoInput}
+                type="text"
+                placeholder="New todo"
+              />
+              <button type="submit">+</button>
             </div>
-          </div>
-        )}
-        {/* {todoItems} */}
-        {todoItems}
-        <form
-          className="newTodoForm"
-          onSubmit={event => createTodoItemHandler(event)}
-          action=""
-        >
-          <div className="newTodoForm-control">
-            <input
-              required
-              ref={newTodoInput}
-              type="text"
-              placeholder="New todo"
-            />
-            <button type="submit">+</button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </Fragment>
   );

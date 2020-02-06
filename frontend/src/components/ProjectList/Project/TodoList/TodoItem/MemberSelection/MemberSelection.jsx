@@ -16,8 +16,37 @@ const MemberSelection = props => {
     }
   };
 
+  const selectParentElement = () => {
+    let memberSelectionElement = document.querySelector(".memberSelection");
+    let parent = document.querySelector(".memberSelection").parentElement;
+
+    let rectMemberSelection = memberSelectionElement.getBoundingClientRect();
+
+    let rectParent = parent.getBoundingClientRect();
+
+    console.log(rectParent);
+    console.log(rectMemberSelection);
+
+    // parent.style.backgroundColor = "green";
+    // document.querySelector(".assignedUser").style.backgroundColor = "green";
+    // memberSelectionElement.style.left = rectParent.left;
+
+    if (rectParent.top >= 400) {
+      memberSelectionElement.style.top = rectParent.top - 235 + "px";
+      memberSelectionElement.classList.add("memberSelectionAbove");
+      memberSelectionElement.classList.remove("memberSelection");
+      // memberSelectionElement.style.backgroundColor = "green";
+    } else {
+      memberSelectionElement.style.top = rectParent.top - 60 + "px";
+    }
+
+    // console.log(memberSelectionElement.getBoundingClientRect());
+    // console.log(rect);
+  };
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClick);
+    selectParentElement();
 
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
@@ -38,7 +67,7 @@ const MemberSelection = props => {
     <div ref={node} className="memberSelection">
       <div className="triangle"></div>
       {selectableMembers}
-      <p onClick={props.unassignUser}>Unassign</p>
+      <i onClick={props.unassignUser} className="fas fa-ban"></i>
     </div>
   );
 };
