@@ -18,6 +18,8 @@ const MemberSelection = props => {
 
   //This function is necessary because the member Selection needs to be absolute positioned to the wrapper around the todolist,
   // otherwise it cant overflow the todolist
+
+  //TODO Make a helper function for finding the todolist position
   const positionMemberSelection = () => {
     let memberSelectionWrapperElement = document.querySelector(
       ".memberSelectionWrapper"
@@ -27,8 +29,6 @@ const MemberSelection = props => {
       .parentElement;
 
     let triangleElement = document.querySelector(".triangle");
-
-    let rectMemberSelection = memberSelectionWrapperElement.getBoundingClientRect();
 
     let rectParent = parent.getBoundingClientRect();
 

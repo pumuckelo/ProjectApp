@@ -1,0 +1,11 @@
+.checklist-dropdown {
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  z-index: 100;
+  -webkit-box-shadow: 0 1px 5px 0.5px #dadada;
+          box-shadow: 0 1px 5px 0.5px #dadada;
+}
+/*# sourceMappingURL=Checklist.css.map */

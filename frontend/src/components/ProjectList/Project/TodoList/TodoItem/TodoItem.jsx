@@ -4,6 +4,7 @@ import { gql, useQuery, useMutation, useSubscription } from "@apollo/client";
 import TodoItemDetails from "./TodoItemDetails/TodoItemDetails";
 import { useProjectData } from "../../Project";
 import MemberSelection from "./MemberSelection/MemberSelection";
+import Checklist from "./Checklist/Checklist";
 
 const TodoItem = props => {
   const nameInput = useRef();
@@ -15,6 +16,7 @@ const TodoItem = props => {
   });
   const { _id } = props;
   const [isAssigningUser, setIsAssigningUser] = useState(false);
+  const [isViewingChecklist, setIsViewingChecklist] = useState(false);
 
   const getTodoItemQueryString = gql`
     {
@@ -167,9 +169,16 @@ const TodoItem = props => {
       .catch(err => console.log(err));
   };
 
+  //====== STATE TOGGLERS ========
   const toggleIsAssigningUser = () => {
     setIsAssigningUser(!isAssigningUser);
   };
+
+  const toggleIsViewingChecklist = () => {
+    setIsViewingChecklist(!isViewingChecklist);
+  };
+
+  //====================================
 
   const assignUserHandler = userId => {
     console.log(`assignUserhandler fired, Userid ${userId}`);
@@ -284,7 +293,11 @@ const TodoItem = props => {
             )}
           </div>
           <div className="checklist">
-            <i className="fas fa-tasks"></i>
+            <i
+              onClick={() => toggleIsViewingChecklist()}
+              className="fas fa-tasks"
+            ></i>
+            {isViewingChecklist && <Checklist />}
           </div>
         </div>
 

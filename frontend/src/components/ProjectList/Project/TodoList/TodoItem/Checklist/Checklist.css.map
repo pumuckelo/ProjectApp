@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,mBAAmB,CAAC;EAClB,OAAO,EAAE,MAAM;EACf,gBAAgB,EAAE,KAAK;EACvB,aAAa,EAAE,IAAI;EACnB,QAAQ,EAAE,QAAQ;EAClB,GAAG,EAAE,CAAC;EACN,OAAO,EAAE,GAAG;EACZ,UAAU,EAAE,CAAC,CAAC,GAAG,CAAC,GAAG,CAAC,KAAK,CAAC,OAAkB;CAC/C",
+    "sources": [
+        "Checklist.scss"
+    ],
+    "names": [],
+    "file": "Checklist.css"
+}
