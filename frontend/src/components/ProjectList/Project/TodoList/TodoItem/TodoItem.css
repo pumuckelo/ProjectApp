@@ -1,4 +1,5 @@
 .newdesign-todoitem {
+  max-height: 30rem;
   width: 100%;
   border-radius: 10px;
   display: -webkit-box;
@@ -28,6 +29,7 @@
 }
 
 .newdesign-todoitem .name {
+  overflow: hidden;
   cursor: pointer;
   text-align: center;
   margin-top: 0;
@@ -85,8 +87,8 @@
 .newdesign-todoitem .assignedUser .user {
   cursor: pointer;
   width: 100%;
-  -webkit-box-shadow: 0 1px 5px 0.5px #dadada;
-          box-shadow: 0 1px 5px 0.5px #dadada;
+  background-color: #0088ff;
+  color: white;
   padding: 0.25rem 0.5rem;
   border-radius: 10px;
   -webkit-transition: all 0.1s;
@@ -144,14 +146,5 @@
 
 .newdesign-todoitem .checklist-status {
   font-size: 80%;
-}
-
-.newdesign-todoitem .assignedTo {
-  margin-top: 0.5rem;
-}
-
-.newdesign-todoitem .assignedTo p {
-  margin: 0 0.5rem;
-  display: inline-block;
 }
 /*# sourceMappingURL=TodoItem.css.map */

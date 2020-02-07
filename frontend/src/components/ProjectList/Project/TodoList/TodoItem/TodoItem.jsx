@@ -249,8 +249,8 @@ const TodoItem = props => {
               //   {todoItemData.assignedTo.username.substring(0, 5) + ".."}
               // </button>
               <div className="user" onClick={() => toggleIsAssigningUser()}>
-                {todoItemData.assignedTo.username.length > 6
-                  ? todoItemData.assignedTo.username.substring(0, 6) + ".."
+                {todoItemData.assignedTo.username.length > 10
+                  ? todoItemData.assignedTo.username.substring(0, 8) + ".."
                   : todoItemData.assignedTo.username}
               </div>
             ) : (
