@@ -43,7 +43,8 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 1rem;
+  width: 0.3rem;
+  margin-right: 10rem;
 }
 
 ::-webkit-scrollbar-track {

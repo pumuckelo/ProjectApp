@@ -7,13 +7,13 @@
   background-color: white;
   width: 1rem;
   height: 1rem;
-  z-index: 50;
+  z-index: 20;
   top: -6%;
   left: 50%;
   -webkit-transform: translate(-50%) rotate(45deg);
           transform: translate(-50%) rotate(45deg);
-  -webkit-box-shadow: -1.5px -1.5px 2px 0.5px #dadada;
-          box-shadow: -1.5px -1.5px 2px 0.5px #dadada;
+  -webkit-box-shadow: -1.5px -1.5px 1.5px 0.5px #efefef;
+          box-shadow: -1.5px -1.5px 1.5px 0.5px #efefef;
   text-align: center;
   -webkit-animation: dropdowntriangle 0.2s linear;
           animation: dropdowntriangle 0.2s linear;
@@ -21,8 +21,8 @@
 
 .triangle.above {
   position: absolute;
-  -webkit-box-shadow: 1.5px 1.5px 2px 0.5px #dadada;
-          box-shadow: 1.5px 1.5px 2px 0.5px #dadada;
+  -webkit-box-shadow: 1.5px 1.5px 2px 0.5px #efefef;
+          box-shadow: 1.5px 1.5px 2px 0.5px #efefef;
   top: unset;
   bottom: -6%;
   -webkit-animation: dropdowntriangle_above 0.2s linear;
@@ -49,6 +49,7 @@
           align-items: center;
   text-align: center;
   z-index: 10;
+  max-height: 20rem;
   -webkit-animation: dropdown 0.2s linear;
           animation: dropdown 0.2s linear;
   overflow: auto;
@@ -215,8 +216,8 @@
 
 @-webkit-keyframes dropdowntriangle {
   0% {
-    -webkit-transform: translate(-50%, -20%) rotate(45deg);
-            transform: translate(-50%, -20%) rotate(45deg);
+    -webkit-transform: translate(-50%, -120%) rotate(45deg);
+            transform: translate(-50%, -120%) rotate(45deg);
     overflow: hidden;
     visibility: hidden;
   }
@@ -231,8 +232,8 @@
 
 @keyframes dropdowntriangle {
   0% {
-    -webkit-transform: translate(-50%, -20%) rotate(45deg);
-            transform: translate(-50%, -20%) rotate(45deg);
+    -webkit-transform: translate(-50%, -120%) rotate(45deg);
+            transform: translate(-50%, -120%) rotate(45deg);
     overflow: hidden;
     visibility: hidden;
   }
@@ -247,8 +248,8 @@
 
 @-webkit-keyframes dropdowntriangle_above {
   0% {
-    -webkit-transform: translate(-50%, 200%) rotate(45deg);
-            transform: translate(-50%, 200%) rotate(45deg);
+    -webkit-transform: translate(-50%, 120%) rotate(45deg);
+            transform: translate(-50%, 120%) rotate(45deg);
     overflow: hidden;
     visibility: hidden;
   }
@@ -263,8 +264,8 @@
 
 @keyframes dropdowntriangle_above {
   0% {
-    -webkit-transform: translate(-50%, 200%) rotate(45deg);
-            transform: translate(-50%, 200%) rotate(45deg);
+    -webkit-transform: translate(-50%, 120%) rotate(45deg);
+            transform: translate(-50%, 120%) rotate(45deg);
     overflow: hidden;
     visibility: hidden;
   }
