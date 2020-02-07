@@ -272,11 +272,19 @@ const TodoItem = props => {
         </div>
         <div className="flex">
           <div className="date">
-            <i className="far fa-calendar-plus"></i>
-            <i className="far fa-calendar-times"></i>
+            {todoItemData.startDate ? (
+              todoItemData.startDate
+            ) : (
+              <i className="far fa-calendar-plus"></i>
+            )}{" "}
+            {todoItemData.dueDate ? (
+              todoItemData.dueDate
+            ) : (
+              <i className="far fa-calendar-times"></i>
+            )}
           </div>
           <div className="checklist">
-            <i class="fas fa-tasks"></i>
+            <i className="fas fa-tasks"></i>
           </div>
         </div>
 

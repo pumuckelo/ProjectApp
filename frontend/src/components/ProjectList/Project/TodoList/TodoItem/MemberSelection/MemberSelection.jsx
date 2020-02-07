@@ -16,37 +16,36 @@ const MemberSelection = props => {
     }
   };
 
-  const selectParentElement = () => {
+  //This function is necessary because the member Selection needs to be absolute positioned to the wrapper around the todolist,
+  // otherwise it cant overflow the todolist
+  const positionMemberSelection = () => {
+    let memberSelectionWrapperElement = document.querySelector(
+      ".memberSelectionWrapper"
+    );
     let memberSelectionElement = document.querySelector(".memberSelection");
-    let parent = document.querySelector(".memberSelection").parentElement;
+    let parent = document.querySelector(".memberSelectionWrapper")
+      .parentElement;
 
-    let rectMemberSelection = memberSelectionElement.getBoundingClientRect();
+    let triangleElement = document.querySelector(".triangle");
+
+    let rectMemberSelection = memberSelectionWrapperElement.getBoundingClientRect();
 
     let rectParent = parent.getBoundingClientRect();
 
-    console.log(rectParent);
-    console.log(rectMemberSelection);
-
-    // parent.style.backgroundColor = "green";
-    // document.querySelector(".assignedUser").style.backgroundColor = "green";
-    // memberSelectionElement.style.left = rectParent.left;
-
     if (rectParent.top >= 400) {
-      memberSelectionElement.style.top = rectParent.top - 235 + "px";
-      memberSelectionElement.classList.add("memberSelectionAbove");
-      memberSelectionElement.classList.remove("memberSelection");
-      // memberSelectionElement.style.backgroundColor = "green";
+      memberSelectionWrapperElement.style.top = rectParent.top - 235 + "px";
+      memberSelectionElement.classList.add("above");
+      triangleElement.classList.add("above");
+      // memberSelectionElement.classList.add("memberSelectionAbove");
+      // memberSelectionElement.classList.remove("memberSelection");
     } else {
-      memberSelectionElement.style.top = rectParent.top - 60 + "px";
+      memberSelectionWrapperElement.style.top = rectParent.top - 60 + "px";
     }
-
-    // console.log(memberSelectionElement.getBoundingClientRect());
-    // console.log(rect);
   };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClick);
-    selectParentElement();
+    positionMemberSelection();
 
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
@@ -64,10 +63,12 @@ const MemberSelection = props => {
   });
 
   return (
-    <div ref={node} className="memberSelection">
+    <div ref={node} className="memberSelectionWrapper">
       <div className="triangle"></div>
-      {selectableMembers}
-      <i onClick={props.unassignUser} className="fas fa-ban"></i>
+      <div className="memberSelection">
+        {selectableMembers}
+        <i onClick={props.unassignUser} className="fas fa-ban"></i>
+      </div>
     </div>
   );
 };
