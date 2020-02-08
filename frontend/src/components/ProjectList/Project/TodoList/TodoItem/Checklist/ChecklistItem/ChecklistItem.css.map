@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,cAAc,CAAC;EACb,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;EACnB,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,CAAC;EACT,eAAe,EAAE,aAAa;CAI/B",
+    "sources": [
+        "ChecklistItem.scss"
+    ],
+    "names": [],
+    "file": "ChecklistItem.css"
+}

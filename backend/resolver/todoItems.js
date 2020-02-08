@@ -97,15 +97,25 @@ module.exports = {
       { todoItemId, checklistItemId, checklistItemData },
       { req, res, pubsub }
     ) => {
+      //Find the todoitem that the checklistitem is associated to
       const todoItem = await db.TodoItem.findById(todoItemId);
+      if (!todoItem) {
+        throw new Error("Error on updating checklistItem, todoItem not found.");
+      }
       //find the index so we can splice the array and replace with the new data
       let indexofitem = todoItem.checklist.findIndex(
         el => el._id == checklistItemId
       );
+      //now replace the item in the array with the new data
       todoItem.checklist.splice(indexofitem, 1, checklistItemData);
+      console.log(todoItem);
       todoItem.save().catch(err => {
         throw err;
       });
+
+      //send updated todo to the subsription so it gets refreshed on client
+      pubsub.publish("todoItemUpdated", todoItem);
+      return "updated successfully ";
     }
   },
   Query: {

@@ -2,9 +2,13 @@ import React, { useEffect, useRef } from "react";
 import { useMutation, gql } from "@apollo/client";
 import "./Checklist.css";
 import { createRef } from "react";
+import ChecklistItem from "./ChecklistItem/ChecklistItem";
 
 const Checklist = props => {
   const { checklistData, todoItemId } = props;
+  const checklistItemInput = createRef();
+
+  const node = createRef();
   useEffect(() => {
     positionChecklist();
 
@@ -24,9 +28,6 @@ const Checklist = props => {
     } else {
     }
   };
-
-  const checklistItemInput = createRef();
-  const node = createRef();
 
   const createChecklistItemMutationString = gql`
     mutation createChecklistItem($todoItemId: ID, $name: String) {
@@ -69,12 +70,18 @@ const Checklist = props => {
     console.log(checklistDropdownElementRect.left);
   };
 
-  let checklistItems = checklistData.map(item => {
+  let checklistItems = checklistData.map(checklistItem => {
     return (
-      <div className="checklistItem" key={item._id}>
-        <input value={item.completed} type="checkbox" name={item.name} id="" />
-        <input className="hidden-input pg-0" type="text" value={item.name} />
-      </div>
+      // <div className="checklistItem" key={item._id}>
+      //   <input value={item.completed} type="checkbox" name={item.name} id="" />
+      //   <input className="hidden-input pg-0" type="text" value={item.name} />
+      // </div>
+
+      <ChecklistItem
+        key={checklistItem._id}
+        todoItemId={todoItemId}
+        checklistItemData={checklistItem}
+      />
     );
   });
 

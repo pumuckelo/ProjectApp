@@ -100,9 +100,23 @@ const typeDefs = gql`
       assignedTo: ID
     ): TodoItem
     createChecklistItem(todoItemId: ID, name: String): String
-    updateChecklistItem(todoItemId: ID, checklistItemId: String): String
+    updateChecklistItem(
+      todoItemId: ID
+      checklistItemId: String
+      checklistItemData: ChecklistItemInput
+    ): String
     #TODO THIS NEEDS TO BE UPDATED WITH TODOINPUT AS VARIABLES
   }
+
+  # ============== INPUT TYPES =============
+
+  input ChecklistItemInput {
+    name: String
+    completed: Boolean
+    _id: ID
+  }
+
+  # ================================
 
   type Query {
     hello: String
