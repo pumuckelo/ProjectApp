@@ -1,3 +1,12 @@
+.background {
+  background-color: rgba(128, 128, 128, 0.218);
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+}
 .checklist-dropdown {
   padding: 0.5rem;
   background-color: white;
@@ -6,4 +15,17 @@
   top: 0;
   z-index: 100;
   box-shadow: 0 1px 5px 0.5px rgb(218, 218, 218);
+  overflow-y: auto;
+  max-height: 15rem;
+}
+
+.checklistItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  justify-content: space-between;
+  // background-color: goldenrod;
+  // padding: 10rem;
+  // cursor: pointer;
 }

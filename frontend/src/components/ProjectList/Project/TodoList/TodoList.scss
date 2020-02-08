@@ -63,26 +63,25 @@
         box-shadow: 0 0px 2px 1px dodgerblue;
         border-radius: 10px;
       }
-    }
+      input {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        box-sizing: border-box;
+        padding: 1rem;
+        outline: none;
+        border: none;
+      }
 
-    input {
-      border-top-left-radius: 10px;
-      border-bottom-left-radius: 10px;
-      box-sizing: border-box;
-      padding: 1rem;
-      outline: none;
-      border: none;
-    }
+      button {
+        outline: none;
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+        background: none;
+        border: none;
 
-    button {
-      outline: none;
-      border-bottom-right-radius: 10px;
-      border-top-right-radius: 10px;
-      background: none;
-      border: none;
-
-      cursor: pointer;
-      padding: 1rem;
+        cursor: pointer;
+        padding: 1rem;
+      }
     }
   }
 }

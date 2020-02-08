@@ -7,6 +7,10 @@ const todoItemSchema = new mongoose.Schema({
   },
   checklist: [
     {
+      _id: {
+        type: String,
+        unique: true
+      },
       name: String,
       completed: false
     }

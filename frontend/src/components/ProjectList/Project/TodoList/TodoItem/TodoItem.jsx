@@ -26,6 +26,7 @@ const TodoItem = props => {
         checklist {
           name
           completed
+          _id
         }
         assignedTo {
           username
@@ -72,6 +73,7 @@ const TodoItem = props => {
         checklist {
           name
           completed
+          _id
         }
         assignedTo {
           username
@@ -297,7 +299,13 @@ const TodoItem = props => {
               onClick={() => toggleIsViewingChecklist()}
               className="fas fa-tasks"
             ></i>
-            {isViewingChecklist && <Checklist />}
+            {isViewingChecklist && (
+              <Checklist
+                closeChecklist={toggleIsViewingChecklist}
+                todoItemId={todoItemData._id}
+                checklistData={todoItemData.checklist}
+              />
+            )}
           </div>
         </div>
 

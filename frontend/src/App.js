@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./App.css";
+// import "./fontawesome/all.css";
 import ProjectList from "./components/ProjectList/ProjectList";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Project from "./components/ProjectList/Project/Project";
 import Home from "./components/Home/Home";
 import AuthContext from "./context/auth-context";
 import Cookies from "js-cookie";
+import "font-awesome/css/font-awesome.min.css";
 
 import { InMemoryCache, ApolloClient, ApolloProvider } from "@apollo/client";
 

@@ -4,6 +4,7 @@ const typeDefs = gql`
   type ChecklistItem {
     name: String
     completed: Boolean
+    _id: ID
   }
 
   type Comment {
@@ -98,6 +99,8 @@ const typeDefs = gql`
       status: String
       assignedTo: ID
     ): TodoItem
+    createChecklistItem(todoItemId: ID, name: String): String
+    updateChecklistItem(todoItemId: ID, checklistItemId: String): String
     #TODO THIS NEEDS TO BE UPDATED WITH TODOINPUT AS VARIABLES
   }
 

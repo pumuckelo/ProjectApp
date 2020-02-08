@@ -1,3 +1,13 @@
+.background {
+  background-color: rgba(128, 128, 128, 0.218);
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+}
+
 .checklist-dropdown {
   padding: 0.5rem;
   background-color: white;
@@ -7,5 +17,21 @@
   z-index: 100;
   -webkit-box-shadow: 0 1px 5px 0.5px #dadada;
           box-shadow: 0 1px 5px 0.5px #dadada;
+  overflow-y: auto;
+  max-height: 15rem;
+}
+
+.checklistItem {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  margin: 0;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 /*# sourceMappingURL=Checklist.css.map */

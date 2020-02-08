@@ -1,6 +1,7 @@
 const db = require("../models");
 const { withFilter } = require("apollo-server-express");
 const checkIfAuthenticated = require("../helpers/checkIfAuthenticated");
+const { generateRandomId } = require("../helpers/general");
 
 module.exports = {
   Mutation: {
@@ -61,6 +62,50 @@ module.exports = {
       console.log(updatedTodoItem);
       pubsub.publish("todoItemUpdated", updatedTodoItem);
       return updatedTodoItem;
+    },
+    createChecklistItem: async (
+      parent,
+      { todoItemId, name },
+      { req, res, pubsub }
+    ) => {
+      //check if user is authentiicated
+      checkIfAuthenticated(req, res);
+      //find the todoitem where the checklist item should be added
+      const todoItem = await db.TodoItem.findById(todoItemId);
+      if (!todoItem) {
+        throw new Error("TodoItem couldn't be found");
+      }
+      //create a new checklistitem
+      const checklistItem = {
+        _id: generateRandomId(),
+        completed: false,
+        name: name
+      };
+      //push checklistitem to the array and save to database
+      todoItem.checklist.push(checklistItem);
+      todoItem.save().catch(err => {
+        throw err;
+      });
+
+      //publish updated todoitem to subscription
+      pubsub.publish("todoItemUpdated", todoItem);
+
+      return "ChecklistItem added";
+    },
+    updateChecklistItem: async (
+      parent,
+      { todoItemId, checklistItemId, checklistItemData },
+      { req, res, pubsub }
+    ) => {
+      const todoItem = await db.TodoItem.findById(todoItemId);
+      //find the index so we can splice the array and replace with the new data
+      let indexofitem = todoItem.checklist.findIndex(
+        el => el._id == checklistItemId
+      );
+      todoItem.checklist.splice(indexofitem, 1, checklistItemData);
+      todoItem.save().catch(err => {
+        throw err;
+      });
     }
   },
   Query: {

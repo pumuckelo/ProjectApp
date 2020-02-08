@@ -85,7 +85,7 @@
   border-radius: 10px;
 }
 
-.todolist form input {
+.todolist form .newTodoForm-control input {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   -webkit-box-sizing: border-box;
@@ -95,7 +95,7 @@
   border: none;
 }
 
-.todolist form button {
+.todolist form .newTodoForm-control button {
   outline: none;
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
