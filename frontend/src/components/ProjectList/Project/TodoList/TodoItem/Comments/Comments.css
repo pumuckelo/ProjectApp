@@ -1,0 +1,30 @@
+.comments-dropdown {
+  position: absolute;
+  padding: 1rem;
+  background-color: white;
+  z-index: 20;
+  border-radius: 10px;
+  width: 30rem;
+  max-height: 22rem;
+  overflow-y: auto;
+  -webkit-box-shadow: 0 1px 5px 0.5px #dadada;
+          box-shadow: 0 1px 5px 0.5px #dadada;
+}
+
+.comments-dropdown form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.comments-dropdown form button {
+  margin-top: 0;
+}
+/*# sourceMappingURL=Comments.css.map */

@@ -5,6 +5,7 @@ import TodoItemDetails from "./TodoItemDetails/TodoItemDetails";
 import { useProjectData } from "../../Project";
 import MemberSelection from "./MemberSelection/MemberSelection";
 import Checklist from "./Checklist/Checklist";
+import Comments from "./Comments/Comments";
 
 const TodoItem = props => {
   const nameInput = useRef();
@@ -12,11 +13,13 @@ const TodoItem = props => {
 
   const [todoItemData, setTodoItemData] = useState({
     name: "",
-    checklist: []
+    checklist: [],
+    comments: []
   });
   const { _id } = props;
   const [isAssigningUser, setIsAssigningUser] = useState(false);
   const [isViewingChecklist, setIsViewingChecklist] = useState(false);
+  const [isViewingComments, setIsViewingComments] = useState(false);
 
   const getTodoItemQueryString = gql`
     {
@@ -33,6 +36,10 @@ const TodoItem = props => {
           _id
         }
         comments {
+          author {
+            username
+          }
+          _id
           content
           created
         }
@@ -80,6 +87,10 @@ const TodoItem = props => {
           _id
         }
         comments {
+          _id
+          author {
+            username
+          }
           content
           created
         }
@@ -178,6 +189,10 @@ const TodoItem = props => {
 
   const toggleIsViewingChecklist = () => {
     setIsViewingChecklist(!isViewingChecklist);
+  };
+
+  const toggleIsViewingComments = () => {
+    setIsViewingComments(!isViewingComments);
   };
 
   //====================================
@@ -295,15 +310,37 @@ const TodoItem = props => {
             )}
           </div>
           <div className="checklist">
+            <div className="">
+              <span>
+                {todoItemData.checklist.filter(item => item.completed).length}/
+              </span>
+              <span>{todoItemData.checklist.length}</span>
+            </div>
             <i
               onClick={() => toggleIsViewingChecklist()}
-              className="fas fa-tasks"
+              className="fas fa-tasks mg-left-02"
             ></i>
             {isViewingChecklist && (
               <Checklist
                 closeChecklist={toggleIsViewingChecklist}
                 todoItemId={todoItemData._id}
                 checklistData={todoItemData.checklist}
+              />
+            )}
+          </div>
+          <div className="comments">
+            <span className="comments-count">
+              {todoItemData.comments.length > 0 && todoItemData.comments.length}
+            </span>
+            <i
+              onClick={() => toggleIsViewingComments()}
+              className="far fa-comments"
+            ></i>
+            {isViewingComments && (
+              <Comments
+                todoItemId={todoItemData._id}
+                closeComments={toggleIsViewingComments}
+                commentsData={todoItemData.comments}
               />
             )}
           </div>

@@ -32,8 +32,8 @@ const ChecklistItem = props => {
       completedRef.current.value != checklistItemData.completed
     ) {
       if (nameInputRef.current.value != "") {
-        console.log("tried to update");
-        console.log(completedRef.current.value);
+        // console.log("tried to update");
+        // console.log(completedRef.current.value);
         updateChecklistItem({
           variables: {
             todoItemId: todoItemId,

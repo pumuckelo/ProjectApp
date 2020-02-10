@@ -1,4 +1,5 @@
 const db = require("../models");
+const mongoose = require("mongoose");
 const { withFilter } = require("apollo-server-express");
 const checkIfAuthenticated = require("../helpers/checkIfAuthenticated");
 const { generateRandomId } = require("../helpers/general");
@@ -77,10 +78,11 @@ module.exports = {
       }
       //create a new checklistitem
       const checklistItem = {
-        _id: generateRandomId(),
+        _id: new mongoose.Types.ObjectId(),
         completed: false,
         name: name
       };
+      console.log(checklistItem);
       //push checklistitem to the array and save to database
       todoItem.checklist.push(checklistItem);
       todoItem.save().catch(err => {
@@ -116,6 +118,38 @@ module.exports = {
       //send updated todo to the subsription so it gets refreshed on client
       pubsub.publish("todoItemUpdated", todoItem);
       return "updated successfully ";
+    },
+    createComment: async (
+      parent,
+      { todoItemId, content },
+      { req, res, pubsub }
+    ) => {
+      let todoItem = await db.TodoItem.findById(todoItemId);
+      if (!todoItem) {
+        throw new Error("Couldn't add the comment. Try again later.");
+      }
+      //create the comment object
+      const comment = {
+        _id: new mongoose.Types.ObjectId(),
+        content: content,
+        author: req.userId
+      };
+
+      //push the comment to the comments array
+      todoItem.comments.push(comment);
+      await todoItem.save().catch(err => {
+        throw new Error("Couldn't add the comment. Try again later.");
+      });
+
+      //refetch so author of comment gets popoulated
+      const todoItem2 = await db.TodoItem.findById(todoItemId);
+
+      console.log(todoItem2);
+      pubsub.publish("todoItemUpdated", todoItem2);
+
+      // We dont need to return the object because the client will add the comment to state from the subscription
+      //TODO Maybe i should change all of this and return the objects instead so the client is not dependent on the subscription
+      return "Comment added.";
     }
   },
   Query: {

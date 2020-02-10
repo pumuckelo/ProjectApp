@@ -1,0 +1,28 @@
+.comment {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0 1px 5px 0.5px rgb(218, 218, 218);
+
+  .comment-content {
+    margin: 0;
+  }
+
+  .comment-author {
+    margin: 0;
+    font-size: 0.7rem;
+  }
+
+  .comment-date {
+    font-size: 0.7rem;
+    margin: 0;
+    margin-left: 0.5rem;
+  }
+
+  .flex {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

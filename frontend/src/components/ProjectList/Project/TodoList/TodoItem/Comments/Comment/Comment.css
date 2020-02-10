@@ -1,0 +1,39 @@
+.comment {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 5px 0.5px #dadada;
+          box-shadow: 0 1px 5px 0.5px #dadada;
+}
+
+.comment .comment-content {
+  margin: 0;
+}
+
+.comment .comment-author {
+  margin: 0;
+  font-size: 0.7rem;
+}
+
+.comment .comment-date {
+  font-size: 0.7rem;
+  margin: 0;
+  margin-left: 0.5rem;
+}
+
+.comment .flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+/*# sourceMappingURL=Comment.css.map */

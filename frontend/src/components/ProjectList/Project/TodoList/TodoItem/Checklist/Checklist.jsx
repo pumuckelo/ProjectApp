@@ -62,10 +62,10 @@ const Checklist = props => {
 
     //if the checklist is near the right end of the screen the checklist should be displayed left of the icon
     // if left is >900, then change to 850 and later also change the styling of the triangle on the side
-    if (checklistDropdownElementRect.left > 1000) {
-      checklistDropdownElement.style.left = "-1rem";
-    } else {
+    if (checklistDropdownElementRect.left < 950) {
       checklistDropdownElement.style.left = "15rem";
+    } else {
+      checklistDropdownElement.style.left = "-4rem";
     }
     console.log(checklistDropdownElementRect.left);
   };

@@ -71,6 +71,19 @@ body {
 
 /* Utiilities */
 
+.mg-left-01 {
+  margin-left: 0.1rem;
+}
+.mg-left-02 {
+  margin-left: 0.2rem;
+}
+.mg-left-03 {
+  margin-left: 0.3rem;
+}
+.mg-left-04 {
+  margin-left: 0.4rem;
+}
+
 .mg-left-05 {
   margin-left: 0.5rem;
 }

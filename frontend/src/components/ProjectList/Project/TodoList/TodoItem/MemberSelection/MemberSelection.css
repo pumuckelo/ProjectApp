@@ -48,7 +48,7 @@
       -ms-flex-align: center;
           align-items: center;
   text-align: center;
-  z-index: 10;
+  z-index: 20;
   max-height: 20rem;
   -webkit-animation: dropdown 0.2s linear;
           animation: dropdown 0.2s linear;

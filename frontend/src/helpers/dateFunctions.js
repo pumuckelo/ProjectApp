@@ -1,10 +1,7 @@
-module.exports = {
-  convertMongoDateToIsoDate: mongodate => {
-    return new Date(+mongodate).toISOString().split("T")[0];
-  },
-  convertIsoStringToLocalDateString: isoString => {
-    return new Date(isoString).toLocaleDateString();
-  },
+export const convertMongoDateToIsoDate = mongodate => {
+  return new Date(+mongodate).toISOString().split("T")[0];
+};
 
-  mockFunction: () => {}
+export const convertIsoStringToLocalDateString = isoString => {
+  return new Date(isoString).toLocaleDateString();
 };

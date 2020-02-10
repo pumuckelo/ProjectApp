@@ -1,9 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useMutation, gql } from "@apollo/client";
 import ConfirmationPopup from "../../../../Utils/ConfirmationPopup/ConfirmationPopup";
 import "./TodoListSettings.css";
+import {
+  detectEscape,
+  removeDetectEscape
+} from "../../../../../helpers/detectKeyPresses";
 
 const TodoListSettings = props => {
+  // useEffect(() => {
+  //   detectEscape(() => props.closeSettings());
+
+  //   return () => removeDetectEscape();
+  // }, []);
+
   //Add DOM references to the input fields
   const nameInput = useRef("");
   const descriptionInput = useRef("");

@@ -7,10 +7,7 @@ const todoItemSchema = new mongoose.Schema({
   },
   checklist: [
     {
-      _id: {
-        type: String,
-        unique: true
-      },
+      _id: mongoose.Schema.Types.ObjectId,
       name: String,
       completed: false
     }
@@ -21,6 +18,7 @@ const todoItemSchema = new mongoose.Schema({
   },
   comments: [
     {
+      _id: mongoose.Schema.Types.ObjectId,
       content: String,
       author: {
         type: mongoose.Schema.Types.ObjectId,
@@ -45,14 +43,20 @@ const todoItemSchema = new mongoose.Schema({
   }
 });
 
-const autoPopulateAssignedTo = function(next) {
+const autoPopulateAssignedToAndCommentsAuthor = function(next) {
   this.populate("assignedTo");
+  // this.populate("author");
+
+  this.populate({
+    path: "comments.author",
+    model: "User"
+  });
   next();
 };
 
 todoItemSchema
-  .pre("findOne", autoPopulateAssignedTo)
-  .pre("find", autoPopulateAssignedTo);
+  .pre("findOne", autoPopulateAssignedToAndCommentsAuthor)
+  .pre("find", autoPopulateAssignedToAndCommentsAuthor);
 
 const TodoItem = mongoose.model("TodoItem", todoItemSchema);
 

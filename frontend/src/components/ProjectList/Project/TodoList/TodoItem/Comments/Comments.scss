@@ -1,0 +1,21 @@
+.comments-dropdown {
+  position: absolute;
+  padding: 1rem;
+  background-color: white;
+  z-index: 20;
+  border-radius: 10px;
+  width: 30rem;
+  max-height: 22rem;
+  overflow-y: auto;
+  box-shadow: 0 1px 5px 0.5px rgb(218, 218, 218);
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    button {
+      margin-top: 0;
+    }
+  }
+}

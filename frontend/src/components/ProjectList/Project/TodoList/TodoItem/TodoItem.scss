@@ -85,6 +85,7 @@
     width: 100%;
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
 
     i {
       cursor: pointer;
@@ -94,10 +95,29 @@
   .checklist {
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    align-items: center;
+    justify-content: flex-start;
 
     i {
+      // transform: translateY(7%);
+      margin-top: 0.15rem;
       cursor: pointer;
+      // z-index: -1;
+    }
+  }
+
+  .comments {
+    display: flex;
+    align-items: center;
+    i {
+      cursor: pointer;
+    }
+
+    .comments-count {
+      cursor: default;
+      color: black;
+      font-size: 0.5rem;
+      transform: translate(400%, -80%);
     }
   }
 
@@ -105,10 +125,6 @@
     position: absolute;
     // top: 0;
     // left: 0;
-  }
-
-  .checklist-status {
-    font-size: 80%;
   }
 
   // .assignedTo {

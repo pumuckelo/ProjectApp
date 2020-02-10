@@ -120,6 +120,9 @@
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .newdesign-todoitem .date i {
@@ -131,20 +134,41 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 .newdesign-todoitem .checklist i {
+  margin-top: 0.15rem;
   cursor: pointer;
+}
+
+.newdesign-todoitem .comments {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.newdesign-todoitem .comments i {
+  cursor: pointer;
+}
+
+.newdesign-todoitem .comments .comments-count {
+  cursor: default;
+  color: black;
+  font-size: 0.5rem;
+  -webkit-transform: translate(400%, -80%);
+          transform: translate(400%, -80%);
 }
 
 .newdesign-todoitem .absolute {
   position: absolute;
-}
-
-.newdesign-todoitem .checklist-status {
-  font-size: 80%;
 }
 /*# sourceMappingURL=TodoItem.css.map */

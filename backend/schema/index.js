@@ -8,6 +8,7 @@ const typeDefs = gql`
   }
 
   type Comment {
+    _id: ID
     content: String
     author: User
     created: String
@@ -106,6 +107,7 @@ const typeDefs = gql`
       checklistItemData: ChecklistItemInput
     ): String
     #TODO THIS NEEDS TO BE UPDATED WITH TODOINPUT AS VARIABLES
+    createComment(todoItemId: ID, content: String): String
   }
 
   # ============== INPUT TYPES =============
