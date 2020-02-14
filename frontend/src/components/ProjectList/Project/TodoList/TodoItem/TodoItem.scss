@@ -119,6 +119,13 @@
       font-size: 0.5rem;
       transform: translate(400%, -80%);
     }
+
+    .comments-count-over9 {
+      cursor: default;
+      color: black;
+      font-size: 0.5rem;
+      transform: translate(250%, -80%);
+    }
   }
 
   .absolute {

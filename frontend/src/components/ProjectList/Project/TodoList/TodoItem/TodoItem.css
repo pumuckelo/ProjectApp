@@ -168,6 +168,14 @@
           transform: translate(400%, -80%);
 }
 
+.newdesign-todoitem .comments .comments-count-over9 {
+  cursor: default;
+  color: black;
+  font-size: 0.5rem;
+  -webkit-transform: translate(250%, -80%);
+          transform: translate(250%, -80%);
+}
+
 .newdesign-todoitem .absolute {
   position: absolute;
 }

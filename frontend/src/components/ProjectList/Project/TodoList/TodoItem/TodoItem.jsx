@@ -310,12 +310,15 @@ const TodoItem = props => {
             )}
           </div>
           <div className="checklist">
-            <div className="">
-              <span>
-                {todoItemData.checklist.filter(item => item.completed).length}/
-              </span>
-              <span>{todoItemData.checklist.length}</span>
-            </div>
+            {todoItemData.checklist.length > 0 && (
+              <div className="">
+                <span>
+                  {todoItemData.checklist.filter(item => item.completed).length}
+                  /
+                </span>
+                <span>{todoItemData.checklist.length}</span>
+              </div>
+            )}
             <i
               onClick={() => toggleIsViewingChecklist()}
               className="fas fa-tasks mg-left-02"
@@ -329,7 +332,13 @@ const TodoItem = props => {
             )}
           </div>
           <div className="comments">
-            <span className="comments-count">
+            <span
+              className={
+                todoItemData.comments.length > 9
+                  ? "comments-count-over9"
+                  : "comments-count"
+              }
+            >
               {todoItemData.comments.length > 0 && todoItemData.comments.length}
             </span>
             <i

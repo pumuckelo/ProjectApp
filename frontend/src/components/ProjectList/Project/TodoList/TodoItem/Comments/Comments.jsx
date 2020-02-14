@@ -5,6 +5,7 @@ import { useMutation, gql } from "@apollo/client";
 
 const Comments = props => {
   useEffect(() => {
+    //TODO PositionComments needs to be updated
     positionComments();
   });
   const { commentsData, todoItemId } = props;
@@ -14,10 +15,20 @@ const Comments = props => {
     const commentsDropdownElement = document.querySelector(
       ".comments-dropdown"
     );
+    const commentsDropdownElementRect = commentsDropdownElement.getBoundingClientRect();
     const parentRect = commentsDropdownElement.parentElement.getBoundingClientRect();
+    console.log(parentRect);
+    console.log(commentsDropdownElementRect);
 
-    commentsDropdownElement.style.bottom = parentRect.top;
+    // commentsDropdownElement.style.top =
+    //   parentRect.top - commentsDropdownElementRect.height + "px";
     commentsDropdownElement.style.left = "18rem";
+
+    if (parentRect.top >= 400) {
+      console.log("bigger");
+      // commentsDropdownElement.style.top =
+      //   parentRect.top - commentsDropdownElementRect.top + "px";
+    }
   };
 
   const createCommentMutationString = gql`
