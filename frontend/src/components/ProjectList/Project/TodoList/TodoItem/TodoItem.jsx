@@ -6,6 +6,7 @@ import { useProjectData } from "../../Project";
 import MemberSelection from "./MemberSelection/MemberSelection";
 import Checklist from "./Checklist/Checklist";
 import Comments from "./Comments/Comments";
+import flatpicker from "flatpickr";
 
 const TodoItem = props => {
   const nameInput = useRef();
@@ -231,6 +232,12 @@ const TodoItem = props => {
     }
   };
 
+  const openDatepicker = () => {
+    console.log("openDatepicker fired");
+  };
+
+  // flatpicker("#datepickerinput", { wrap: true });
+
   return (
     <Fragment>
       <div className="newdesign-todoitem">
@@ -298,15 +305,18 @@ const TodoItem = props => {
         </div>
         <div className="flex">
           <div className="date">
-            {todoItemData.startDate ? (
+            {/* TODO braucht man ein Start Datum fuer todos? */}
+            {/* {todoItemData.startDate ? (
               todoItemData.startDate
             ) : (
               <i className="far fa-calendar-plus"></i>
-            )}{" "}
+            )}{" "} */}
             {todoItemData.dueDate ? (
-              todoItemData.dueDate
+              <div className="">
+                <i className="far fa-calendar-times"></i> {todoItemData.dueDate}
+              </div>
             ) : (
-              <i className="far fa-calendar-times"></i>
+              <i onClick={openDatepicker} className="far fa-calendar-times"></i>
             )}
           </div>
           <div className="checklist">

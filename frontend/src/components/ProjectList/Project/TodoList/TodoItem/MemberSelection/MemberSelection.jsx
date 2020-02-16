@@ -33,7 +33,7 @@ const MemberSelection = props => {
     let rectParent = parent.getBoundingClientRect();
 
     if (rectParent.top >= 400) {
-      memberSelectionWrapperElement.style.top = rectParent.top - 235 + "px";
+      memberSelectionWrapperElement.style.top = rectParent.top - 200 + "px";
       memberSelectionElement.classList.add("above");
       triangleElement.classList.add("above");
       // memberSelectionElement.classList.add("memberSelectionAbove");

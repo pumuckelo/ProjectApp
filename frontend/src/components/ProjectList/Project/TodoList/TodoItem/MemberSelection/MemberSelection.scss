@@ -9,7 +9,7 @@
   height: 1rem;
 
   z-index: 20;
-  top: -6%;
+  top: -8.5%;
   left: 50%;
   transform: translate(-50%) rotate(45deg);
   box-shadow: -1.5px -1.5px 1.5px 0.5px rgb(239, 239, 239);
@@ -21,7 +21,7 @@
   position: absolute;
   box-shadow: 1.5px 1.5px 2px 0.5px rgb(239, 239, 239);
   top: unset;
-  bottom: -6%;
+  bottom: -8.5%;
   animation: dropdowntriangle_above 0.2s linear;
 }
 

@@ -129,6 +129,10 @@
   cursor: pointer;
 }
 
+.newdesign-todoitem .date .hidden {
+  display: none;
+}
+
 .newdesign-todoitem .checklist {
   width: 100%;
   display: -webkit-box;

@@ -1,5 +1,6 @@
 const nodeSchedule = require("node-schedule");
 const nodemailer = require("nodemailer");
+const db = require("../models/index");
 
 const corsEmailNotificationsaaaaaa = {
   todoItems: {
@@ -42,7 +43,13 @@ function corsEmailNotifications() {
       todoItems.schedules.push({ _id: "werr" + todoItems.schedules.length });
     },
     removeSchedule: () => {},
-    getSchedules: () => todoItems.schedules
+    getSchedules: () => todoItems.schedules,
+    initialize: () => {
+      //Find all todos that have a due date
+      db.TodoItem.find({
+        dueDate
+      });
+    }
   };
   const todoLists = {
     schedules: [],
@@ -56,6 +63,8 @@ function corsEmailNotifications() {
     removeSchedule: () => {},
     getSchedules: () => projects.schedules
   };
+
+  const initializeAll = () => {};
 
   return {
     todoItems: {
